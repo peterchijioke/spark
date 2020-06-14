@@ -7,60 +7,56 @@ export default class ProfileInfo extends Component {
   state = { text: "Enter Text" };
   render() {
     return (
-      <KeyboardAvoidingView>
-        <View style={styles.component}>
-          <View style={{ flexGrow: 1, backgroundColor: "#fff" }}>
-            <TextInput
-              style={styles.textInput}
-              label="Email"
-              mode="outlined"
-              underlineColorAndroid="#123"
-              onChangeText={(text) => this.setState({ text })}
-            />
-            <Text style={styles.textOnly}>
-              We'll send you your ride recipts
-            </Text>
-            <TextInput
-              style={styles.textInput}
-              label="First Name"
-              mode="outlined"
-              underlineColorAndroid="#123"
-              onChangeText={(text) => this.setState({ text })}
-            />
-            <TextInput
-              style={styles.textInput}
-              label="Last Name"
-              mode="outlined"
-              underlineColorAndroid="#123"
-              onChangeText={(text) => this.setState({ text })}
-            />
-            <Text style={styles.textOnly}>
-              Driver will confirm picking up the right person by your first name
-            </Text>
+      <View style={styles.component}>
+        <View style={{ flexGrow: 1, backgroundColor: "#fff" }}>
+          <TextInput
+            style={styles.textInput}
+            label="Email"
+            mode="outlined"
+            underlineColorAndroid="#123"
+            onChangeText={(text) => this.setState({ text })}
+          />
+          <Text style={styles.textOnly}>We'll send you your ride recipts</Text>
+          <TextInput
+            style={styles.textInput}
+            label="First Name"
+            mode="outlined"
+            underlineColorAndroid="#123"
+            onChangeText={(text) => this.setState({ text })}
+          />
+          <TextInput
+            style={styles.textInput}
+            label="Last Name"
+            mode="outlined"
+            underlineColorAndroid="#123"
+            onChangeText={(text) => this.setState({ text })}
+          />
+          <Text style={styles.textOnly}>
+            Driver will confirm picking up the right person by your first name
+          </Text>
 
-            <TextInput
-              style={styles.textInput}
-              label="Password"
-              mode="outlined"
-              underlineColorAndroid="#123"
-              onChangeText={(text) => this.setState({ text })}
-            />
+          <TextInput
+            style={styles.textInput}
+            label="Password"
+            mode="outlined"
+            underlineColorAndroid="#123"
+            onChangeText={(text) => this.setState({ text })}
+          />
 
-            <TextInput
-              style={styles.textInput}
-              label="Confirm Password"
-              mode="outlined"
-              underlineColorAndroid="#123"
-              onChangeText={(text) => this.setState({ text })}
-            />
-          </View>
-          <View style={styles.btnView}>
-            <TouchableOpacity style={styles.btn}>
-              <Text style={styles.btnText}>DONE</Text>
-            </TouchableOpacity>
-          </View>
+          <TextInput
+            style={styles.textInput}
+            label="Confirm Password"
+            mode="outlined"
+            underlineColorAndroid="#123"
+            onChangeText={(text) => this.setState({ text })}
+          />
         </View>
-      </KeyboardAvoidingView>
+        <View style={styles.btnView}>
+          <TouchableOpacity style={styles.btn}>
+            <Text style={styles.btnText}>DONE</Text>
+          </TouchableOpacity>
+        </View>
+      </View>
     );
   }
 }

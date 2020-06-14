@@ -8,6 +8,8 @@ import profileInfo from "./src/screens/ProfileInfo";
 import profileSetUp from "./src/screens/profileSetUp";
 import PhoneNumberPage_signup from "./src/screens/PhoneNumberPage_signup";
 import DeliveryMadeEasy_Screen from "./src/screens/DeliveryMadeEasy_Screen";
+import Connect from "./src/screens/Connect";
+import LoginPage from "./src/screens/LoginPage";
 
 export default function App() {
   const Stack = createStackNavigator();
@@ -15,25 +17,39 @@ export default function App() {
     <NavigationContainer>
       <Stack.Navigator
         screenOptions={{
-          headerTintColor: "#4C4B4B",
           headerTitleStyle: { fontWeight: "bold" },
         }}
       >
         <Stack.Screen
-          name="delivery Made Easy"
-          component={DeliveryMadeEasy_Screen}
+          name="Login Page"
+          component={LoginPage}
           options={{
             headerStyle: {
               elevation: 0,
               shadowOpacity: 0,
               borderBottomWidth: 0,
             },
-            title: "SPARK",
-            headerShown: false,
+            title: "Login With",
+            // headerShown: false,
             headerTitleAlign: "center",
           }}
         />
         <Stack.Screen
+          name="Connect"
+          component={Connect}
+          options={{
+            headerStyle: {
+              // elevation: 0,
+              shadowOpacity: 0,
+              borderBottomWidth: 0,
+            },
+            title: "Connect With",
+            headerShown: false,
+
+            headerTitleAlign: "center",
+          }}
+        />
+        {/* <Stack.Screen
           name="profileInfo"
           component={profileInfo}
           options={{
@@ -46,13 +62,9 @@ export default function App() {
             // headerShown: false,
             headerTitleAlign: "center",
           }}
-        />
-        <Stack.Screen
-          name="Home"
-          component={Splash}
-          options={{ headerShown: false }}
-        />
-        <Stack.Screen
+        /> */}
+
+        {/* <Stack.Screen
           name="profileSetUp"
           component={profileSetUp}
           options={{
@@ -64,6 +76,27 @@ export default function App() {
             title: "Profile Setup",
             headerTitleAlign: "center",
           }}
+        /> */}
+
+        <Stack.Screen
+          name="deliveryMadeEasy"
+          component={DeliveryMadeEasy_Screen}
+          options={{
+            headerStyle: {
+              elevation: 0,
+              shadowOpacity: 0,
+              borderBottomWidth: 0,
+            },
+            title: "SPARK",
+            headerShown: false,
+            headerTitleAlign: "center",
+          }}
+        />
+
+        <Stack.Screen
+          name="Home"
+          component={Splash}
+          options={{ headerShown: false }}
         />
 
         <Stack.Screen

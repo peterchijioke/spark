@@ -10,6 +10,8 @@ import {
 
 export default class DeliveryMadeEasy_Screen extends Component {
   state = {};
+  Loginfunc = () => {};
+  Registerfunc = () => {};
   render() {
     return (
       <View style={Styles.container}>
@@ -22,16 +24,19 @@ export default class DeliveryMadeEasy_Screen extends Component {
           <Text style={[Styles.DTxt, { color: "#b90000" }]}>Easy.</Text>
         </View>
         <View style={Styles.imageView}>
-          <Image source={require("../img/bg.png")} style={{}} />
+          <Image source={require("../img/bg1.png")} style={{}} />
         </View>
         <View style={Styles.btnView}>
           <View style={Styles.loginView}>
-            <TouchableOpacity style={Styles.Btn}>
+            <TouchableOpacity onPress={this.Loginfunc} style={Styles.Btn}>
               <Text style={Styles.btnText}>LOGIN</Text>
             </TouchableOpacity>
           </View>
           <View>
-            <TouchableOpacity style={[Styles.Btn, Styles.bg]}>
+            <TouchableOpacity
+              onPress={this.RegisterFunc}
+              style={[Styles.Btn, Styles.bg]}
+            >
               <View>
                 <Text style={[Styles.btnText, Styles.txt]}>SIGNUP</Text>
               </View>
@@ -48,7 +53,7 @@ const Styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     height: Dimensions.get("window").height,
-    backgroundColor: "#f1f1f1",
+    backgroundColor: "#f7f7f7",
   },
   sparkTxt: {
     fontSize: 30,
