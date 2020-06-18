@@ -82,27 +82,28 @@ export default class DrawerActivity extends Component {
           /> */}
             {/* btn Area */}
             <View style={styles.btn_view}>
+              {/* Delivery btn */}
               <View style={styles.btn_inner}>
                 <TouchableOpacity style={[styles.btn]}>
                   <View>
                     <Image
-                      source={require("../img/manOnBick.jpeg")}
-                      style={{ height: 90, width: 90 }}
+                      source={require("../img/man.png")}
+                      style={{ height: 60, width: 90 }}
                     />
-                    {/* <Text>peter</Text> */}
+                    <Text style={styles.btn_text}>Delivery</Text>
                   </View>
                 </TouchableOpacity>
               </View>
-              {/*  */}
+              {/* Get a ride btn */}
               <View style={styles.btn_inner}>
                 <TouchableOpacity style={[styles.btn]}>
                   <View>
                     <Image
-                      source={require("../img/girlBick.png")}
-                      style={{ height: 90, width: 90 }}
+                      source={require("../img/car.png")}
+                      style={{ height: 60, width: 90 }}
                     />
 
-                    {/* <Text>peter</Text> */}
+                    <Text style={styles.btn_text}>Get a Ride</Text>
                   </View>
                 </TouchableOpacity>
               </View>
@@ -124,9 +125,6 @@ export default class DrawerActivity extends Component {
 }
 
 const styles = StyleSheet.create({
-  container: {
-    // flex: 1,
-  },
   btn_view: {
     flexDirection: "row",
     backgroundColor: "#123",
@@ -134,11 +132,13 @@ const styles = StyleSheet.create({
     padding: 5,
     flexWrap: "wrap",
   },
-  btn_inner: { width: "50%", height: "60%", padding: 5 },
+  btn_inner: { width: "50%", height: "60%", padding: 15 },
   btn: {
     alignItems: "center",
-    justifyContent: "center",
+    // justifyContent: "center",
     flex: 1,
     backgroundColor: "#fff",
+    borderRadius: 25,
   },
+  btn_text: { color: "#717171", textAlign: "center" },
 });
