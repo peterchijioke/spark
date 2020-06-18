@@ -88,7 +88,7 @@ export default class DrawerActivity extends Component {
                   <View>
                     <Image
                       source={require("../img/man.png")}
-                      style={{ height: 60, width: 90 }}
+                      style={{ height: 60, width: 70 }}
                     />
                     <Text style={styles.btn_text}>Delivery</Text>
                   </View>
