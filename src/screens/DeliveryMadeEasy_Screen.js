@@ -7,43 +7,51 @@ import {
   TouchableOpacity,
   Dimensions,
 } from "react-native";
-
+import { Footer, Container } from "native-base";
+import {
+  widthPercentageToDP as wp,
+  heightPercentageToDP as hp,
+} from "react-native-responsive-screen";
 export default class DeliveryMadeEasy_Screen extends Component {
   state = {};
   Loginfunc = () => {};
   Registerfunc = () => {};
   render() {
     return (
-      <View style={Styles.container}>
-        <View style={{ marginTop: 40 }}>
-          <Text style={Styles.sparkTxt}>SPARK</Text>
-        </View>
-        <View style={{ marginTop: 40, flexDirection: "row" }}>
-          <Text style={[Styles.DTxt, { color: "#ef8f8f" }]}>Delivery.</Text>
-          <Text style={[Styles.DTxt, { color: "#e92d2d" }]}> Made.</Text>
-          <Text style={[Styles.DTxt, { color: "#b90000" }]}>Easy.</Text>
-        </View>
-        <View style={Styles.imageView}>
-          <Image source={require("../img/bg1.png")} style={{}} />
-        </View>
-        <View style={Styles.btnView}>
-          <View style={Styles.loginView}>
-            <TouchableOpacity onPress={this.Loginfunc} style={Styles.Btn}>
-              <Text style={Styles.btnText}>LOGIN</Text>
-            </TouchableOpacity>
+      <Container>
+        <View style={Styles.container}>
+          <View style={{ marginTop: 40 }}>
+            <Text style={Styles.sparkTxt}>SPARK</Text>
           </View>
-          <View>
-            <TouchableOpacity
-              onPress={this.RegisterFunc}
-              style={[Styles.Btn, Styles.bg]}
-            >
-              <View>
-                <Text style={[Styles.btnText, Styles.txt]}>SIGNUP</Text>
-              </View>
-            </TouchableOpacity>
+          <View style={{ marginTop: 40, flexDirection: "row" }}>
+            <Text style={[Styles.DTxt, { color: "#ef8f8f" }]}>Delivery.</Text>
+            <Text style={[Styles.DTxt, { color: "#e92d2d" }]}> Made.</Text>
+            <Text style={[Styles.DTxt, { color: "#b90000" }]}>Easy.</Text>
           </View>
+          <View style={Styles.imageView}>
+            <Image source={require("../img/bg1.png")} style={{}} />
+          </View>
+          {/* <Footer style={{ flexDirection: "column" }}> */}
+          <View style={Styles.btnView}>
+            <View style={Styles.loginView}>
+              <TouchableOpacity onPress={this.Loginfunc} style={Styles.Btn}>
+                <Text style={Styles.btnText}>LOGIN</Text>
+              </TouchableOpacity>
+            </View>
+            <View>
+              <TouchableOpacity
+                onPress={this.RegisterFunc}
+                style={[Styles.Btn, Styles.bg]}
+              >
+                <View>
+                  <Text style={[Styles.btnText, Styles.txt]}>SIGNUP</Text>
+                </View>
+              </TouchableOpacity>
+            </View>
+          </View>
+          {/* </Footer> */}
         </View>
-      </View>
+      </Container>
     );
   }
 }
@@ -61,8 +69,8 @@ const Styles = StyleSheet.create({
     color: "#707070",
   },
   imageView: { flexGrow: 1 },
-  btnView: {},
-  loginView: { marginBottom: 20 },
+  // btnView: {},
+  loginView: { marginBottom: hp("3%") },
 
   Btn: {
     backgroundColor: "#CE3737",

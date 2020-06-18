@@ -69,12 +69,12 @@ export default class Splash extends Component {
             style={{ opacity: this.state.logoText, marginTop: 20 }}
           >
             <Text style={styles.text}>
-              <Text style={styles.textinone}>Transport and Delivers </Text>
-              like spark
+              <Text style={styles.textinone}>Delivery. </Text>
+              <Text>Made.</Text> <Text>Easy.</Text>
             </Text>
           </Animated.View>
         </View>
-        <Content>{this.spinnerInitFunction()}</Content>
+        {/* <Content>{this.spinnerInitFunction()}</Content> */}
       </View>
     );
   }
@@ -83,7 +83,7 @@ export default class Splash extends Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#333945",
+    backgroundColor: "#e92d2d",
   },
   logo: {
     flexGrow: 1,

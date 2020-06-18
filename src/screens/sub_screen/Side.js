@@ -43,8 +43,8 @@ export default class SideBar extends Component {
         <Button style={styles.btn} block danger>
           <Text> Danger </Text>
         </Button>
-        <Button style={styles.btn} block dark>
-          <Text> Dark </Text>
+        <Button style={[styles.btn]} block dark>
+          <Text style={{ color: "#fff" }}> Dark </Text>
         </Button>
       </ScrollView>
     );
@@ -54,7 +54,7 @@ export default class SideBar extends Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#000",
+    backgroundColor: "#fafafa",
     marginRight: 5,
   },
   text: { color: "#fff", marginTop: 5, marginLeft: 10 },

@@ -1,4 +1,5 @@
 import React from "react";
+import { inject, observer } from "mobx-react";
 import {
   StyleSheet,
   Text,
@@ -13,7 +14,7 @@ import {
   heightPercentageToDP as hp,
 } from "react-native-responsive-screen";
 
-const loginWithEmailForm = () => {
+const loginWithEmailForm = (props) => {
   const moveToConnectWith = () => {
     // Alert.prompt("peter");
   };
@@ -60,7 +61,7 @@ const loginWithEmailForm = () => {
   );
 };
 
-export default loginWithEmailForm;
+export default inject("store")(observer(loginWithEmailForm));
 
 const Styles = StyleSheet.create({
   container: { flex: 1, marginTop: 80 },
