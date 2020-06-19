@@ -6,7 +6,6 @@ import {
   FlatList,
   TouchableOpacity,
   Image,
-  Dimensions,
 } from "react-native";
 
 const BtnScreen = () => {

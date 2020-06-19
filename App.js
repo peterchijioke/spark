@@ -10,29 +10,28 @@ import Connect from "./src/screens/Connect";
 import LoginPage from "./src/screens/LoginPage";
 import UserDashboard from "./src/screens/UserDashboard";
 import HomeScreen from "./src/screens/HomeScreen";
+import DeliveryLocation from "./src/screens/DeliveryLocation";
 
 export default class App extends Component {
-  state = {};
-
-  async componentWillMount() {
-    await Font.loadAsync({
-      Roboto: require("native-base/Fonts/Roboto.ttf"),
-      Roboto_medium: require("native-base/Fonts/Roboto_medium.ttf"),
-    });
-    this.setState({ loading: false });
-  }
+  // async UNSAFE_componentWillMount() {
+  //   await Font.loadAsync({
+  //     Roboto: require("native-base/Fonts/Roboto.ttf"),
+  //     Roboto_medium: require("native-base/Fonts/Roboto_medium.ttf"),
+  //   });
+  // }
 
   render() {
     const Stack = createStackNavigator();
 
     return (
       <NavigationContainer>
-        <Stack.Navigator
-          screenOptions={{
-            headerTitleStyle: { fontWeight: "bold" },
-          }}
-        >
+        <Stack.Navigator>
           {/* start */}
+          <Stack.Screen
+            name="Delivery Location"
+            component={DeliveryLocation}
+            options={{ headerShown: false }}
+          />
           <Stack.Screen
             name="UserDashboard"
             component={UserDashboard}

@@ -17,14 +17,23 @@ import {
 } from "react-native-responsive-screen";
 // import * as Font from "expo-font";
 // import { AppLoading, Root } from "expo";
+import * as Font from "expo-font";
 
 import SideBar from "./sub_screen/Side";
 import { statusBarColor, stauBarColorDash } from "../screens/sub_screen/Colors";
 import BtnScreen from "./UserDashboard_sub_screens/BtnScreen";
 import Footer_screen from "./UserDashboard_sub_screens/Footer_screen";
 import { Dimensions } from "react-native";
+import HeaderMain from "./sub_screen/HeaderMain";
 
 export default class DrawerActivity extends Component {
+  async UNSAFE_componentWillMount() {
+    await Font.loadAsync({
+      Roboto: require("native-base/Fonts/Roboto.ttf"),
+      Roboto_medium: require("native-base/Fonts/Roboto_medium.ttf"),
+    });
+  }
+
   closeDrawer = () => {
     this.drawer._root.close();
   };
@@ -49,25 +58,25 @@ export default class DrawerActivity extends Component {
             }}
           >
             <Header
-              style={{ backgroundColor: "#f1f1f1" }}
+              style={{ backgroundColor: "#b90000" }}
               androidStatusBarColor={statusBarColor}
               iosBarStyle="light-content"
             >
               <Left>
                 <Button transparent onPress={this.openDrawer}>
-                  <Icon name="menu" style={{ color: "#717171" }} />
+                  <Icon name="menu" />
                 </Button>
               </Left>
               <Body>
                 <Title
-                  style={{ color: "#b90000", fontSize: 27, fontWeight: "bold" }}
+                  style={{ color: "#fff", fontSize: 27, fontWeight: "bold" }}
                 >
-                  Spark
+                  Dashboard
                 </Title>
               </Body>
               <Right>
                 <Button transparent>
-                  <Icon name="camera" />
+                  <Icon name="home" />
                 </Button>
               </Right>
             </Header>

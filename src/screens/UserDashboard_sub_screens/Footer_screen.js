@@ -1,5 +1,16 @@
 import React from "react";
 import { View, Text, TouchableOpacity, Image, StyleSheet } from "react-native";
+import {
+  Drawer,
+  Container,
+  Header,
+  Left,
+  Body,
+  Right,
+  Button,
+  Icon,
+  Title,
+} from "native-base";
 
 const Footer_screen = () => {
   return (
@@ -18,6 +29,8 @@ const Footer_screen = () => {
       <View style={styles.safeSavedView}>
         <Text style={styles.txt}>Choose a saved place</Text>
         <View style={[styles.savedPlace, { marginTop: 20 }]}>
+          {/* <Icon name="home" style={{ color: "#b90000" }} /> */}
+
           <Image
             source={require("../../img/home.png")}
             style={styles.fowardArrowImageInner}
