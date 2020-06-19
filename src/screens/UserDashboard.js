@@ -1,14 +1,5 @@
 import React, { Component } from "react";
 import {
-  Text,
-  View,
-  StyleSheet,
-  FlatList,
-  TouchableOpacity,
-  Image,
-  Dimensions,
-} from "react-native";
-import {
   Drawer,
   Container,
   Header,
@@ -18,8 +9,6 @@ import {
   Button,
   Icon,
   Title,
-  Footer,
-  Content,
 } from "native-base";
 
 import {
@@ -28,10 +17,12 @@ import {
 } from "react-native-responsive-screen";
 // import * as Font from "expo-font";
 // import { AppLoading, Root } from "expo";
-// import CardImge from "./sub_screen/CardImage";
-// import FooterBadge from "./sub_screen/FooterBadge";
+
 import SideBar from "./sub_screen/Side";
 import { statusBarColor, stauBarColorDash } from "../screens/sub_screen/Colors";
+import BtnScreen from "./UserDashboard_sub_screens/BtnScreen";
+import Footer_screen from "./UserDashboard_sub_screens/Footer_screen";
+import { Dimensions } from "react-native";
 
 export default class DrawerActivity extends Component {
   closeDrawer = () => {
@@ -51,11 +42,16 @@ export default class DrawerActivity extends Component {
           content={<SideBar navigator={this.navigator} />}
           onClose={() => this.closeDrawer()}
         >
-          <Container>
+          <Container
+            style={{
+              backgroundColor: "#f1f1f1",
+              height: Dimensions.get("screen").height,
+            }}
+          >
             <Header
               style={{ backgroundColor: "#f1f1f1" }}
-              androidStatusBarColor={stauBarColorDash}
-              iosBarStyle="dark-content"
+              androidStatusBarColor={statusBarColor}
+              iosBarStyle="light-content"
             >
               <Left>
                 <Button transparent onPress={this.openDrawer}>
@@ -81,64 +77,13 @@ export default class DrawerActivity extends Component {
             renderItem={({ item }) => <CardImge />}
           /> */}
             {/* btn Area */}
-            <View style={styles.btn_view}>
-              {/* Delivery btn */}
-              <View style={styles.btn_inner}>
-                <TouchableOpacity style={[styles.btn]}>
-                  <View>
-                    <Image
-                      source={require("../img/man.png")}
-                      style={{ height: 60, width: 70 }}
-                    />
-                    <Text style={styles.btn_text}>Delivery</Text>
-                  </View>
-                </TouchableOpacity>
-              </View>
-              {/* Get a ride btn */}
-              <View style={styles.btn_inner}>
-                <TouchableOpacity style={[styles.btn]}>
-                  <View>
-                    <Image
-                      source={require("../img/car.png")}
-                      style={{ height: 60, width: 90 }}
-                    />
-
-                    <Text style={styles.btn_text}>Get a Ride</Text>
-                  </View>
-                </TouchableOpacity>
-              </View>
-            </View>
+            <BtnScreen />
           </Container>
           {/* text Area */}
-          <Footer style={{ flexDirection: "column" }}>
-            <Content>
-              <Text>peter1</Text>
-              <Text>peter2</Text>
-              <Text>peter3</Text>
-            </Content>
-          </Footer>
+          <Footer_screen />
           {/* <FooterBadge /> */}
         </Drawer>
       </React.Fragment>
     );
   }
 }
-
-const styles = StyleSheet.create({
-  btn_view: {
-    flexDirection: "row",
-    backgroundColor: "#123",
-    height: "45%",
-    padding: 5,
-    flexWrap: "wrap",
-  },
-  btn_inner: { width: "50%", height: "60%", padding: 15 },
-  btn: {
-    alignItems: "center",
-    // justifyContent: "center",
-    flex: 1,
-    backgroundColor: "#fff",
-    borderRadius: 25,
-  },
-  btn_text: { color: "#717171", textAlign: "center" },
-});

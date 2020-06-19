@@ -16,8 +16,7 @@ class Store {
   // action to add images to favorites
   addToFavorite = (image) => {
     this.favorites.push(image);
-    this.data = null;
-    this.text = '';
+    
   };
 }
 
