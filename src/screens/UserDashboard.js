@@ -58,7 +58,7 @@ export default class DrawerActivity extends Component {
             }}
           >
             <Header
-              style={{ backgroundColor: "#b90000" }}
+              style={{ backgroundColor: "#e92d2d" }}
               androidStatusBarColor={statusBarColor}
               iosBarStyle="light-content"
             >
