@@ -24,16 +24,8 @@ import { statusBarColor, stauBarColorDash } from "../screens/sub_screen/Colors";
 import BtnScreen from "./UserDashboard_sub_screens/BtnScreen";
 import Footer_screen from "./UserDashboard_sub_screens/Footer_screen";
 import { Dimensions } from "react-native";
-import HeaderMain from "./sub_screen/HeaderMain";
 
 export default class DrawerActivity extends Component {
-  async UNSAFE_componentWillMount() {
-    await Font.loadAsync({
-      Roboto: require("native-base/Fonts/Roboto.ttf"),
-      Roboto_medium: require("native-base/Fonts/Roboto_medium.ttf"),
-    });
-  }
-
   closeDrawer = () => {
     this.drawer._root.close();
   };

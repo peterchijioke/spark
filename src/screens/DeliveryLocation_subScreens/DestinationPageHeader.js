@@ -14,7 +14,7 @@ import {
 
 import { AntDesign } from "react-native-vector-icons";
 import { statusBarColor, stauBarColorDash } from "../sub_screen/Colors";
-import UserDashboard from "../../screens/UserDashboard";
+import UserDashboard from "../UserDashboard";
 
 const HeaderMain = () => {
   return (
@@ -31,9 +31,9 @@ const HeaderMain = () => {
         </Button>
       </Left>
       <Body>
-        <Title
-          style={{ color: "#fff", fontSize: 27, fontWeight: "bold" }}
-        ></Title>
+        <Title style={{ color: "#fff", fontSize: 22, fontWeight: "600" }}>
+          Destination
+        </Title>
       </Body>
       <Right></Right>
     </Header>
