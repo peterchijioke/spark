@@ -4,6 +4,7 @@ import { AppLoading } from "expo";
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 import * as Font from "expo-font";
+import * as SplashScreen from "expo-splash-screen";
 import Splash from "./src/screens/Splash";
 import PhoneNumberPage_signup from "./src/screens/PhoneNumberPage_signup";
 import DeliveryMadeEasy_Screen from "./src/screens/DeliveryMadeEasy_Screen";
@@ -14,7 +15,28 @@ import DeliveryLocation from "./src/screens/DeliveryLocation";
 import MakeRequestPage from "./src/screens/sub_screen/MakeRequestPage";
 
 export default class App extends Component {
-  state = { loading: true };
+  state = { loading: true, appIsReady: false };
+  async UNSAFE_componentDidMount() {
+    // Prevent native splash screen from autohiding
+    try {
+      await SplashScreen.preventAutoHideAsync();
+    } catch (e) {
+      console.warn(e);
+    }
+    this.prepareResources();
+  }
+
+  /**
+   * Method that serves to load resources and make API calls
+   */
+  prepareResources = async () => {
+    await performAPICalls();
+    await downloadAssets();
+
+    this.setState({ appIsReady: true }, async () => {
+      await SplashScreen.hideAsync();
+    });
+  };
 
   UNSAFE_componentWillMount = async () => {
     try {
@@ -31,8 +53,8 @@ export default class App extends Component {
   render() {
     const Stack = createStackNavigator();
 
-    if (this.state.loading) {
-      return <AppLoading />;
+    if (this.state.loading || !this.state.appIsReady) {
+      return <Splash />;
     } else {
       return (
         <NavigationContainer>
@@ -125,3 +147,7 @@ export default class App extends Component {
     }
   }
 }
+
+// Put any code you need to prepare your app in these functions
+async function performAPICalls() {}
+async function downloadAssets() {}

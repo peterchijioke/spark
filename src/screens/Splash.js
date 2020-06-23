@@ -61,7 +61,7 @@ export default class Splash extends Component {
           >
             <Image
               style={{ width: 165, height: 56 }}
-              source={require("../img/app_logo.png")}
+              source={require("../img/logo.png")}
             />
           </Animated.View>
 
