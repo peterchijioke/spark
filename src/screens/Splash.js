@@ -6,8 +6,10 @@ import {
   StyleSheet,
   Image,
   Animated,
+  StatusBar,
 } from "react-native";
 import { Content, Spinner } from "native-base";
+import { AppLoading } from "expo";
 
 export default class Splash extends Component {
   state = {
@@ -49,6 +51,7 @@ export default class Splash extends Component {
   render() {
     return (
       <View style={styles.container}>
+        <StatusBar barStyle="light-content" backgroundColor="#b90000" />
         <View style={styles.logo}>
           <Animated.View
             style={{
@@ -60,7 +63,7 @@ export default class Splash extends Component {
             }}
           >
             <Image
-              style={{ width: 165, height: 56 }}
+              style={{ width: 189, height: 56 }}
               source={require("../img/logo.png")}
             />
           </Animated.View>
@@ -69,12 +72,13 @@ export default class Splash extends Component {
             style={{ opacity: this.state.logoText, marginTop: 20 }}
           >
             <Text style={styles.text}>
-              <Text style={styles.textinone}>Delivery. </Text>
-              <Text>Made.</Text> <Text>Easy.</Text>
+              <Text style={{ color: "#b90000" }}>Delivery. </Text>
+              <Text style={{ color: "#e92d2d" }}>Made. </Text>
+              <Text style={{ color: "#ef8f8f" }}>Easy.</Text>
             </Text>
           </Animated.View>
         </View>
-        {/* <Content>{this.spinnerInitFunction()}</Content> */}
+        <View>{this.spinnerInitFunction()}</View>
       </View>
     );
   }
@@ -83,22 +87,22 @@ export default class Splash extends Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#e92d2d",
+    backgroundColor: "#fff",
   },
   logo: {
     flexGrow: 1,
     justifyContent: "center",
     alignItems: "center",
-    margin: 5,
+    // margin: ,
   },
 
   text: {
-    color: "#f7a803",
-    fontSize: 20,
+    margin: 0,
+    fontSize: 10,
     textAlign: "center",
-    textDecorationStyle: "dotted",
+    // textDecorationStyle: "dotted",
   },
-  textinone: { color: "#fff" },
+  textinone: { color: "#e92d2d" },
 });
 
 AppRegistry.registerComponent("Splash", () => Splash);

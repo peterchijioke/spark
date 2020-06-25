@@ -1,4 +1,5 @@
-import React from "react";
+import React, { Component } from "react";
+
 import {
   StyleSheet,
   Text,
@@ -7,39 +8,72 @@ import {
   ImageBackground,
   Dimensions,
 } from "react-native";
+import MapView from "react-native-maps";
+import * as Location from "expo-location";
+import * as Permissions from "expo-permissions";
+import { DestinationButton } from "./DestinationButton";
+import { CurrentLocationButton } from "./CurrentLocationButton";
 
-const GoogleMap = () => {
-  return (
-    <ImageBackground
-      source={require("../../img/mapImage.jpeg")}
-      style={{ width: Dimensions.get("screen").width, height: 550 }}
-    >
-      <TouchableOpacity style={styles.btn}>
-        <Text style={styles.txtInnerBtn}>Confirm</Text>
-      </TouchableOpacity>
-    </ImageBackground>
-  );
-};
+export default class GoogleMap extends Component {
+  state = { region: null };
 
-export default GoogleMap;
+  UNSAFE_componentWillMount = () => {
+    this._getLocationAcync();
+  };
+  _getLocationAcync = async () => {
+    try {
+      let { status } = await Location.requestPermissionsAsync();
+      // await Permissions.askAsync(Permissions.LOCATION);
+      //
+      if (status !== "granted") {
+        setErrorMsg("Permission to access location was denied");
+      }
+      let location = await Location.getCurrentPositionAsync({
+        enabledHighAccurecy: true,
+      });
+
+      let region = {
+        latitude: location.coords.latitude,
+        longitude: location.coords.longitude,
+        longitudeDelta: 0.045,
+        latitudeDelta: 0.045,
+      };
+      this.setState({ region });
+    } catch (e) {
+      console.log("Error =" + e);
+    }
+  };
+  render() {
+    return (
+      <View style={styles.mapView}>
+        <DestinationButton />
+        <CurrentLocationButton />
+        <MapView
+          initialRegion={this.state.region}
+          showsUserLocation={true}
+          followsUserLocation={true}
+          showsCompass={true}
+          showsScale={true}
+          showsBuildings={true}
+          zoomTapEnabled={true}
+          rotateEnabled={false}
+          rotateEnabled={false}
+          zoomEnabled={true}
+          style={styles.map}
+        ></MapView>
+      </View>
+    );
+  }
+}
 
 const styles = StyleSheet.create({
-  btn: {
+  mapView: {
+    flex: 1,
     backgroundColor: "#fff",
-    width: 80,
-    height: 30,
-    borderRadius: 25,
-    justifyContent: "center",
-    alignSelf: "center",
-    alignItems: "center",
-    position: "absolute",
-    elevation: 5,
-    top: "10%",
-    // borderWidth: 1,
   },
-  txtInnerBtn: {
-    color: "#b90000",
-    fontSize: 16,
-    textAlign: "center",
+  map: {
+    flex: 1,
+    height: 200,
+    // marginTop: ,
   },
 });

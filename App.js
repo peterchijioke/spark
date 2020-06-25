@@ -12,11 +12,11 @@ import Connect from "./src/screens/Connect";
 import LoginPage from "./src/screens/LoginPage";
 import UserDashboard from "./src/screens/UserDashboard";
 import DeliveryLocation from "./src/screens/DeliveryLocation";
-import MakeRequestPage from "./src/screens/sub_screen/MakeRequestPage";
+import MakeRequestPage from "./src/screens/MakeRequestPage";
 
 export default class App extends Component {
   state = { loading: true, appIsReady: false };
-  async UNSAFE_componentDidMount() {
+  async componentDidMount() {
     // Prevent native splash screen from autohiding
     try {
       await SplashScreen.preventAutoHideAsync();
@@ -46,7 +46,7 @@ export default class App extends Component {
       });
       this.setState({ loading: false });
     } catch (error) {
-      console.log("did not load");
+      console.log("Error occured = " + error);
     }
   };
 
