@@ -43,22 +43,45 @@ export default class GoogleMap extends Component {
       console.log("Error =" + e);
     }
   };
+
+  centerMap = () => {
+    const {
+      latitude,
+      longitude,
+      longitudeDelta,
+      latitudeDelta,
+    } = this.state.region;
+
+    this.map.animateToRegion({
+      latitude,
+      longitude,
+      longitudeDelta,
+      latitudeDelta,
+    });
+  };
   render() {
     return (
       <View style={styles.mapView}>
         <DestinationButton />
-        <CurrentLocationButton />
+        <CurrentLocationButton
+          cb={() => {
+            this.centerMap();
+          }}
+        />
         <MapView
           initialRegion={this.state.region}
           showsUserLocation={true}
           followsUserLocation={true}
           showsCompass={true}
-          showsScale={true}
+          // showsScale={true}
           showsBuildings={true}
           zoomTapEnabled={true}
           rotateEnabled={false}
           rotateEnabled={false}
           zoomEnabled={true}
+          ref={(map) => {
+            this.map = map;
+          }}
           style={styles.map}
         ></MapView>
       </View>
@@ -69,7 +92,9 @@ export default class GoogleMap extends Component {
 const styles = StyleSheet.create({
   mapView: {
     flex: 1,
+    flexGrow: 1,
     backgroundColor: "#fff",
+    height: 350,
   },
   map: {
     flex: 1,

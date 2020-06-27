@@ -6,6 +6,10 @@ const WIDTH = Dimensions.get("window").width;
 const HEIGHT = Dimensions.get("window").height;
 
 export const CurrentLocationButton = (props) => {
+  const cb = props.cb
+    ? props.cb
+    : () => console.log("callback function not passed to currentLocaionButton");
+
   // const bottom = props.bottom ? props.bottom : 65;
   return (
     <View style={[styles.container, { top: HEIGHT - 280 }]}>
@@ -13,7 +17,9 @@ export const CurrentLocationButton = (props) => {
         name="my-location"
         color="#000000"
         size={25}
-        onPress={() => {}}
+        onPress={() => {
+          cb();
+        }}
       />
     </View>
   );

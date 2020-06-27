@@ -1,17 +1,31 @@
 import React from "react";
-import { View, Text, StyleSheet, Dimensions, StatusBar } from "react-native";
+import {
+  View,
+  Text,
+  StyleSheet,
+  Dimensions,
+  StatusBar,
+  FlatList,
+} from "react-native";
 import HeaderGlobal from "./sub_screen/HeaderGlobal";
 import GoogleMap from "./MakeRequestSubScreen/GoogleMap";
-
-const MakeRequestPage = () => {
+import CarChoice from "./MakeRequestSubScreen/CarChoice";
+const WIDTH = Dimensions.get("window").width;
+const HEIGHT = Dimensions.get("window").height;
+const MakeRequestPage = (props) => {
   return (
-    <View>
-      {/* <HeaderGlobal /> */}
-      <StatusBar barStyle="light-content" backgroundColor="#b90000" />
-      <View style={styles.container}>
-        <GoogleMap />
+    <React.Fragment>
+      <View>
+        {/* <HeaderGlobal /> */}
+        <StatusBar barStyle="light-content" backgroundColor="#b90000" />
+        <View style={styles.container}>
+          <GoogleMap />
+        </View>
       </View>
-    </View>
+      <View style={styles.carChoice}>
+        <CarChoice />
+      </View>
+    </React.Fragment>
   );
 };
 
@@ -22,5 +36,9 @@ const styles = StyleSheet.create({
     backgroundColor: "#f1f1f1",
     height: 500,
   },
-  mapView: { backgroundColor: "#b90000" },
+  carChoice: {
+    backgroundColor: "#b90000",
+    height: HEIGHT - 500,
+    marginBottom: 0,
+  },
 });
