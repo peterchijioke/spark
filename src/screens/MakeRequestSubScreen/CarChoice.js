@@ -35,7 +35,7 @@ const DATA = [
   {
     id: "58694a0f-3da1-471f-bd96-145571e29d72",
     title: "Bus",
-    ImageUir: require("../../img/truckCar.png"),
+    ImageUir: require("../../img/bus.png"),
   },
   {
     id: "58694a0f-3gts-471f-joy2-145571e29d72",
