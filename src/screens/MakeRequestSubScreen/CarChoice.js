@@ -30,7 +30,7 @@ const DATA = [
   {
     id: "3ac68afc-c605-48d3-a4f8-fbd91aa97f63",
     title: "Car",
-    ImageUir: require("../../img/carChoicep.png"),
+    ImageUir: require("../../img/carChoiceP.png"),
   },
   {
     id: "58694a0f-3da1-471f-bd96-145571e29d72",
@@ -39,7 +39,7 @@ const DATA = [
   },
   {
     id: "58694a0f-3gts-471f-joy2-145571e29d72",
-    ImageUir: require("../../img/truckCar.png"),
+    ImageUir: require("../../img/truckChoice.png"),
     title: "Truck",
   },
 ];
@@ -47,31 +47,37 @@ const DATA = [
 const CarChoice = () => {
   return (
     <React.Fragment>
-      <View>
+      <View style={{ flex: 1, backgroundColor: "#f1f1f1" }}>
         <FlatList
           horizontal
           data={DATA}
           renderItem={({ item }) => (
-            <Card style={styles.card}>
-              <TouchableOpacity>
-                <CardItem>
-                  <Body>
-                    <Image
-                      source={item.ImageUir}
-                      style={{ height: 50, width: 130 }}
-                      resizeMode="cover"
-                    />
-                  </Body>
-                </CardItem>
-                <Text style={{ textAlign: "center", fontSize: 16 }}>
-                  {item.title}
-                </Text>
-              </TouchableOpacity>
-            </Card>
+            <TouchableOpacity style={styles.card}>
+              <Image
+                source={item.ImageUir}
+                style={{
+                  height: HEIGHT - 680,
+                  width: WIDTH - 230,
+                  borderRadius: 10,
+                }}
+                resizeMode="cover"
+              />
+
+              <Text
+                style={{ textAlign: "center", fontSize: 16, color: "#ccc" }}
+              >
+                {item.title}
+              </Text>
+            </TouchableOpacity>
           )}
           keyExtractor={(item) => item.id}
           // extraData={selected}
         />
+      </View>
+      <View style={styles.btnView}>
+        <TouchableOpacity style={styles.btn}>
+          <Text style={{ fontSize: 20, color: "#b90000" }}>Make Request</Text>
+        </TouchableOpacity>
       </View>
     </React.Fragment>
   );
@@ -82,5 +88,36 @@ const HEIGHT = Dimensions.get("window").height;
 const WIDTH = Dimensions.get("window").width;
 
 const styles = StyleSheet.create({
-  card: { width: WIDTH - 650, height: HEIGHT - 620 },
+  card: {
+    width: WIDTH - 250,
+    height: HEIGHT - 630,
+    alignItems: "center",
+    justifyContent: "center",
+    borderRadius: 28,
+    marginTop: 10,
+    backgroundColor: "#ffffff",
+    elevation: 7,
+    shadowRadius: 5,
+    // shadowOpacity: 1.0,
+    margin: 5,
+  },
+  btnView: {
+    backgroundColor: "#f1f1f1",
+    flex: 1,
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  btn: {
+    backgroundColor: "#ffffff",
+    width: "70%",
+    height: "50%",
+    borderWidth: 1,
+    borderColor: "#b90000",
+    elevation: 7,
+    borderRadius: 28,
+    alignItems: "center",
+    justifyContent: "center",
+    shadowRadius: 5,
+    shadowOpacity: 1.0,
+  },
 });
