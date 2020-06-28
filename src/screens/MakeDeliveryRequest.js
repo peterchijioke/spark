@@ -7,7 +7,6 @@ import {
   StatusBar,
   FlatList,
 } from "react-native";
-import HeaderGlobal from "./sub_screen/HeaderGlobal";
 import GoogleMap from "./MakeRequestSubScreen/GoogleMap";
 import CarChoice from "./MakeRequestSubScreen/CarChoice";
 const WIDTH = Dimensions.get("window").width;
