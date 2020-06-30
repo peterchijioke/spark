@@ -12,7 +12,8 @@ import Connect from "./src/screens/Connect";
 import LoginPage from "./src/screens/LoginPage";
 import UserDashboard from "./src/screens/UserDashboard";
 import DeliveryLocation from "./src/screens/DeliveryLocation";
-import MakeRequestPage from "./src/screens/MakeRequestPage";
+import MakeDeliveryRequest from "./src/screens/MakeDeliveryRequest";
+import PickAcab from "./src/screens/PickAcab";
 
 export default class App extends Component {
   state = { loading: true, appIsReady: false };
@@ -61,8 +62,13 @@ export default class App extends Component {
           <Stack.Navigator>
             {/* start */}
             <Stack.Screen
+              name="Pick a cab"
+              component={PickAcab}
+              options={{ headerShown: false }}
+            />
+            <Stack.Screen
               name="Make Request"
-              component={MakeRequestPage}
+              component={MakeDeliveryRequest}
               options={{ headerShown: false }}
             />
 

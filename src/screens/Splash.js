@@ -7,8 +7,9 @@ import {
   Image,
   Animated,
   StatusBar,
+  ActivityIndicator,
 } from "react-native";
-import { Content, Spinner } from "native-base";
+// import { Content, Spinner } from "native-base";
 import { AppLoading } from "expo";
 
 export default class Splash extends Component {
@@ -78,7 +79,7 @@ export default class Splash extends Component {
             </Text>
           </Animated.View>
         </View>
-        <View>{this.spinnerInitFunction()}</View>
+        <ActivityIndicator size="large" color="#0000ff" />
       </View>
     );
   }
