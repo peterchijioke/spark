@@ -1,87 +1,55 @@
-import React from "react";
+import React, { Component } from "react";
 import {
   StyleSheet,
   Text,
   TouchableOpacity,
   View,
   Dimensions,
+  Picker,
 } from "react-native";
-import RNPickerSelect from "react-native-picker-select";
+import { Entypo } from "react-native-vector-icons";
 
 const WIDTH = Dimensions.get("window").width;
 
-const componentDidMount = () => {
-  // if the component is using the optional `value` prop, the parent
-  // has the abililty to both set the initial value and also update it
-  setTimeout(() => {
-    this.setState({
-      favColor: "red",
-    });
-  }, 1000);
-
-  // parent can also update the `items` prop
-  setTimeout(() => {
-    this.setState({
-      items: this.state.items.concat([{ value: "purple", label: "Purple" }]),
-    });
-  }, 2000);
-};
-
-const WhereTo = () => {
-  const data = {
-    favColor: undefined,
-    items: [
-      {
-        label: "Red",
-        value: "red",
-      },
-      {
-        label: "Orange",
-        value: "orange",
-      },
-      {
-        label: "Blue",
-        value: "blue",
-      },
-    ],
-  };
-  const inputRefs = {};
-  return (
-    <View style={{ flex: 1, backgroundColor: "#123" }}>
-      <TouchableOpacity style={styles.Btn}>
-        <View style={styles.leftCol}>
-          <RNPickerSelect
-            placeholder={{
-              label: "Select a color...",
-              // value: null,
-            }}
-            items={data.items}
-            onValueChange={(value) => {
-              setState({
-                favColor: value,
-              });
-            }}
-            onUpArrow={() => {
-              inputRefs.name.focus();
-            }}
-            onDownArrow={() => {
-              inputRefs.picker2.togglePicker();
-            }}
-            style={styles.input}
-            value={data.favColor}
-            ref={(el) => {
-              inputRefs.picker = el;
-            }}
-            useNativeAndroidPickerStyle={false} //android only
-            hideIcon={true}
+export default class WhereTo extends Component {
+  state = { itemValue: "Now" };
+  render() {
+    return (
+      <View style={styles.Btn}>
+        <TouchableOpacity style={styles.WhereToTextView}>
+          <Entypo
+            name="direction"
+            size={22}
+            color="#b90000"
+            style={{ marginTop: 3, marginRight: 5 }}
           />
+          <Text style={{ fontSize: 18, fontWeight: "bold", color: "#b90000" }}>
+            Where to ?
+          </Text>
+        </TouchableOpacity>
+        <View style={styles.pickerView}>
+          <Picker
+            selectedValue={this.state.itemValue}
+            style={{
+              height: 45,
+              width: 100,
+              color: "#b90000",
+              borderRadius: 25,
+            }}
+            onValueChange={(itemValue, itemIndex) =>
+              this.setState({ itemValue }, () => {
+                console.log(itemValue + "=" + itemIndex);
+              })
+            }
+          >
+            <Picker.Item label="Now" value="Now" />
+            <Picker.Item label="Later" value="Later" />
+          </Picker>
         </View>
-      </TouchableOpacity>
-    </View>
-  );
-};
-
-export default WhereTo;
+      </View>
+    );
+  }
+}
 
 const styles = StyleSheet.create({
   btnView: {
@@ -92,35 +60,36 @@ const styles = StyleSheet.create({
   },
   Btn: {
     zIndex: 9,
-    width: WIDTH - 90,
+    width: WIDTH - 76,
     flexDirection: "row",
     height: 55,
-    borderRadius: 5,
-    backgroundColor: "#fff",
-    alignItems: "center",
+    borderRadius: 28,
+    backgroundColor: "#f1f1f1",
+    justifyContent: "space-between",
     elevation: 7,
-    // shadowColor:'#000000'
+    shadowColor: "#b90000",
     shadowRadius: 5,
     shadowOpacity: 1.0,
+    alignSelf: "center",
+    marginTop: 20,
+    borderWidth: 0.5,
+    borderColor: "#b90000",
   },
-  leftCol: { flex: 1, alignItems: "center" },
-  centerCol: { flex: 4 },
-  RightCol: {
-    flex: 1,
-    borderLeftWidth: 1,
-    borderColor: "#ededed",
-    width: "50%",
+  pickerView: {
+    backgroundColor: "#fff",
+    borderRadius: 25,
+    alignSelf: "flex-end",
+    marginBottom: 5,
+    marginRight: 5,
+    borderColor: "#ccc",
+    borderWidth: 0.5,
   },
-  input: {
-    width: 50,
-    // fontSize: 16,
-    // paddingTop: 13,
-    // paddingHorizontal: 10,
-    // paddingBottom: 12,
-    // borderWidth: 1,
-    // borderColor: "gray",
-    // borderRadius: 4,
-    // backgroundColor: "white",
-    // color: "black",
+  WhereToTextView: {
+    // backgroundColor: "#b90000",
+    width: WIDTH - 200,
+    flexDirection: "row",
+    justifyContent: "center",
+    // marginLeft: ,
+    alignItems: "center",
   },
 });

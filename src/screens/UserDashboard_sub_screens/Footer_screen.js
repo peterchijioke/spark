@@ -1,16 +1,16 @@
 import React from "react";
 import { View, Text, TouchableOpacity, Image, StyleSheet } from "react-native";
-import {
-  Drawer,
-  Container,
-  Header,
-  Left,
-  Body,
-  Right,
-  Button,
-  Icon,
-  Title,
-} from "native-base";
+// import {
+//   Drawer,
+//   Container,
+//   Header,
+//   Left,
+//   Body,
+//   Right,
+//   Button,
+//   Icon,
+//   Title,
+// } from "native-base";
 
 const Footer_screen = () => {
   return (

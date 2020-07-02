@@ -10,7 +10,7 @@ import {
 
 import GoogleMap from "./PickACab/GoogleMap";
 import WhereTo from "./PickACab/WhereTo";
-// import CarChoice from "./MakeRequestSubScreen/CarChoice";
+import SavedPlace from "./PickACab/SavedPlace";
 const WIDTH = Dimensions.get("window").width;
 const HEIGHT = Dimensions.get("window").height;
 
@@ -29,8 +29,9 @@ export default class PickAcab extends Component {
             <GoogleMap />
           </View>
         </View>
-        <View style={styles.carChoice}>
+        <View style={styles.WheretoBtn_SavedPlaceView}>
           <WhereTo />
+          <SavedPlace />
         </View>
       </React.Fragment>
     );
@@ -41,9 +42,9 @@ const styles = StyleSheet.create({
     backgroundColor: "#f1f1f1",
     height: 500,
   },
-  carChoice: {
-    backgroundColor: "#b90000",
-    height: HEIGHT - 500,
+  WheretoBtn_SavedPlaceView: {
+    backgroundColor: "#f1f1f1",
+    height: HEIGHT - 460,
     marginBottom: 0,
   },
 });

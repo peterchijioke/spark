@@ -19,9 +19,9 @@ import UserDashboard from "../UserDashboard";
 const HeaderMain = () => {
   return (
     <Header
-      style={{ backgroundColor: "#e92d2d" }}
+      style={{ backgroundColor: "#e92d2d", marginTop: 30 }}
       androidStatusBarColor={statusBarColor}
-      iosBarStyle="light-content"
+      // iosBarStyle="light-content"
     >
       <Left>
         <Button transparent>

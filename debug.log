@@ -3,3 +3,5 @@
 [0628/211207.830:ERROR:exception_snapshot_win.cc(98)] thread ID 2916 not found in process
 [0628/211207.830:ERROR:exception_snapshot_win.cc(98)] thread ID 11064 not found in process
 [0630/161450.205:ERROR:settings.cc(320)] Settings magic is not 1129342067
+[0702/180446.463:ERROR:process_reader_win.cc(123)] NtOpenThread: {Access Denied} A process has requested access to an object, but has not been granted those access rights. (0xc0000022)
+[0702/180446.626:ERROR:exception_snapshot_win.cc(98)] thread ID 8664 not found in process

@@ -9,7 +9,7 @@ import {
   Image,
   ScrollView,
 } from "react-native";
-import { AntDesign, FontAwesome } from "react-native-vector-icons";
+import { AntDesign, FontAwesome, Entypo } from "react-native-vector-icons";
 import DestinationPageHeader from "./DeliveryLocation_subScreens/DestinationPageHeader";
 
 const DeliveryLocation = () => {
@@ -172,7 +172,7 @@ const styles = StyleSheet.create({
     height: "80%",
     borderRadius: 25,
     // marginTop: 1,
-    paddingLeft: 10,
+    paddingLeft: 15,
     paddingRight: 10,
     paddingTop: 1,
     paddingBottom: 2,
@@ -184,12 +184,12 @@ const styles = StyleSheet.create({
     // borderColor: "#ccc",
   },
   textInpuView: {
-    justifyContent: "space-around",
     elevation: 2,
-    width: "90%",
+    width: "85%",
+    height: 30,
     borderRadius: 25,
     marginTop: 15,
-    height: "85%",
+    height: "35%",
     backgroundColor: "#f4d7d7",
     alignItems: "center",
     flexDirection: "row",
