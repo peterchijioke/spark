@@ -38,7 +38,7 @@ export default class SavedPlace extends Component {
           </View>
         </SafeAreaView>
         <TouchableOpacity style={[styles.SavedAreaView, { marginTop: 20 }]}>
-          <Text style={[styles.txt, { fontStyle: "italic", fontSize: 16 }]}>
+          <Text style={[styles.txt, { fontSize: 16, fontStyle: "italic" }]}>
             Add a saved place
           </Text>
         </TouchableOpacity>
@@ -63,6 +63,7 @@ const styles = StyleSheet.create({
   },
   txt: {
     fontSize: 20,
+    // fontFamily: "bold_italic",
     // marginBottom: 20,
     fontWeight: "700",
     color: "#b90000",

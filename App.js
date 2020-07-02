@@ -44,13 +44,9 @@ export default class App extends Component {
       await Font.loadAsync({
         Roboto: require("native-base/Fonts/Roboto.ttf"),
         Roboto_medium: require("native-base/Fonts/Roboto_medium.ttf"),
-        thin_italic: require("./assets/fonts/brandon-grotesque-thin-italic-58a8a3a8861fe.ttf"),
-        medium_italic: require("./assets/fonts/brandon-grotesque-medium-italic-58a8a3c40866a.ttf"),
-        light_italic: require("./assets/fonts/brandon-grotesque-light-italic-58a8a4ccb88be.ttf"),
-        light: require("./assets/fonts/brandon-grotesque-light-58a8a4b38001d.ttf"),
-        bold_italic: require("./assets/fonts/brandon-grotesque-bold-italic-58a8a48221563.ttf"),
-        black: require("./assets/fonts/brandon-grotesque-black-58a8a3e824392.ttf"),
-        grotesque_regular: require("./assets/fonts/brandon-grotesque-regular-italic-58a8a456c4724.ttf"),
+        Regular: require("./assets/fonts/BrandonGrotesque-Regular.ttf"),
+        light_italic: require("./assets/fonts/BrandonGrotesque-LightItalic.ttf"),
+        m_2p: require("./assets/fonts/mplus-2p-thin.ttf"),
       });
       this.setState({ loading: false });
     } catch (error) {
