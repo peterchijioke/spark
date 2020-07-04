@@ -23,6 +23,22 @@ const loginWithEmailForm = (props) => {
       <View style={Styles.inputPhoneView}>
         <TextInput
           style={Styles.inputEmail}
+          keyboardType="default"
+          onChangeText={(firstName) => firstName(firstName)}
+          placeholder="First Name"
+          // autoFocus={true}
+          // inlineImageLeft="search"
+        />
+        <TextInput
+          style={Styles.inputEmail}
+          keyboardType="default"
+          onChangeText={(lastName) => Name(lastName)}
+          placeholder="Last Name"
+          // autoFocus={true}
+          // inlineImageLeft="search"
+        />
+        <TextInput
+          style={Styles.inputEmail}
           keyboardType="email-address"
           onChangeText={(email) => emailOnChangeFunc(email)}
           placeholder="Email"

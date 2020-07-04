@@ -31,10 +31,12 @@ export default class Splash extends Component {
         tension: 10,
         friction: 2,
         duration: 1000,
+        useNativeDriver: false,
       }).start(),
       Animated.timing(logoText, {
         toValue: 1,
         duration: 1200,
+        useNativeDriver: false,
       }).start(() => {
         this.setState({ loadinSpinner: true });
       }),
@@ -44,8 +46,14 @@ export default class Splash extends Component {
   spinnerInitFunction = () => {
     const { loadinSpinner } = this.state;
 
-    if (loadinSpinner != false) {
-      return <Spinner color="green" />;
+    if (loadinSpinner == true) {
+      return (
+        <ActivityIndicator
+          size="large"
+          color="#b90000"
+          style={{ position: "absolute", top: 500, left: 160 }}
+        />
+      );
     }
   };
 
@@ -79,7 +87,9 @@ export default class Splash extends Component {
             </Text>
           </Animated.View>
         </View>
-        <ActivityIndicator size="large" color="#0000ff" />
+
+        {/*  */}
+        {this.spinnerInitFunction()}
       </View>
     );
   }

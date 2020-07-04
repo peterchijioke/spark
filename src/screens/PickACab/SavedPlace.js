@@ -38,7 +38,12 @@ export default class SavedPlace extends Component {
           </View>
         </SafeAreaView>
         <TouchableOpacity style={[styles.SavedAreaView, { marginTop: 20 }]}>
-          <Text style={[styles.txt, { fontSize: 16, fontStyle: "italic" }]}>
+          <Text
+            style={[
+              styles.txt,
+              { fontSize: 16, fontStyle: "italic", fontFamily: "Regular" },
+            ]}
+          >
             Add a saved place
           </Text>
         </TouchableOpacity>

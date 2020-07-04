@@ -1,4 +1,5 @@
-import React from "react";
+import React, { Component } from "react";
+
 import {
   View,
   Text,
@@ -7,98 +8,216 @@ import {
   TouchableOpacity,
   Dimensions,
   Alert,
-} from "react-native";
+  KeyboardAvoidingView,
+} from "react-native"; // imports inject and observer from 'mobx-react':
+import { inject, observer } from "mobx-react";
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from "react-native-responsive-screen";
-import { FontAwesome, MaterialCommunityIcons } from "@expo/vector-icons";
+import { MaterialCommunityIcons, Fontisto } from "@expo/vector-icons";
 
-const ConnectWithEmailScreen = () => {
-  const moveToLogin = () => {
+@inject("store")
+@observer
+export default class ConnectWithEmailScreen extends Component {
+  moveToLogin = () => {
     return Alert.alert("Move to login page is in progress");
   };
 
-  const passwordOnChangeFunc = (password) => {};
-
-  const emailOnChangeFunc = (email) => {
+  emailOnChangeFunc = (email) => {
     let reg = /^\w+([\.-]?\w+)@\w+([\.-]?\w+)(\.\w{2,3})+$/;
     if (reg.test(email) === false) {
       Alert.prompt("peter this email is valid");
     }
   };
-  return (
-    <View style={Styles.container}>
-      <View style={Styles.inputPhoneView}>
-        <TextInput
-          style={Styles.inputEmail}
-          keyboardType="email-address"
-          onChangeText={(email) => emailOnChangeFunc(email)}
-          placeholder="Email"
-          autoFocus={true}
-          inlineImageLeft="search"
-        />
-        <TextInput
-          style={Styles.inputPassword}
-          onChangeText={(password) => passwordOnChangeFunc(password)}
-          placeholder="Password"
-        />
-      </View>
+  render() {
+    const {
+      setFName,
+      setlName,
+      setPassword,
+      setPhoneNumber,
+      setEmail,
+      userDetails,
+    } = this.props.store;
 
-      <View style={{ marginTop: 20 }}>
-        <Text style={Styles.termsTxt1}>By signing up you agree with</Text>
-        <Text style={Styles.termsTxt2}>
-          our terms and conditions and privacy policy
-        </Text>
-      </View>
-      <View
-        style={{
-          marginTop: 20,
-          alignItems: "center",
-        }}
-      >
-        <TouchableOpacity style={Styles.btn_proceed}>
-          <Text
-            style={[
-              Styles.btnTextConfirmation,
-              { fontSize: 18, fontWeight: "bold" },
-            ]}
-          >
-            SIGN UP
+    console.log(this.props.store.userDetails.fName);
+
+    return (
+      <View style={Styles.container}>
+        <KeyboardAvoidingView>
+          <View style={Styles.inputPhoneView}>
+            <View style={[Styles.inputView, { marginBottom: 10 }]}>
+              <Fontisto
+                name="person"
+                size={20}
+                color="#b90000"
+                style={Styles.icon}
+              />
+              <TextInput
+                style={Styles.input}
+                keyboardType="default"
+                onChangeText={(fName) => setFName(fName)}
+                placeholder="First Name"
+                autoFocus={false}
+                // inlineImageLeft="search"
+              />
+            </View>
+
+            {/* first Name end */}
+            <View style={[Styles.inputView, { marginBottom: 10 }]}>
+              <Fontisto
+                name="person"
+                size={20}
+                color="#b90000"
+                style={Styles.icon}
+              />
+              <TextInput
+                style={Styles.input}
+                keyboardType="default"
+                onChangeText={(lName) => setlName(lName)}
+                placeholder="Last Name"
+                autoFocus={false}
+                // inlineImageLeft="search"
+              />
+            </View>
+
+            {/* Last Name end */}
+            <View style={[Styles.inputView, { marginBottom: 10 }]}>
+              <Fontisto
+                name="phone"
+                size={20}
+                color="#b90000"
+                style={Styles.icon}
+              />
+              <TextInput
+                style={Styles.input}
+                keyboardType="number-pad"
+                onChangeText={(phoneNumber) => setPhoneNumber(phoneNumber)}
+                placeholder="Phone number"
+                autoFocus={false}
+                // inlineImageLeft="search"
+              />
+            </View>
+
+            {/* email end */}
+            <View style={[Styles.inputView, { marginBottom: 10 }]}>
+              <Fontisto
+                name="at"
+                size={20}
+                color="#b90000"
+                style={Styles.icon}
+              />
+              <TextInput
+                style={Styles.input}
+                keyboardType="email-address"
+                onChangeText={(email) => setEmail(email)}
+                placeholder="Email"
+                autoFocus={false}
+                // inlineImageLeft="search"
+              />
+            </View>
+
+            {/* email end */}
+            <View style={[Styles.inputView, { marginBottom: 10 }]}>
+              <Fontisto
+                name="key"
+                size={20}
+                color="#b90000"
+                style={Styles.icon}
+              />
+              <TextInput
+                style={Styles.input}
+                keyboardType="default"
+                passwordRules={true}
+                secureTextEntry={true}
+                onChangeText={(password) => setPassword(password)}
+                placeholder="Password"
+                autoFocus={false}
+                // inlineImageLeft="search"
+              />
+            </View>
+
+            {/* Password end */}
+            <View style={Styles.inputView}>
+              <Fontisto
+                name="key"
+                size={20}
+                color="#b90000"
+                style={Styles.icon}
+              />
+              <TextInput
+                style={Styles.input}
+                keyboardType="default"
+                passwordRules={true}
+                secureTextEntry={true}
+                onChangeText={(Cpassword) => console.log(Cpassword)}
+                placeholder="Confirm password"
+                autoFocus={false}
+                // inlineImageLeft="search"
+              />
+            </View>
+
+            {/* confirm Password end */}
+          </View>
+        </KeyboardAvoidingView>
+
+        <View style={{ marginTop: 20 }}>
+          <Text style={Styles.termsTxt1}>By signing up you agree with</Text>
+          <Text style={Styles.termsTxt2}>
+            our terms and conditions and privacy policy
           </Text>
-        </TouchableOpacity>
-        <TouchableOpacity
-          style={[
-            Styles.btn_proceed,
-            { marginTop: 20, backgroundColor: "#fff" },
-          ]}
+        </View>
+        <View
+          style={{
+            marginTop: 20,
+            alignItems: "center",
+          }}
         >
-          <MaterialCommunityIcons
-            name="google"
-            size={30}
-            style={Styles.googlIcon}
-          />
-          <Text
+          <TouchableOpacity style={Styles.btn_proceed}>
+            <Text
+              style={[
+                Styles.btnTextConfirmation,
+                { fontSize: 18, fontWeight: "bold" },
+              ]}
+            >
+              SIGN UP
+            </Text>
+          </TouchableOpacity>
+          <TouchableOpacity
             style={[
-              Styles.btnTextConfirmation,
-              { color: "#e92d2d", fontWeight: "bold" },
+              Styles.btn_proceed,
+              { marginTop: 20, backgroundColor: "#fff" },
             ]}
           >
-            Connect With Google
-          </Text>
-        </TouchableOpacity>
-        <View style={Styles.AlreadyLoginView}>
-          <Text style={Styles.termsTxt2}>Already have an account?</Text>
-          <TouchableOpacity onPress={moveToLogin}>
-            <Text style={Styles.loginTxt}>Login</Text>
+            <MaterialCommunityIcons
+              name="google"
+              size={30}
+              style={Styles.googlIcon}
+            />
+            <Text
+              style={[
+                Styles.btnTextConfirmation,
+                { color: "#e92d2d", fontWeight: "bold" },
+              ]}
+            >
+              Connect With Google
+            </Text>
           </TouchableOpacity>
+          <View style={Styles.AlreadyLoginView}>
+            <Text style={Styles.termsTxt2}>Already have an account?</Text>
+            <TouchableOpacity onPress={this.moveToLogin}>
+              <Text style={Styles.loginTxt}>Login</Text>
+            </TouchableOpacity>
+          </View>
         </View>
       </View>
-    </View>
-  );
-};
+    );
+  }
+}
 
-export default ConnectWithEmailScreen;
+// export default ConnectWithEmailScreen;
+
+const HEIGHT = Dimensions.get("screen").height;
 const Styles = StyleSheet.create({
   container: {},
 
@@ -108,33 +227,29 @@ const Styles = StyleSheet.create({
     marginTop: 25,
     justifyContent: "center",
   },
-  inputEmail: {
+  inputView: {
+    flexDirection: "row",
+    alignItems: "center",
     alignSelf: "center",
     width: "80%",
-    height: 50,
+    height: HEIGHT - 760,
+    // backgroundColor: "#f4d7d7",
     backgroundColor: "#ffffff",
+    elevation: 7,
+    shadowColor: "#f4d7d7",
     borderRadius: 10,
-    paddingLeft: 25,
-    fontSize: 16,
-    fontFamily: "serif",
-    color: "#B90000",
-    borderColor: "#b90000",
-    borderWidth: 1,
+    // borderColor: "#b90000",
+    // borderWidth: 1,
   },
-  inputPassword: {
-    alignSelf: "center",
+  input: {
+    fontSize: 16,
+    borderRadius: 28,
+    // backgroundColor: "#133",
     width: "80%",
-    height: 50,
-    backgroundColor: "#ffffff",
-    borderRadius: 10,
-    paddingLeft: 25,
-    fontSize: 16,
-    fontFamily: "serif",
-    color: "#B90000",
-    borderColor: "#b90000",
-    borderWidth: 1,
-    marginTop: 30,
+    height: HEIGHT - 760,
+    padding: 10,
   },
+  icon: { marginRight: 15, marginLeft: 10 },
 
   termsTxt2: {
     textAlign: "center",

@@ -9,22 +9,19 @@ import {
   TouchableOpacity,
 } from "react-native";
 
-const girlDrive_connect = ({
-  ShowEmailScreenFunction,
-  ShowPhoneScreenFunction,
-}) => {
+const girlDrive_connect = ({}) => {
+  const WIDTH = Dimensions.get("window").width;
+  const HEIGHT = Dimensions.get("window").height;
   return (
     <View style={Styles.container}>
       <View style={{ alignItems: "center" }}>
         <ImageBackground
           source={require("../../img/girlBick.png")}
-          style={{ height: 200, width: 250, marginTop: 30 }}
-        >
-          <Text style={Styles.connectText}>Connect With</Text>
-        </ImageBackground>
+          style={{ height: HEIGHT - 600, width: WIDTH - 200, marginTop: 10 }}
+        ></ImageBackground>
       </View>
 
-      <View style={Styles.btnView}>
+      {/* <View style={Styles.btnView}>
         <TouchableOpacity
           onPress={ShowEmailScreenFunction}
           style={[Styles.btnEmail, { backgroundColor: "#fff" }]}
@@ -38,7 +35,7 @@ const girlDrive_connect = ({
         >
           <Text style={Styles.btnText}>Phone</Text>
         </TouchableOpacity>
-      </View>
+      </View> */}
     </View>
   );
 };

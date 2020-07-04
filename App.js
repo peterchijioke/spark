@@ -1,6 +1,8 @@
 import React, { Component } from "react";
 import { StyleSheet, Text, View } from "react-native";
-import { AppLoading } from "expo";
+import { Provider } from "mobx-react";
+import store from "./store";
+
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 import * as Font from "expo-font";
@@ -18,6 +20,12 @@ import PickAcab from "./src/screens/PickAcab";
 export default class App extends Component {
   state = { loading: true, appIsReady: false };
   async componentDidMount() {
+    await Font.loadAsync({
+      Regular: require("./assets/fonts/BrandonGrotesque-Regular.ttf"),
+      light_italic: require("./assets/fonts/BrandonGrotesque-LightItalic.ttf"),
+      m_2p: require("./assets/fonts/mplus-2p-thin.ttf"),
+    });
+
     // Prevent native splash screen from autohiding
     try {
       await SplashScreen.preventAutoHideAsync();
@@ -44,9 +52,6 @@ export default class App extends Component {
       await Font.loadAsync({
         Roboto: require("native-base/Fonts/Roboto.ttf"),
         Roboto_medium: require("native-base/Fonts/Roboto_medium.ttf"),
-        Regular: require("./assets/fonts/BrandonGrotesque-Regular.ttf"),
-        light_italic: require("./assets/fonts/BrandonGrotesque-LightItalic.ttf"),
-        m_2p: require("./assets/fonts/mplus-2p-thin.ttf"),
       });
       this.setState({ loading: false });
     } catch (error) {
@@ -61,97 +66,80 @@ export default class App extends Component {
       return <Splash />;
     } else {
       return (
-        <NavigationContainer>
-          <Stack.Navigator>
-            {/* start */}
-            <Stack.Screen
-              name="Pick a cab"
-              component={PickAcab}
-              options={{ headerShown: false }}
-            />
-            <Stack.Screen
-              name="Make Request"
-              component={MakeDeliveryRequest}
-              options={{ headerShown: false }}
-            />
+        <Provider store={store}>
+          <NavigationContainer>
+            <Stack.Navigator>
+              {/* start */}
+              <Stack.Screen
+                name="Connect"
+                component={Connect}
+                options={{ headerShown: false }}
+              />
+              <Stack.Screen
+                name="Home"
+                component={Splash}
+                options={{ headerShown: false }}
+              />
+              <Stack.Screen
+                name="Pick a cab"
+                component={PickAcab}
+                options={{ headerShown: false }}
+              />
+              <Stack.Screen
+                name="Make Request"
+                component={MakeDeliveryRequest}
+                options={{ headerShown: false }}
+              />
 
-            <Stack.Screen
-              name="Delivery Location"
-              component={DeliveryLocation}
-              options={{ headerShown: false }}
-            />
+              <Stack.Screen
+                name="Delivery Location"
+                component={DeliveryLocation}
+                options={{ headerShown: false }}
+              />
 
-            <Stack.Screen
-              name="UserDashboard"
-              component={UserDashboard}
-              options={{ headerShown: false }}
-            />
+              <Stack.Screen
+                name="UserDashboard"
+                component={UserDashboard}
+                options={{ headerShown: false }}
+              />
 
-            <Stack.Screen
-              name="Home"
-              component={Splash}
-              options={{ headerShown: false }}
-            />
-            <Stack.Screen
-              name="Login Page"
-              component={LoginPage}
-              options={{
-                headerStyle: {
-                  elevation: 0,
-                  shadowOpacity: 0,
-                  borderBottomWidth: 0,
-                },
-                title: "Login With",
-                // headerShown: false,
-                headerTitleAlign: "center",
-              }}
-            />
-            <Stack.Screen
-              name="Connect"
-              component={Connect}
-              options={{
-                headerStyle: {
-                  // elevation: 0,
-                  shadowOpacity: 0,
-                  borderBottomWidth: 0,
-                },
-                title: "Connect With",
-                headerShown: false,
+              <Stack.Screen
+                name="Login Page"
+                component={LoginPage}
+                options={{ headerShown: false }}
+              />
 
-                headerTitleAlign: "center",
-              }}
-            />
+              <Stack.Screen
+                name="deliveryMadeEasy"
+                component={DeliveryMadeEasy_Screen}
+                options={{
+                  headerStyle: {
+                    elevation: 0,
+                    shadowOpacity: 0,
+                    borderBottomWidth: 0,
+                  },
+                  title: "SPARK",
+                  headerShown: false,
+                  headerTitleAlign: "center",
+                }}
+              />
 
-            <Stack.Screen
-              name="deliveryMadeEasy"
-              component={DeliveryMadeEasy_Screen}
-              options={{
-                headerStyle: {
-                  elevation: 0,
-                  shadowOpacity: 0,
-                  borderBottomWidth: 0,
-                },
-                title: "SPARK",
-                headerShown: false,
-                headerTitleAlign: "center",
-              }}
-            />
-
-            <Stack.Screen
-              name="PhoneNumberPage_signup"
-              component={PhoneNumberPage_signup}
-              options={{
-                title: "Phone number verification",
-                headerTitleAlign: "center",
-                headerStyle: {
-                  elevation: 0,
-                  shadowOpacity: 0,
-                  borderBottomWidth: 0,
-                },
-              }}
-            />
-          </Stack.Navigator>
-        </NavigationContainer>
+              <Stack.Screen
+                name="PhoneNumberPage_signup"
+                component={PhoneNumberPage_signup}
+                options={{
+                  title: "Phone number verification",
+                  headerTitleAlign: "center",
+                  headerStyle: {
+                    elevation: 0,
+                    shadowOpacity: 0,
+                    borderBottomWidth: 0,
+                  },
+                }}
+              />
+            </Stack.Navigator>
+          </NavigationContainer>
+        </Provider>
       );
     }
   }

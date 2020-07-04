@@ -49,6 +49,7 @@ export default class GoogleMap extends Component {
     } = this.state.region;
 
     this.map.animateToRegion({
+      useNativeDriver: true,
       latitude,
       longitude,
       longitudeDelta,
