@@ -25,6 +25,7 @@ export default class PickAcab extends Component {
       <React.Fragment>
         <View>
           <StatusBar />
+
           <View style={styles.container}>
             <GoogleMap />
           </View>

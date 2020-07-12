@@ -21,18 +21,22 @@ import {
   Icon,
   Title,
 } from "native-base";
-import { Provider } from "mobx-react";
-import store from "../../store";
+import { observer, inject } from "mobx-react";
 
 import { AntDesign } from "react-native-vector-icons";
 import { statusBarColor, stauBarColorDash } from "../screens/sub_screen/Colors";
-
+import { Root } from "popup-ui";
+@inject("store")
+@observer
 export default class Connect extends Component {
   // state = { emailPage: false, phonePage: false };
+  componentDidMount() {}
 
   render() {
+    // console.log(this.props.navigation);
+
     return (
-      <Provider store={store}>
+      <React.Fragment>
         {/* {this.headerFuction()} */}
         <StatusBar backgroundColor="#b90000" barStyle="light-content" />
         <View style={Styles.container}>
@@ -41,9 +45,12 @@ export default class Connect extends Component {
             // ShowPhoneScreenFunction={this.FuncHandlePhonePage}
           />
           {/* {this.sellectPage()} */}
-          <ConnectWithEmailSreen />
+          <ConnectWithEmailSreen
+            navigationObj={this.props.navigation}
+            store={this.props.store}
+          />
         </View>
-      </Provider>
+      </React.Fragment>
     );
   }
 }

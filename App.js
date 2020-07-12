@@ -16,6 +16,7 @@ import UserDashboard from "./src/screens/UserDashboard";
 import DeliveryLocation from "./src/screens/DeliveryLocation";
 import MakeDeliveryRequest from "./src/screens/MakeDeliveryRequest";
 import PickAcab from "./src/screens/PickAcab";
+import { Root } from "popup-ui";
 
 export default class App extends Component {
   state = { loading: true, appIsReady: false };
@@ -66,80 +67,82 @@ export default class App extends Component {
       return <Splash />;
     } else {
       return (
-        <Provider store={store}>
-          <NavigationContainer>
-            <Stack.Navigator>
-              {/* start */}
-              <Stack.Screen
-                name="Connect"
-                component={Connect}
-                options={{ headerShown: false }}
-              />
-              <Stack.Screen
-                name="Home"
-                component={Splash}
-                options={{ headerShown: false }}
-              />
-              <Stack.Screen
-                name="Pick a cab"
-                component={PickAcab}
-                options={{ headerShown: false }}
-              />
-              <Stack.Screen
-                name="Make Request"
-                component={MakeDeliveryRequest}
-                options={{ headerShown: false }}
-              />
+        <Root>
+          <Provider store={store}>
+            <NavigationContainer>
+              <Stack.Navigator>
+                {/* start */}
+                <Stack.Screen
+                  name="LoginPage"
+                  component={LoginPage}
+                  options={{ headerShown: false }}
+                />
 
-              <Stack.Screen
-                name="Delivery Location"
-                component={DeliveryLocation}
-                options={{ headerShown: false }}
-              />
+                <Stack.Screen
+                  name="Connect"
+                  component={Connect}
+                  options={{ headerShown: false }}
+                />
+                <Stack.Screen
+                  name="Home"
+                  component={Splash}
+                  options={{ headerShown: false }}
+                />
+                <Stack.Screen
+                  name="Pick a cab"
+                  component={PickAcab}
+                  options={{ headerShown: false }}
+                />
+                <Stack.Screen
+                  name="Make Request"
+                  component={MakeDeliveryRequest}
+                  options={{ headerShown: false }}
+                />
 
-              <Stack.Screen
-                name="UserDashboard"
-                component={UserDashboard}
-                options={{ headerShown: false }}
-              />
+                <Stack.Screen
+                  name="Delivery Location"
+                  component={DeliveryLocation}
+                  options={{ headerShown: false }}
+                />
 
-              <Stack.Screen
-                name="Login Page"
-                component={LoginPage}
-                options={{ headerShown: false }}
-              />
+                <Stack.Screen
+                  name="UserDashboard"
+                  component={UserDashboard}
+                  options={{ headerShown: false }}
+                />
 
-              <Stack.Screen
-                name="deliveryMadeEasy"
-                component={DeliveryMadeEasy_Screen}
-                options={{
-                  headerStyle: {
-                    elevation: 0,
-                    shadowOpacity: 0,
-                    borderBottomWidth: 0,
-                  },
-                  title: "SPARK",
-                  headerShown: false,
-                  headerTitleAlign: "center",
-                }}
-              />
+                <Stack.Screen
+                  name="deliveryMadeEasy"
+                  component={DeliveryMadeEasy_Screen}
+                  options={{
+                    headerStyle: {
+                      elevation: 0,
+                      shadowOpacity: 0,
+                      borderBottomWidth: 0,
+                    },
+                    title: "SPARK",
+                    headerShown: false,
+                    headerTitleAlign: "center",
+                  }}
+                />
 
-              <Stack.Screen
-                name="PhoneNumberPage_signup"
-                component={PhoneNumberPage_signup}
-                options={{
-                  title: "Phone number verification",
-                  headerTitleAlign: "center",
-                  headerStyle: {
-                    elevation: 0,
-                    shadowOpacity: 0,
-                    borderBottomWidth: 0,
-                  },
-                }}
-              />
-            </Stack.Navigator>
-          </NavigationContainer>
-        </Provider>
+                <Stack.Screen
+                  name="PhoneNumberPage_signup"
+                  component={PhoneNumberPage_signup}
+                  options={{
+                    title: "Phone number verification",
+                    headerTitleAlign: "center",
+                    headerStyle: {
+                      elevation: 0,
+                      shadowOpacity: 0,
+                      borderBottomWidth: 0,
+                    },
+                  }}
+                />
+              </Stack.Navigator>
+            </NavigationContainer>
+          </Provider>
+        </Root>
       );
     }
   }

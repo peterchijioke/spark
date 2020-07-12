@@ -8,7 +8,9 @@ import {
   TouchableOpacity,
   Dimensions,
   Alert,
+  ToastAndroid,
   KeyboardAvoidingView,
+  Keyboard,
 } from "react-native"; // imports inject and observer from 'mobx-react':
 import { inject, observer } from "mobx-react";
 import {
@@ -16,31 +18,219 @@ import {
   heightPercentageToDP as hp,
 } from "react-native-responsive-screen";
 import { MaterialCommunityIcons, Fontisto } from "@expo/vector-icons";
+import axios from "axios";
+import { Root, Popup } from "popup-ui";
+const CancelToken = axios.CancelToken;
+const source = CancelToken.source();
 
-@inject("store")
-@observer
 export default class ConnectWithEmailScreen extends Component {
-  moveToLogin = () => {
-    return Alert.alert("Move to login page is in progress");
-  };
+  // constructor(props) {
+  //   super(props);
 
-  emailOnChangeFunc = (email) => {
-    let reg = /^\w+([\.-]?\w+)@\w+([\.-]?\w+)(\.\w{2,3})+$/;
-    if (reg.test(email) === false) {
-      Alert.prompt("peter this email is valid");
+  //   this.email_pass_validation(
+  //     this.state.user_email,
+  //     this.state.password,
+  //     this.state.C_password
+  //   );
+  // }
+  state = {
+    last_Name: "",
+    first_Name: "",
+    user_email: "",
+    phone_number: "",
+    password: "",
+    C_password: "",
+    error: "",
+  };
+  // CancelToken = axios.Cancel;
+
+  // componentDidMount() {
+  //   console.log(this.props.navigation);
+  // }
+  componentWillUnmount() {
+    // source.cancel("Operation canceled by the user.");
+    source.cancel();
+  }
+
+  validateEmail = (email) => {
+    var re = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+    if (email == null || email == "") {
+      Keyboard.dismiss();
+      ToastAndroid.show("email can't be blank", ToastAndroid.SHORT);
+    }
+    if (re.test(email) === false) {
+      Keyboard.dismiss();
+      ToastAndroid.show("Invalid email, try again", ToastAndroid.SHORT);
+    } else {
+      return email;
     }
   };
-  render() {
+
+  validateAllLetters = (name) => {
+    let letters = new RegExp("[a-zA-Z]+");
+
+    if (letters.test(name) === true) {
+      return name;
+    } else {
+      Keyboard.dismiss();
+      ToastAndroid.show(
+        "Both names must be alphabet characters only!, try again ",
+        ToastAndroid.SHORT
+      );
+    }
+  };
+
+  validatePassword = (pass1, cPass) => {
+    if (8 > pass1.length && 8 > cPass.length) {
+      Keyboard.dismiss();
+      ToastAndroid.show(
+        "Both passwords must be 8 characters or more.",
+        ToastAndroid.SHORT
+      );
+    } else if (pass1 != cPass) {
+      Keyboard.dismiss();
+      ToastAndroid.show("Both password must be same.", ToastAndroid.SHORT);
+    } else {
+      return pass1;
+    }
+  };
+  numberValidation = (number) => {
+    const num = new RegExp("^-?[0-9]*$");
+    if (num.test(number) === false) {
+      Keyboard.dismiss();
+      ToastAndroid.show("Invalid Phone number!, try again", ToastAndroid.SHORT);
+    } else {
+      return number;
+    }
+  };
+
+  passToStore = (first_Name, last_Name, phone_number, user_email, password) => {
     const {
       setFName,
-      setlName,
+      setLName,
       setPassword,
       setPhoneNumber,
       setEmail,
       userDetails,
     } = this.props.store;
 
-    console.log(this.props.store.userDetails.fName);
+    setFName(first_Name);
+    setEmail(user_email);
+    setPassword(password);
+    setLName(last_Name);
+    setPhoneNumber(phone_number);
+  };
+
+  registrationEndPoint = async () => {
+    if (this.state.first_Name === "") {
+      Keyboard.dismiss();
+      ToastAndroid.show("First name can't be blank", ToastAndroid.SHORT);
+    } else if (this.state.last_Name === "") {
+      Keyboard.dismiss();
+      ToastAndroid.show("Last name can't be blank", ToastAndroid.SHORT);
+    } else if (this.state.phone_number === "") {
+      Keyboard.dismiss();
+      ToastAndroid.show("Phone number can't be blank", ToastAndroid.SHORT);
+    } else if (this.state.user_email === "") {
+      Keyboard.dismiss();
+      ToastAndroid.show("email can't be blank", ToastAndroid.SHORT);
+    } else if (this.state.password === "") {
+      Keyboard.dismiss();
+      ToastAndroid.show("Password can't be blank", ToastAndroid.SHORT);
+    } else if (this.state.C_password === "") {
+      Keyboard.dismiss();
+      ToastAndroid.show("Confirm Password can't be blank", ToastAndroid.SHORT);
+    } else {
+      const email = this.validateEmail(this.state.user_email);
+      const firstName = this.validateAllLetters(this.state.first_Name);
+      const lastName = this.validateAllLetters(this.state.last_Name);
+      const passw = this.validatePassword(
+        this.state.password,
+        this.state.C_password
+      );
+      const phone = this.numberValidation(this.state.phone_number);
+
+      this.passToStore(firstName, lastName, phone, email, passw);
+
+      const { userDetails } = this.props.store;
+
+      if (
+        typeof userDetails.fName != "undefined" &&
+        typeof userDetails.lName != "undefined" &&
+        typeof userDetails.phoneNumber != "undefined" &&
+        typeof userDetails.email != "undefined" &&
+        typeof userDetails.password != "undefined" &&
+        typeof userDetails.Cpassword != "undefined"
+      ) {
+        const { userDetails } = this.props.store;
+
+        let DATA = {
+          firstname: userDetails.fName,
+          surname: userDetails.lName,
+          telephone: userDetails.phoneNumber,
+          email: userDetails.email,
+          password: userDetails.password,
+        };
+        // let axiosConfig = {
+        //   headers: {
+        //     "Content-Type": "application/x-www-form-urlencoded",
+        //   },
+        // };
+
+        //axios
+        // .post(
+        //   "https://sparklogistics.herokuapp.com/users/signup",
+        //   DATA,
+        //   axiosConfig
+        // )
+        // .then((response) => {
+        //   console.log(response.data);
+        // })
+        // .catch((error) => {
+        //   console.log(error.response);
+        // });
+
+        try {
+          const resp = await axios.post(
+            "https://sparklogistics.herokuapp.com/users/signup",
+            DATA,
+            {
+              cancelToken: source.token,
+            }
+          );
+          console.log(resp.data.message);
+          this.poupRespo();
+        } catch (e) {
+          console.log(e.response);
+        }
+        console.log(DATA);
+      } else {
+        console.log("undefined field available..");
+      }
+    }
+  };
+  poupRespo = () => {
+    Popup.show(
+      {
+        type: "Success",
+        title: "Signup complete",
+        button: false,
+        textBody: "Congrats! you've successfully registered",
+        buttontext: "Ok",
+        callback: () => {
+          Popup.hide();
+          this.moveToLogin();
+        },
+      },
+      { useNativeDriver: false }
+    );
+  };
+  moveToLogin = () => {
+    this.props.navigationObj.navigate("LoginPage");
+  };
+
+  render() {
+    // console.log(this.props.navigationObj);
 
     return (
       <View style={Styles.container}>
@@ -56,7 +246,8 @@ export default class ConnectWithEmailScreen extends Component {
               <TextInput
                 style={Styles.input}
                 keyboardType="default"
-                onChangeText={(fName) => setFName(fName)}
+                value={this.state.first_Name}
+                onChangeText={(fName) => this.setState({ first_Name: fName })}
                 placeholder="First Name"
                 autoFocus={false}
                 // inlineImageLeft="search"
@@ -74,7 +265,7 @@ export default class ConnectWithEmailScreen extends Component {
               <TextInput
                 style={Styles.input}
                 keyboardType="default"
-                onChangeText={(lName) => setlName(lName)}
+                onChangeText={(lName) => this.setState({ last_Name: lName })}
                 placeholder="Last Name"
                 autoFocus={false}
                 // inlineImageLeft="search"
@@ -92,7 +283,9 @@ export default class ConnectWithEmailScreen extends Component {
               <TextInput
                 style={Styles.input}
                 keyboardType="number-pad"
-                onChangeText={(phoneNumber) => setPhoneNumber(phoneNumber)}
+                onChangeText={(phoneNumber) =>
+                  this.setState({ phone_number: phoneNumber })
+                }
                 placeholder="Phone number"
                 autoFocus={false}
                 // inlineImageLeft="search"
@@ -110,7 +303,7 @@ export default class ConnectWithEmailScreen extends Component {
               <TextInput
                 style={Styles.input}
                 keyboardType="email-address"
-                onChangeText={(email) => setEmail(email)}
+                onChangeText={(email) => this.setState({ user_email: email })}
                 placeholder="Email"
                 autoFocus={false}
                 // inlineImageLeft="search"
@@ -130,7 +323,9 @@ export default class ConnectWithEmailScreen extends Component {
                 keyboardType="default"
                 passwordRules={true}
                 secureTextEntry={true}
-                onChangeText={(password) => setPassword(password)}
+                onChangeText={(password) =>
+                  this.setState({ password: password })
+                }
                 placeholder="Password"
                 autoFocus={false}
                 // inlineImageLeft="search"
@@ -150,7 +345,9 @@ export default class ConnectWithEmailScreen extends Component {
                 keyboardType="default"
                 passwordRules={true}
                 secureTextEntry={true}
-                onChangeText={(Cpassword) => console.log(Cpassword)}
+                onChangeText={(Cpassword) =>
+                  this.setState({ C_password: Cpassword })
+                }
                 placeholder="Confirm password"
                 autoFocus={false}
                 // inlineImageLeft="search"
@@ -173,7 +370,10 @@ export default class ConnectWithEmailScreen extends Component {
             alignItems: "center",
           }}
         >
-          <TouchableOpacity style={Styles.btn_proceed}>
+          <TouchableOpacity
+            style={Styles.btn_proceed}
+            onPress={this.registrationEndPoint}
+          >
             <Text
               style={[
                 Styles.btnTextConfirmation,
@@ -184,6 +384,7 @@ export default class ConnectWithEmailScreen extends Component {
             </Text>
           </TouchableOpacity>
           <TouchableOpacity
+            onPress={this.poupRespo}
             style={[
               Styles.btn_proceed,
               { marginTop: 20, backgroundColor: "#fff" },

@@ -2,10 +2,7 @@
 import { decorate, observable, action } from "mobx";
 
 class Store {
-  text = "";
-  updateText = (text) => {};
-
-  data = null;
+  // register observables
   userDetails = {
     fName: "",
     lName: "",
@@ -13,15 +10,19 @@ class Store {
     password: "",
     phoneNumber: "",
     Cpassword: "",
+    Uid: "",
+  };
+  // Login observables
+  userLoginDetails = {
+    loginPhoneNumber: "",
+    loginPassword: "",
   };
 
-  searchImages = () => {};
-
-  setData = (data) => {};
+  // register actions
   setFName = (data) => {
     this.userDetails.fName = data;
   };
-  setlName = (data) => {
+  setLName = (data) => {
     this.userDetails.lName = data;
   };
   setPassword = (data) => {
@@ -33,12 +34,16 @@ class Store {
   setEmail = (data) => {
     this.userDetails.email = data;
   };
+  setUid = (data) => {
+    this.userDetails.Uid = data;
+  };
 
-  // array to save favourite images
-
-  // action to add images to favorites
-  addToFavorite = (image) => {
-    this.favorites.push(image);
+  // login Actions
+  setPassword = (data) => {
+    this.userDetails.password = data;
+  };
+  setPhoneNumber = (data) => {
+    this.userDetails.phoneNumber = data;
   };
 }
 
@@ -46,19 +51,13 @@ class Store {
 
 decorate(Store, {
   setFName: action,
-  setlName: action,
+  setLName: action,
   setPassword: action,
   setPhoneNumber: action,
   setEmail: action,
-  text: observable,
-  updateText: action,
-  data: observable,
-  searchImage: action,
-  setData: action,
-  //adding decorators
+  setUid: action,
   userDetails: observable,
-  addToFavorite: action,
-  addToFavorite: action,
+  userLoginDetails: observable,
 });
 
 // export class
