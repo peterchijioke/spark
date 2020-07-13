@@ -171,24 +171,6 @@ export default class ConnectWithEmailScreen extends Component {
           email: userDetails.email,
           password: userDetails.password,
         };
-        // let axiosConfig = {
-        //   headers: {
-        //     "Content-Type": "application/x-www-form-urlencoded",
-        //   },
-        // };
-
-        //axios
-        // .post(
-        //   "https://sparklogistics.herokuapp.com/users/signup",
-        //   DATA,
-        //   axiosConfig
-        // )
-        // .then((response) => {
-        //   console.log(response.data);
-        // })
-        // .catch((error) => {
-        //   console.log(error.response);
-        // });
 
         try {
           const resp = await axios.post(
