@@ -17,6 +17,7 @@ import DeliveryLocation from "./src/screens/DeliveryLocation";
 import MakeDeliveryRequest from "./src/screens/MakeDeliveryRequest";
 import PickAcab from "./src/screens/PickAcab";
 import { Root } from "popup-ui";
+import { AppLoading } from "expo";
 
 export default class App extends Component {
   state = { loading: true, appIsReady: false };
@@ -39,7 +40,6 @@ export default class App extends Component {
   /**
    * Method that serves to load resources and make API calls
    */
- 
 
   UNSAFE_componentWillMount = async () => {
     try {
@@ -57,7 +57,7 @@ export default class App extends Component {
     const Stack = createStackNavigator();
 
     if (this.state.loading || !this.state.appIsReady) {
-      return <Splash />;
+      return <AppLoading />;
     } else {
       return (
         <Root>
