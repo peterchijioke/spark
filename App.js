@@ -33,20 +33,13 @@ export default class App extends Component {
     } catch (e) {
       console.warn(e);
     }
-    this.prepareResources();
+    this.setState({ appIsReady: true });
   }
 
   /**
    * Method that serves to load resources and make API calls
    */
-  prepareResources = async () => {
-    await performAPICalls();
-    await downloadAssets();
-
-    this.setState({ appIsReady: true }, async () => {
-      await SplashScreen.hideAsync();
-    });
-  };
+ 
 
   UNSAFE_componentWillMount = async () => {
     try {

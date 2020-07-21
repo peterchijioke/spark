@@ -35,6 +35,13 @@ export default class LoginPage extends Component {
   state = { user_emailPhoneNumber: "", user_password: "" };
   componentDidMount() {
     // console.log(this.props.store.userLoginDetails);
+    // if (this.state.user_emailPhoneNumber != "") {
+    //   this.setState({ disableBtn: true });
+    // }
+  }
+  componentWillUnmount() {
+    // source.cancel("Operation canceled by the user.");
+    source.cancel();
   }
 
   // password validation
@@ -85,12 +92,13 @@ export default class LoginPage extends Component {
       Keyboard.dismiss();
       ToastAndroid.show("Password can't be blank", ToastAndroid.SHORT);
     } else {
-      var re = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
-      const num = new RegExp("^-?[0-9]*$");
-      if (re.test(this.state.user_emailPhoneNumber) === true) {
-        const email = this.validateEmail(this.state.user_emailPhoneNumber);
-      } else if (num.test(this.state.user_emailPhoneNumber) === true) {
-        const phone = this.numberValidation(this.state.user_emailPhoneNumber);
+      let re = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+      let num = new RegExp("^-?[0-9]*$");
+      if (
+        re.test(this.state.user_emailPhoneNumber) === true ||
+        num.test(this.state.user_emailPhoneNumber) === true
+      ) {
+        const email = this.state.user_emailPhoneNumber;
       } else {
         Keyboard.dismiss();
         ToastAndroid.show(
@@ -99,23 +107,42 @@ export default class LoginPage extends Component {
         );
       }
       const passw = this.validatePassword(this.state.user_password);
-      console.log(this.state.user_emailPhoneNumber);
+      const {
+        userLoginDetails,
+        setLoginPhoneNumber_email,
+        setLoginPassword,
+      } = this.props.store;
+
+      setLoginPassword(passw);
+      setLoginPhoneNumber_email(this.state.user_emailPhoneNumber);
 
       if (
-        typeof this.state.user_emailPhoneNumber != "undefined" ||
-        typeof passw != "undefined"
+        typeof userLoginDetails.loginPhoneNumberEmail != "undefined" &&
+        typeof userLoginDetails.loginPassword != "undefined"
       ) {
-        const {
-          userLoginDetails,
-          setLoginPhoneNumber_email,
-          setLoginPassword,
-        } = this.props.store;
+        const DATA = {
+          email: userLoginDetails.loginPhoneNumberEmail,
+          password: userLoginDetails.loginPassword,
+        };
+
+        try {
+          const resp = await axios.get(
+            "https://sparklogistics.herokuapp.com/users/login",
+            DATA,
+            {
+              cancelToken: source.token,
+            }
+          );
+          console.log(resp.data.message);
+          this.poupRespo();
+        } catch (e) {
+          console.log(e.response);
+        }
       } else {
+        console.log("undefined field available");
       }
     }
   };
-
-  componentWillUnmount() {}
 
   render() {
     return (
@@ -202,17 +229,19 @@ export default class LoginPage extends Component {
                 <Text style={{ color: "#b90000", marginRight: 55 }}>
                   Forgot password
                 </Text>
-                <Button title=" Register" color="#123" disabled={true}>
-                  {/* <Text
+                <TouchableOpacity
+                  onPress={() => this.props.navigation.navigate("Connect")}
+                >
+                  <Text
                     style={{ color: "#b90000", marginLeft: 55, marginRight: 0 }}
                   >
                     Register
-                  </Text> */}
-                </Button>
+                  </Text>
+                </TouchableOpacity>
               </View>
               <TouchableOpacity
                 touchSoundDisabled={false}
-                // disabled={true}
+                disabled={this.state.disableBtn}
                 style={Styles.btn}
                 onPress={this.loginEndPoint}
               >
@@ -233,18 +262,14 @@ const Styles = StyleSheet.create({
     alignSelf: "center",
     width: "90%",
     height: HEIGHT - 760,
-    // backgroundColor: "#f4d7d7",
     backgroundColor: "#ffffff",
     elevation: 7,
     shadowColor: "#f4d7d7",
     borderRadius: 10,
-    // borderColor: "#b90000",
-    // borderWidth: 1,
   },
   input: {
     fontSize: 16,
     borderRadius: 28,
-    // backgroundColor: "#133",
     width: "90%",
     height: HEIGHT - 760,
     padding: 10,
@@ -254,7 +279,6 @@ const Styles = StyleSheet.create({
   safeView: {
     backgroundColor: "#fff",
     alignItems: "center",
-    // justifyContent: "center",
     marginTop: HEIGHT - 600,
     width: WIDTH - 50,
     height: HEIGHT - 260,
