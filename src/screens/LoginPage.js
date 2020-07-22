@@ -13,6 +13,7 @@ import {
   ToastAndroid,
   Keyboard,
   Button,
+  Alert,
 } from "react-native";
 
 import {
@@ -73,47 +74,41 @@ export default class LoginPage extends Component {
   };
 
   // Number verification function
-  numberValidation = (number) => {
-    const num = new RegExp("^-?[0-9]*$");
-    if (num.test(number) === false) {
-      Keyboard.dismiss();
-      ToastAndroid.show("Invalid Phone number!, try again", ToastAndroid.SHORT);
-    } else {
-      return number;
-    }
-  };
+  // numberValidation = (number) => {
+  //   const num = new RegExp("^-?[0-9]*$");
+  //   if (num.test(number) === false) {
+  //     Keyboard.dismiss();
+  //     ToastAndroid.show("Invalid Phone number!, try again", ToastAndroid.SHORT);
+  //   } else {
+  //     return number;
+  //   }
+  // };
 
   loginEndPoint = async () => {
+    const {
+      userLoginDetails,
+      setLoginPhoneNumber_email,
+      setLoginPassword,
+    } = this.props.store;
     if (this.state.user_emailPhoneNumber === "") {
       Keyboard.dismiss();
-      ToastAndroid.show("Enter your phone number or email", ToastAndroid.SHORT);
+      ToastAndroid.show("Enter your email", ToastAndroid.SHORT);
     } else if (this.state.user_password === "") {
       Keyboard.dismiss();
       ToastAndroid.show("Password can't be blank", ToastAndroid.SHORT);
     } else {
-      let re = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
-      let num = new RegExp("^-?[0-9]*$");
-      if (
-        re.test(this.state.user_emailPhoneNumber) === true ||
-        num.test(this.state.user_emailPhoneNumber) === true
-      ) {
+      let email_regx = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+      // let num = new RegExp("^-?[0-9]*$");
+      if (email_regx.test(this.state.user_emailPhoneNumber) === true) {
         const email = this.state.user_emailPhoneNumber;
+        setLoginPhoneNumber_email(email);
       } else {
         Keyboard.dismiss();
-        ToastAndroid.show(
-          "Your phone number or email is invalid!",
-          ToastAndroid.SHORT
-        );
+        ToastAndroid.show("Email is invalid!", ToastAndroid.SHORT);
       }
       const passw = this.validatePassword(this.state.user_password);
-      const {
-        userLoginDetails,
-        setLoginPhoneNumber_email,
-        setLoginPassword,
-      } = this.props.store;
 
       setLoginPassword(passw);
-      setLoginPhoneNumber_email(this.state.user_emailPhoneNumber);
 
       if (
         typeof userLoginDetails.loginPhoneNumberEmail != "undefined" &&
@@ -123,6 +118,8 @@ export default class LoginPage extends Component {
           email: userLoginDetails.loginPhoneNumberEmail,
           password: userLoginDetails.loginPassword,
         };
+
+        console.log(DATA);
 
         try {
           const resp = await axios.get(
@@ -199,9 +196,8 @@ export default class LoginPage extends Component {
                   onChangeText={(user_emailPhoneNumber) =>
                     this.setState({ user_emailPhoneNumber })
                   }
-                  placeholder="Email or phone number"
+                  placeholder="Email Ex: Doe@gmail.com"
                   autoFocus={false}
-                  // inlineImageLeft="search"
                 />
               </View>
 
