@@ -40,7 +40,6 @@ export default class LoginPage extends Component {
     // }
   }
   componentWillUnmount() {
-    // source.cancel("Operation canceled by the user.");
     source.cancel();
   }
 

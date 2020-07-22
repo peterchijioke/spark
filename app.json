@@ -11,7 +11,7 @@
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "splash": {
-      "image": "./assets/sparkBg.png",
+      "image": "./assets/sparkBg.jpg",
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },

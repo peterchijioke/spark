@@ -22,19 +22,13 @@ import { AppLoading } from "expo";
 export default class App extends Component {
   state = { loading: true, appIsReady: false };
   async componentDidMount() {
-    await Font.loadAsync({
-      Regular: require("./assets/fonts/BrandonGrotesque-Regular.ttf"),
-      light_italic: require("./assets/fonts/BrandonGrotesque-LightItalic.ttf"),
-      m_2p: require("./assets/fonts/mplus-2p-thin.ttf"),
-    });
-
-    // Prevent native splash screen from autohiding
-    try {
-      await SplashScreen.preventAutoHideAsync();
-    } catch (e) {
-      console.warn(e);
-    }
-    this.setState({ appIsReady: true });
+    // // // Prevent native splash screen from autohiding
+    // // try {
+    // //   await SplashScreen.preventAutoHideAsync();
+    // // } catch (e) {
+    // //   console.warn(e);
+    // // }
+    // this.setState({ appIsReady: true });
   }
 
   /**
@@ -46,6 +40,9 @@ export default class App extends Component {
       await Font.loadAsync({
         Roboto: require("native-base/Fonts/Roboto.ttf"),
         Roboto_medium: require("native-base/Fonts/Roboto_medium.ttf"),
+        Regular: require("./assets/fonts/BrandonGrotesque-Regular.ttf"),
+        light_italic: require("./assets/fonts/BrandonGrotesque-LightItalic.ttf"),
+        m_2p: require("./assets/fonts/mplus-2p-thin.ttf"),
       });
       this.setState({ loading: false });
     } catch (error) {
@@ -56,7 +53,7 @@ export default class App extends Component {
   render() {
     const Stack = createStackNavigator();
 
-    if (this.state.loading || !this.state.appIsReady) {
+    if (this.state.loading) {
       return <AppLoading />;
     } else {
       return (
@@ -140,7 +137,3 @@ export default class App extends Component {
     }
   }
 }
-
-// Put any code you need to prepare your app in these functions
-async function performAPICalls() {}
-async function downloadAssets() {}
