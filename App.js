@@ -19,6 +19,7 @@ import PickAcab from "./src/screens/PickAcab";
 import { Root } from "popup-ui";
 import { AppLoading } from "expo";
 
+
 export default class App extends Component {
   state = { loading: true, appIsReady: false };
   async componentDidMount() {

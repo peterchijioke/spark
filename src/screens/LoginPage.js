@@ -85,11 +85,8 @@ export default class LoginPage extends Component {
   // };
 
   loginEndPoint = async () => {
-    const {
-      userLoginDetails,
-      setLoginPhoneNumber_email,
-      setLoginPassword,
-    } = this.props.store;
+    const { userLoginDetails, setLoginEmail } = this.props.store;
+
     if (this.state.user_emailPhoneNumber === "") {
       Keyboard.dismiss();
       ToastAndroid.show("Enter your email", ToastAndroid.SHORT);
@@ -101,17 +98,21 @@ export default class LoginPage extends Component {
       // let num = new RegExp("^-?[0-9]*$");
       if (email_regx.test(this.state.user_emailPhoneNumber) === true) {
         const email = this.state.user_emailPhoneNumber;
-        setLoginPhoneNumber_email(email);
+
+        setLoginEmail(email);
+        console.log(userLoginDetails);
+        console.log("love you.....!");
       } else {
         Keyboard.dismiss();
         ToastAndroid.show("Email is invalid!", ToastAndroid.SHORT);
       }
+      const { setLoginPassword } = this.props.store;
       const passw = this.validatePassword(this.state.user_password);
 
       setLoginPassword(passw);
 
       if (
-        typeof userLoginDetails.loginPhoneNumberEmail != "undefined" &&
+        typeof userLoginDetails.loginEmail != "undefined" &&
         typeof userLoginDetails.loginPassword != "undefined"
       ) {
         const DATA = {
@@ -121,19 +122,19 @@ export default class LoginPage extends Component {
 
         console.log(DATA);
 
-        try {
-          const resp = await axios.get(
-            "https://sparklogistics.herokuapp.com/users/login",
-            DATA,
-            {
-              cancelToken: source.token,
-            }
-          );
-          console.log(resp.data.message);
-          this.poupRespo();
-        } catch (e) {
-          console.log(e.response);
-        }
+        // try {
+        //   const resp = await axios.get(
+        //     "https://sparklogistics.herokuapp.com/users/login",
+        //     DATA,
+        //     {
+        //       cancelToken: source.token,
+        //     }
+        //   );
+        //   console.log(resp.data.message);
+        //   this.poupRespo();
+        // } catch (e) {
+        //   console.log(e.response);
+        // }
       } else {
         console.log("undefined field available");
       }

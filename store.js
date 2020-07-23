@@ -14,7 +14,7 @@ class Store {
   };
   // Login observables
   userLoginDetails = {
-    loginPhoneNumberEmail: "",
+    loginEmail: "",
     loginPassword: "",
   };
 
@@ -42,7 +42,7 @@ class Store {
   setLoginPassword = (data) => {
     this.userLoginDetails.loginPassword = data;
   };
-  setLoginPhoneNumber_email = (data) => {
+  setLoginEmail = (data) => {
     this.userLoginDetails.loginPhoneNumberEamil = data;
   };
 }
@@ -57,7 +57,7 @@ decorate(Store, {
   setEmail: action,
   // login
   setLoginPassword: action,
-  setLoginPhoneNumber_email: action,
+  setLoginEmail: action,
   // login end
   setUid: action,
   userDetails: observable,
