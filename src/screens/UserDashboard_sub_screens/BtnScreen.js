@@ -70,11 +70,16 @@ const styles = StyleSheet.create({
     backgroundColor: "#f1f1f1",
   },
   btn: {
+    flex: 1,
     alignItems: "center",
     justifyContent: "center",
-    flex: 1,
     backgroundColor: "#fff",
     borderRadius: 25,
+    // elevation: 7,
+    borderColor: "#b90000",
+    shadowRadius: 5,
+    // shadowColor: "",
+    borderWidth: 1,
   },
   btn_text: {
     color: "#717171",
@@ -88,6 +93,7 @@ const styles = StyleSheet.create({
     height: 30,
     // alignSelf: "center",
     borderRadius: 20,
+
     justifyContent: "center",
   },
   fowardArrowImageInner: {

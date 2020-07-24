@@ -85,7 +85,11 @@ export default class LoginPage extends Component {
   // };
 
   loginEndPoint = async () => {
-    const { userLoginDetails, setLoginEmail } = this.props.store;
+    const {
+      userLoginDetails,
+      setLoginEmail,
+      setLoginPassword,
+    } = this.props.store;
 
     if (this.state.user_emailPhoneNumber === "") {
       Keyboard.dismiss();
@@ -98,15 +102,11 @@ export default class LoginPage extends Component {
       // let num = new RegExp("^-?[0-9]*$");
       if (email_regx.test(this.state.user_emailPhoneNumber) === true) {
         const email = this.state.user_emailPhoneNumber;
-
         setLoginEmail(email);
-        console.log(userLoginDetails);
-        console.log("love you.....!");
       } else {
         Keyboard.dismiss();
         ToastAndroid.show("Email is invalid!", ToastAndroid.SHORT);
       }
-      const { setLoginPassword } = this.props.store;
       const passw = this.validatePassword(this.state.user_password);
 
       setLoginPassword(passw);
@@ -116,25 +116,25 @@ export default class LoginPage extends Component {
         typeof userLoginDetails.loginPassword != "undefined"
       ) {
         const DATA = {
-          email: userLoginDetails.loginPhoneNumberEmail,
+          email: userLoginDetails.loginEmail,
           password: userLoginDetails.loginPassword,
         };
 
         console.log(DATA);
 
-        // try {
-        //   const resp = await axios.get(
-        //     "https://sparklogistics.herokuapp.com/users/login",
-        //     DATA,
-        //     {
-        //       cancelToken: source.token,
-        //     }
-        //   );
-        //   console.log(resp.data.message);
-        //   this.poupRespo();
-        // } catch (e) {
-        //   console.log(e.response);
-        // }
+        try {
+          const resp = await axios.get(
+            "https://sparklogistics.herokuapp.com/users/login",
+            DATA,
+            {
+              cancelToken: source.token,
+            }
+          );
+          console.log(resp.data.message);
+          this.poupRespo();
+        } catch (e) {
+          console.log(e.response);
+        }
       } else {
         console.log("undefined field available");
       }

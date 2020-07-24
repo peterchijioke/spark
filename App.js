@@ -19,18 +19,9 @@ import PickAcab from "./src/screens/PickAcab";
 import { Root } from "popup-ui";
 import { AppLoading } from "expo";
 
-
 export default class App extends Component {
   state = { loading: true, appIsReady: false };
-  async componentDidMount() {
-    // // // Prevent native splash screen from autohiding
-    // // try {
-    // //   await SplashScreen.preventAutoHideAsync();
-    // // } catch (e) {
-    // //   console.warn(e);
-    // // }
-    // this.setState({ appIsReady: true });
-  }
+  async componentDidMount() {}
 
   /**
    * Method that serves to load resources and make API calls
@@ -64,6 +55,12 @@ export default class App extends Component {
               <Stack.Navigator>
                 {/* start */}
                 <Stack.Screen
+                  name="UserDashboard"
+                  component={UserDashboard}
+                  options={{ headerShown: false }}
+                />
+
+                <Stack.Screen
                   name="LoginPage"
                   component={LoginPage}
                   options={{ headerShown: false }}
@@ -74,11 +71,11 @@ export default class App extends Component {
                   component={Connect}
                   options={{ headerShown: false }}
                 />
-                <Stack.Screen
+                {/* <Stack.Screen
                   name="Home"
                   component={Splash}
                   options={{ headerShown: false }}
-                />
+                /> */}
                 <Stack.Screen
                   name="Pick a cab"
                   component={PickAcab}
@@ -93,12 +90,6 @@ export default class App extends Component {
                 <Stack.Screen
                   name="Delivery Location"
                   component={DeliveryLocation}
-                  options={{ headerShown: false }}
-                />
-
-                <Stack.Screen
-                  name="UserDashboard"
-                  component={UserDashboard}
                   options={{ headerShown: false }}
                 />
 

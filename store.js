@@ -43,7 +43,7 @@ class Store {
     this.userLoginDetails.loginPassword = data;
   };
   setLoginEmail = (data) => {
-    this.userLoginDetails.loginPhoneNumberEamil = data;
+    this.userLoginDetails.loginEmail = data;
   };
 }
 

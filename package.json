@@ -17,6 +17,7 @@
     "core-js": "^3.6.5",
     "expo": "^38.0.0",
     "expo-font": "~8.2.1",
+    "expo-linking": "^1.0.3",
     "expo-location": "~8.2.1",
     "expo-permissions": "~9.0.1",
     "expo-splash-screen": "^0.3.1",

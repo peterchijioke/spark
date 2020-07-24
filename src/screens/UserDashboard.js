@@ -11,14 +11,6 @@ import {
   Title,
 } from "native-base";
 
-import {
-  widthPercentageToDP as wp,
-  heightPercentageToDP as hp,
-} from "react-native-responsive-screen";
-// import * as Font from "expo-font";
-// import { AppLoading, Root } from "expo";
-import * as Font from "expo-font";
-
 import SideBar from "./sub_screen/Side";
 import { statusBarColor, stauBarColorDash } from "../screens/sub_screen/Colors";
 import BtnScreen from "./UserDashboard_sub_screens/BtnScreen";
@@ -50,7 +42,7 @@ export default class DrawerActivity extends Component {
             }}
           >
             <Header
-              style={{ backgroundColor: "#e92d2d", marginTop: 30 }}
+              style={{ backgroundColor: "#e92d2d" }}
               androidStatusBarColor={statusBarColor}
               iosBarStyle="light-content"
             >
