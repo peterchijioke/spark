@@ -14,7 +14,7 @@ export default class SavedPlace extends Component {
       <View style={styles.container}>
         <SafeAreaView style={styles.SavedAreaView}>
           <Text style={styles.txt}>Choose a saved place</Text>
-          <View style={[styles.savedPlace, { marginTop: 5 }]}>
+          <View style={[styles.savedPlace]}>
             {/* <Icon name="home" style={{ color: "#b90000" }} /> */}
 
             <Image
@@ -22,7 +22,7 @@ export default class SavedPlace extends Component {
               style={styles.fowardArrowImageInner}
             />
             <TouchableOpacity>
-              <Text style={[styles.savedPlaceTxt, { marginBottom: 10 }]}>
+              <Text style={[styles.savedPlaceTxt, { marginBottom: 5 }]}>
                 Home
               </Text>
             </TouchableOpacity>
@@ -37,7 +37,7 @@ export default class SavedPlace extends Component {
             </TouchableOpacity>
           </View>
         </SafeAreaView>
-        <TouchableOpacity style={[styles.SavedAreaView, { marginTop: 20 }]}>
+        <TouchableOpacity style={[styles.SavedAreaView, { marginTop: 5 }]}>
           <Text
             style={[
               styles.txt,
@@ -53,7 +53,7 @@ export default class SavedPlace extends Component {
 }
 
 const styles = StyleSheet.create({
-  container: { flexShrink: 1, marginTop: 5 },
+  container: { flexShrink: 1 },
   fowardArrowImageInner: {
     width: 20,
     height: 20,
@@ -67,7 +67,7 @@ const styles = StyleSheet.create({
     marginLeft: 30,
   },
   txt: {
-    fontSize: 20,
+    fontSize: 18,
     // fontFamily: "bold_italic",
     // marginBottom: 20,
     fontWeight: "700",
@@ -77,7 +77,7 @@ const styles = StyleSheet.create({
   SavedAreaView: {
     // marginBottom: 35,
     marginLeft: 30,
-    marginTop: 10,
+    marginTop: 5,
   },
   savedPlace: { flexDirection: "row", flexWrap: "wrap" },
   savedPlaceTxt: {

@@ -8,6 +8,7 @@ import {
   Picker,
 } from "react-native";
 import { Entypo } from "react-native-vector-icons";
+import PickupDestinationPage from "./PickupDestinationPage";
 
 const WIDTH = Dimensions.get("window").width;
 
@@ -16,13 +17,19 @@ export default class WhereTo extends Component {
   render() {
     return (
       <View style={styles.Btn}>
-        <TouchableOpacity style={styles.WhereToTextView}>
+        <TouchableOpacity
+          style={styles.WhereToTextView}
+          onPress={() => {
+            this.props.navigation.navigate("pickupdestination");
+          }}
+        >
           <Entypo
             name="direction"
             size={22}
             color="#b90000"
             style={{ marginTop: 3, marginRight: 5 }}
           />
+
           <Text style={{ fontSize: 18, fontWeight: "bold", color: "#b90000" }}>
             Where to ?
           </Text>

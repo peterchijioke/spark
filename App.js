@@ -4,7 +4,11 @@ import { Provider } from "mobx-react";
 import store from "./store";
 
 import { NavigationContainer } from "@react-navigation/native";
-import { createStackNavigator } from "@react-navigation/stack";
+import {
+  createStackNavigator,
+  TransitionSpecs,
+  CardStyleInterpolators,
+} from "@react-navigation/stack";
 import * as Font from "expo-font";
 import * as SplashScreen from "expo-splash-screen";
 import Splash from "./src/screens/Splash";
@@ -18,6 +22,8 @@ import MakeDeliveryRequest from "./src/screens/MakeDeliveryRequest";
 import PickAcab from "./src/screens/PickAcab";
 import { Root } from "popup-ui";
 import { AppLoading } from "expo";
+import getSlideFromRightTransition from "react-navigation-slide-from-right-transition";
+import PickupDestinationPage from "./src/screens/PickACab/PickupDestinationPage";
 
 export default class App extends Component {
   state = { loading: true, appIsReady: false };
@@ -52,45 +58,76 @@ export default class App extends Component {
         <Root>
           <Provider store={store}>
             <NavigationContainer>
-              <Stack.Navigator>
+              <Stack.Navigator
+              // options={{
+              //   headerShown: false,
+              //   gestureDirection: "vertical",
+              // }}
+              >
                 {/* start */}
+                <Stack.Screen
+                  name="PickCab"
+                  component={PickAcab}
+                  options={{
+                    headerShown: false,
+                    cardStyleInterpolator:
+                      CardStyleInterpolators.forHorizontalIOS,
+                  }}
+                />
                 <Stack.Screen
                   name="UserDashboard"
                   component={UserDashboard}
-                  options={{ headerShown: false }}
+                  options={{
+                    headerShown: false,
+                    cardStyleInterpolator:
+                      CardStyleInterpolators.forHorizontalIOS,
+                  }}
+                />
+                <Stack.Screen
+                  name="Connect"
+                  component={Connect}
+                  options={{
+                    headerShown: false,
+                    cardStyleInterpolator:
+                      CardStyleInterpolators.forHorizontalIOS,
+                  }}
                 />
 
                 <Stack.Screen
                   name="LoginPage"
                   component={LoginPage}
-                  options={{ headerShown: false }}
+                  options={{
+                    headerShown: false,
+
+                    cardStyleInterpolator:
+                      CardStyleInterpolators.forHorizontalIOS,
+                  }}
                 />
 
-                <Stack.Screen
-                  name="Connect"
-                  component={Connect}
-                  options={{ headerShown: false }}
-                />
                 {/* <Stack.Screen
                   name="Home"
                   component={Splash}
                   options={{ headerShown: false }}
                 /> */}
-                <Stack.Screen
-                  name="Pick a cab"
-                  component={PickAcab}
-                  options={{ headerShown: false }}
-                />
+
                 <Stack.Screen
                   name="Make Request"
                   component={MakeDeliveryRequest}
-                  options={{ headerShown: false }}
+                  options={{
+                    headerShown: false,
+                    cardStyleInterpolator:
+                      CardStyleInterpolators.forHorizontalIOS,
+                  }}
                 />
 
                 <Stack.Screen
                   name="Delivery Location"
                   component={DeliveryLocation}
-                  options={{ headerShown: false }}
+                  options={{
+                    headerShown: false,
+                    cardStyleInterpolator:
+                      CardStyleInterpolators.forHorizontalIOS,
+                  }}
                 />
 
                 <Stack.Screen
@@ -105,20 +142,20 @@ export default class App extends Component {
                     title: "SPARK",
                     headerShown: false,
                     headerTitleAlign: "center",
+                    cardStyleInterpolator:
+                      CardStyleInterpolators.forHorizontalIOS,
                   }}
                 />
 
                 <Stack.Screen
-                  name="PhoneNumberPage_signup"
-                  component={PhoneNumberPage_signup}
+                  name="pickupdestination"
+                  component={PickupDestinationPage}
                   options={{
-                    title: "Phone number verification",
-                    headerTitleAlign: "center",
-                    headerStyle: {
-                      elevation: 0,
-                      shadowOpacity: 0,
-                      borderBottomWidth: 0,
-                    },
+                    headerShown: false,
+                    cardStyleInterpolator:
+                      CardStyleInterpolators.forScaleFromCenterAndroid,
+                    // cardStyleInterpolator:
+                    //   CardStyleInterpolators.forHorizontalIOS,
                   }}
                 />
               </Stack.Navigator>

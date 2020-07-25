@@ -11,27 +11,26 @@ import {
 import GoogleMap from "./PickACab/GoogleMap";
 import WhereTo from "./PickACab/WhereTo";
 import SavedPlace from "./PickACab/SavedPlace";
-const WIDTH = Dimensions.get("window").width;
-const HEIGHT = Dimensions.get("window").height;
+const { height, width } = Dimensions.get("window");
 
 export default class PickAcab extends Component {
   render() {
     StatusBar.setBarStyle("light-content");
     if (Platform.OS === "android") {
-      StatusBar.setBackgroundColor("#b90000");
-      StatusBar.setTranslucent(true);
+      StatusBar.setBackgroundColor("#000");
+      StatusBar.setTranslucent(false);
     }
     return (
       <React.Fragment>
         <View>
           <StatusBar />
 
-          <View style={styles.container}>
+          <View style={styles.mapView}>
             <GoogleMap />
           </View>
         </View>
         <View style={styles.WheretoBtn_SavedPlaceView}>
-          <WhereTo />
+          <WhereTo navigation={this.props.navigation} />
           <SavedPlace />
         </View>
       </React.Fragment>
@@ -39,13 +38,13 @@ export default class PickAcab extends Component {
   }
 }
 const styles = StyleSheet.create({
-  container: {
+  mapView: {
     backgroundColor: "#f1f1f1",
-    height: 500,
+    height: height - 225,
   },
   WheretoBtn_SavedPlaceView: {
     backgroundColor: "#f1f1f1",
-    height: HEIGHT - 460,
+    height: height - 400,
     marginBottom: 0,
   },
 });
