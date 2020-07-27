@@ -7,38 +7,44 @@ import {
   TouchableOpacity,
   ImageBackground,
   Dimensions,
+  Alert,
 } from "react-native";
 import MapView from "react-native-maps";
-import * as Location from "expo-location";
 import * as Permissions from "expo-permissions";
-import { DestinationButton } from "./DestinationButton";
-import { CurrentLocationButton } from "./CurrentLocationButton";
+
+import * as Location from "expo-location";
+import CurrentLocationButton from "../MakeRequestSubScreen/CurrentLocationButton";
 
 export default class GoogleMap extends Component {
-  state = { region: null };
+  state = { region: null, statusState: null };
 
   UNSAFE_componentWillMount = () => {
     this._getLocationAcync();
   };
   _getLocationAcync = async () => {
     try {
-      let { status } = await Location.requestPermissionsAsync();
-      // await Permissions.askAsync(Permissions.LOCATION);
-      //
-      if (status !== "granted") {
-        setErrorMsg("Permission to access location was denied");
-      }
-      let location = await Location.getCurrentPositionAsync({
-        enabledHighAccurecy: true,
-      });
+      let { status } = await Location.getPermissionsAsync();
+      console.log(status);
+      if (status === "granted") {
+        let location = await Location.getCurrentPositionAsync({
+          enabledHighAccurecy: true,
+        });
+        // let location = await Location.getCurrentPositionAsync({
+        //   accuracy: Location.Accuracy.High,
+        // });
+        console.log(location);
 
-      let region = {
-        latitude: location.coords.latitude,
-        longitude: location.coords.longitude,
-        longitudeDelta: 0.045,
-        latitudeDelta: 0.045,
-      };
-      this.setState({ region });
+        let region = {
+          latitude: location.coords.latitude,
+          longitude: location.coords.longitude,
+          longitudeDelta: 0.045,
+          latitudeDelta: 0.045,
+        };
+        this.setState({ region });
+        this.setState({ statusState: true });
+      } else {
+        Alert.alert("Permission to access location was denied");
+      }
     } catch (e) {
       console.log("Error =" + e);
     }
@@ -53,6 +59,7 @@ export default class GoogleMap extends Component {
     } = this.state.region;
 
     this.map.animateToRegion({
+      useNativeDriver: true,
       latitude,
       longitude,
       longitudeDelta,
@@ -62,8 +69,9 @@ export default class GoogleMap extends Component {
   render() {
     return (
       <View style={styles.mapView}>
-        <DestinationButton />
+        {/* <DestinationButton /> */}
         <CurrentLocationButton
+          st={this.state.statusState}
           cb={() => {
             this.centerMap();
           }}
