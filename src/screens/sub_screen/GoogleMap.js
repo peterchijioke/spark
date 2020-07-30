@@ -18,7 +18,7 @@ import CurrentLocationButton from "../MakeRequestSubScreen/CurrentLocationButton
 export default class GoogleMap extends Component {
   state = { region: null, statusState: null };
 
-  UNSAFE_componentWillMount = () => {
+  componentDidMount = () => {
     this._getLocationAcync();
   };
   _getLocationAcync = async () => {
@@ -26,12 +26,13 @@ export default class GoogleMap extends Component {
       let { status } = await Location.getPermissionsAsync();
       console.log(status);
       if (status === "granted") {
+        // let location = await Location.getCurrentPositionAsync({
+        //   enabledHighAccurecy: true,
+        // });
         let location = await Location.getCurrentPositionAsync({
+          // accuracy: Location.Accuracy.High,
           enabledHighAccurecy: true,
         });
-        // let location = await Location.getCurrentPositionAsync({
-        //   accuracy: Location.Accuracy.High,
-        // });
         console.log(location);
 
         let region = {

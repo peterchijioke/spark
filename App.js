@@ -58,13 +58,20 @@ export default class App extends Component {
         <Root>
           <Provider store={store}>
             <NavigationContainer>
-              <Stack.Navigator
-              // options={{
-              //   headerShown: false,
-              //   gestureDirection: "vertical",
-              // }}
-              >
+              <Stack.Navigator>
                 {/* start */}
+
+                <Stack.Screen
+                  name="pickupdestination"
+                  component={PickupDestinationPage}
+                  options={{
+                    headerShown: false,
+                    // cardStyleInterpolator:
+                    //   CardStyleInterpolators.forScaleFromCenterAndroid,
+                    cardStyleInterpolator:
+                      CardStyleInterpolators.forHorizontalIOS,
+                  }}
+                />
                 <Stack.Screen
                   name="PickCab"
                   component={PickAcab}
@@ -144,18 +151,6 @@ export default class App extends Component {
                     headerTitleAlign: "center",
                     cardStyleInterpolator:
                       CardStyleInterpolators.forHorizontalIOS,
-                  }}
-                />
-
-                <Stack.Screen
-                  name="pickupdestination"
-                  component={PickupDestinationPage}
-                  options={{
-                    headerShown: false,
-                    cardStyleInterpolator:
-                      CardStyleInterpolators.forScaleFromCenterAndroid,
-                    // cardStyleInterpolator:
-                    //   CardStyleInterpolators.forHorizontalIOS,
                   }}
                 />
               </Stack.Navigator>

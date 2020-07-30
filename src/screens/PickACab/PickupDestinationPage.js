@@ -1,10 +1,162 @@
 import React, { Component } from "react";
-import { Text, StyleSheet, View } from "react-native";
+import {
+  Text,
+  StyleSheet,
+  View,
+  Dimensions,
+  TextInput,
+  TouchableOpacity,
+  Alert,
+} from "react-native";
+import { Header, Left, Body, Button, Icon, Title } from "native-base";
+const { height, width } = Dimensions.get("window");
+import { EvilIcons, FontAwesome } from "react-native-vector-icons";
+// import Geocoder from "react-native-geocoding";
+import Location from "expo-location";
+// Geocoder.init("AIzaSyBLsz3Bw1YJAN7GiPzsvYnlJSmxbUOQYMQ", { language: "en" }); // use a valid API key
+
+// AIzaSyBLsz3Bw1YJAN7GiPzsvYnlJSmxbUOQYMQ       MY GOOGLE MAP API Key
 
 export default class PickupDestinationPage extends Component {
+  state = { from: null, To: null, region: null, error: null, result: null };
+  componentDidMount = () => {
+    this._geoLocalAddress();
+  };
+
+  _geoLocalAddress = async () => {
+    // Location.setApiKey("AIzaSyBLsz3Bw1YJAN7GiPzsvYnlJSmxbUOQYMQ");
+    try {
+      const { status } = await Location.requestPermissionsAsync();
+      if (status === "granted") {
+        let location = await Location.getCurrentPositionAsync({
+          // accuracy: Location.Accuracy.High,
+          enabledHighAccurecy: true,
+        });
+
+        let region = {
+          latitude: location.coords.latitude,
+          longitude: location.coords.longitude,
+          // longitudeDelta: 0.045,
+          // latitudeDelta: 0.045,
+        };
+        this.setState({ region });
+        try {
+          let result = await Location.geocodeAsync(this.state.region);
+          this.setState({ result });
+        } catch (e) {
+          this.setState({ error: e.message });
+        }
+        console.log("Error = " + this.state.error);
+        console.log(this.state.result);
+      } else {
+        Alert.alert(
+          "Permission to access location was denied, please enable your location service or imput location manually."
+        );
+      }
+    } catch (error) {
+      console.log(error.message);
+    }
+  };
+
   render() {
-    return <View></View>;
+    return (
+      <React.Fragment>
+        {/* <StatusBar backgroundColor="#000" barStyle="light-content" /> */}
+        <View style={{ flex: 1, backgroundColor: "#ffffff" }}>
+          <Header
+            style={{ backgroundColor: "#fff", elevation: 0 }}
+            // androidStatusBarColor={statusBarColor}
+            androidStatusBarColor="#000000"
+            iosBarStyle="light-content"
+          >
+            <Left>
+              <Button
+                transparent
+                onPress={() => {
+                  this.props.navigation.navigate("PickCab");
+                }}
+              >
+                <Icon name="arrow-back" style={{ color: "#000" }} />
+              </Button>
+            </Left>
+            <Body>
+              <Title
+                style={{ color: "#000", fontSize: 20, fontWeight: "bold" }}
+              >
+                Set destination
+              </Title>
+            </Body>
+          </Header>
+          <View style={styles.inputView}>
+            <View style={styles.inputViewView}>
+              <EvilIcons
+                name="location"
+                color="#0ABDE3"
+                size={25}
+                style={{ top: 15, right: 10 }}
+              />
+              <TextInput
+                style={styles.input}
+                keyboardType="default"
+                onChangeText={(from) => this.setState({ from })}
+                placeholder="Pickup location"
+                autoFocus={false}
+              />
+            </View>
+
+            {/* ============================================================================== */}
+            <View style={styles.inputViewView}>
+              <FontAwesome
+                name="bullseye"
+                color="#2ecc72"
+                size={20}
+                style={{ top: 15, right: 8 }}
+              />
+              <TextInput
+                style={[styles.input, { left: 8 }]}
+                keyboardType="default"
+                onChangeText={(to) => this.setState({ to })}
+                placeholder="Destinaton"
+                autoFocus={false}
+              />
+            </View>
+          </View>
+          <TouchableOpacity style={styles.Btn}>
+            <Text style={{ fontSize: 20, fontWeight: "700", color: "#fff" }}>
+              DONE
+            </Text>
+          </TouchableOpacity>
+        </View>
+      </React.Fragment>
+    );
   }
 }
 
-const styles = StyleSheet.create({});
+const styles = StyleSheet.create({
+  inputViewView: { flexDirection: "row", left: width / 15, marginTop: 20 },
+  inputView: { backgroundColor: "#fff", height: height / 4 },
+  input: {
+    fontSize: 16,
+    borderRadius: 15,
+    backgroundColor: "#DAE0E2",
+    width: "80%",
+    height: height - 760,
+    padding: 10,
+    color: "#7B8788",
+  },
+  Btn: {
+    position: "absolute",
+    bottom: 0,
+    marginBottom: width / 11,
+    width: width - 76,
+    height: 55,
+    borderRadius: 28,
+    elevation: 7,
+    alignSelf: "center",
+    backgroundColor: "#b90000",
+    borderWidth: 2,
+    borderColor: "#fff",
+    alignItems: "center",
+    justifyContent: "center",
+  },
+});

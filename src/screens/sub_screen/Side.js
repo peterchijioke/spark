@@ -111,7 +111,7 @@ export default class SideBar extends Component {
           {/* ===================================================================== */}
           <View style={styles.btn}>
             <FontAwesome
-              name="question-circle-o"
+              name="info-circle"
               size={22}
               // color="#77e76c"
               style={[styles.icon]}

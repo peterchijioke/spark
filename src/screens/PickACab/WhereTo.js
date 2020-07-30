@@ -8,7 +8,6 @@ import {
   Picker,
 } from "react-native";
 import { Entypo } from "react-native-vector-icons";
-import PickupDestinationPage from "./PickupDestinationPage";
 
 const WIDTH = Dimensions.get("window").width;
 
@@ -31,7 +30,7 @@ export default class WhereTo extends Component {
           />
 
           <Text style={{ fontSize: 18, fontWeight: "bold", color: "#b90000" }}>
-            Where to ?
+            Set destination
           </Text>
         </TouchableOpacity>
         <View style={styles.pickerView}>
