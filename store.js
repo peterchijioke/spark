@@ -18,6 +18,8 @@ class Store {
     loginPassword: "",
   };
 
+  locationInStore = { _region: "" };
+
   // register actions
   setFName = (data) => {
     this.userDetails.fName = data;
@@ -45,6 +47,9 @@ class Store {
   setLoginEmail = (data) => {
     this.userLoginDetails.loginEmail = data;
   };
+  setRegionInStore = (data) => {
+    this.locationInStore._region = data;
+  };
 }
 
 // another way to decorate variables with observable
@@ -62,6 +67,9 @@ decorate(Store, {
   setUid: action,
   userDetails: observable,
   userLoginDetails: observable,
+  // region
+  locationInStore: observable,
+  setRegionInStore: action,
 });
 
 // export class

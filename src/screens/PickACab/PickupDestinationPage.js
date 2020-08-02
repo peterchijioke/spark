@@ -12,56 +12,40 @@ import { Header, Left, Body, Button, Icon, Title } from "native-base";
 const { height, width } = Dimensions.get("window");
 import { EvilIcons, FontAwesome } from "react-native-vector-icons";
 // import Geocoder from "react-native-geocoding";
+import * as Permissions from "expo-permissions";
 import Location from "expo-location";
-// Geocoder.init("AIzaSyBLsz3Bw1YJAN7GiPzsvYnlJSmxbUOQYMQ", { language: "en" }); // use a valid API key
+import AsyncStorage from "@react-native-community/async-storage";
 
 // AIzaSyBLsz3Bw1YJAN7GiPzsvYnlJSmxbUOQYMQ       MY GOOGLE MAP API Key
-
 export default class PickupDestinationPage extends Component {
-  state = { from: null, To: null, region: null, error: null, result: null };
+  state = { from: null, to: null };
   componentDidMount = () => {
-    this._geoLocalAddress();
+    this._fetchRegionFromStore();
   };
-
-  _geoLocalAddress = async () => {
-    // Location.setApiKey("AIzaSyBLsz3Bw1YJAN7GiPzsvYnlJSmxbUOQYMQ");
+  componentWillMount = async () => {
+    // AsyncStorage.removeItem("address");
+  };
+  _fetchRegionFromStore = async () => {
     try {
-      const { status } = await Location.requestPermissionsAsync();
-      if (status === "granted") {
-        let location = await Location.getCurrentPositionAsync({
-          // accuracy: Location.Accuracy.High,
-          enabledHighAccurecy: true,
-        });
-
-        let region = {
-          latitude: location.coords.latitude,
-          longitude: location.coords.longitude,
-          // longitudeDelta: 0.045,
-          // latitudeDelta: 0.045,
-        };
-        this.setState({ region });
-        try {
-          let result = await Location.geocodeAsync(this.state.region);
-          this.setState({ result });
-        } catch (e) {
-          this.setState({ error: e.message });
-        }
-        console.log("Error = " + this.state.error);
-        console.log(this.state.result);
-      } else {
-        Alert.alert(
-          "Permission to access location was denied, please enable your location service or imput location manually."
-        );
-      }
-    } catch (error) {
-      console.log(error.message);
+      const data = await AsyncStorage.getItem("address");
+      let address = JSON.parse(data);
+      this.setState({ address: address[0].street });
+    } catch (e) {
+      console.log(e.message);
     }
   };
 
+  onChangeFromText = (from) => {
+    this.setState({ from });
+  };
+  onChangeToText = (to) => {
+    this.setState({ to });
+  };
   render() {
+    const adi = this.state.address;
+    console.log(adi);
     return (
       <React.Fragment>
-        {/* <StatusBar backgroundColor="#000" barStyle="light-content" /> */}
         <View style={{ flex: 1, backgroundColor: "#ffffff" }}>
           <Header
             style={{ backgroundColor: "#fff", elevation: 0 }}
@@ -98,9 +82,10 @@ export default class PickupDestinationPage extends Component {
               <TextInput
                 style={styles.input}
                 keyboardType="default"
-                onChangeText={(from) => this.setState({ from })}
+                onChangeText={(from) => this.onChangeFromText(from)}
                 placeholder="Pickup location"
                 autoFocus={false}
+                value={adi}
               />
             </View>
 
@@ -115,7 +100,7 @@ export default class PickupDestinationPage extends Component {
               <TextInput
                 style={[styles.input, { left: 8 }]}
                 keyboardType="default"
-                onChangeText={(to) => this.setState({ to })}
+                onChangeText={(to) => this.onChangeToText(to)}
                 placeholder="Destinaton"
                 autoFocus={false}
               />

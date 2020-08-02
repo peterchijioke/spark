@@ -62,21 +62,22 @@ export default class App extends Component {
                 {/* start */}
 
                 <Stack.Screen
+                  name="PickCab"
+                  component={PickAcab}
+                  options={{
+                    headerShown: false,
+                    cardStyleInterpolator:
+                      CardStyleInterpolators.forHorizontalIOS,
+                  }}
+                />
+
+                <Stack.Screen
                   name="pickupdestination"
                   component={PickupDestinationPage}
                   options={{
                     headerShown: false,
                     // cardStyleInterpolator:
                     //   CardStyleInterpolators.forScaleFromCenterAndroid,
-                    cardStyleInterpolator:
-                      CardStyleInterpolators.forHorizontalIOS,
-                  }}
-                />
-                <Stack.Screen
-                  name="PickCab"
-                  component={PickAcab}
-                  options={{
-                    headerShown: false,
                     cardStyleInterpolator:
                       CardStyleInterpolators.forHorizontalIOS,
                   }}

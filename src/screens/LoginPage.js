@@ -34,12 +34,7 @@ const source = CancelToken.source();
 @observer
 export default class LoginPage extends Component {
   state = { user_emailPhoneNumber: "", user_password: "" };
-  componentDidMount() {
-    // console.log(this.props.store.userLoginDetails);
-    // if (this.state.user_emailPhoneNumber != "") {
-    //   this.setState({ disableBtn: true });
-    // }
-  }
+
   componentWillUnmount() {
     source.cancel();
   }
