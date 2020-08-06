@@ -11,9 +11,6 @@ import {
 import { Header, Left, Body, Button, Icon, Title } from "native-base";
 const { height, width } = Dimensions.get("window");
 import { EvilIcons, FontAwesome } from "react-native-vector-icons";
-// import Geocoder from "react-native-geocoding";
-import * as Permissions from "expo-permissions";
-import Location from "expo-location";
 import AsyncStorage from "@react-native-community/async-storage";
 
 // AIzaSyBLsz3Bw1YJAN7GiPzsvYnlJSmxbUOQYMQ       MY GOOGLE MAP API Key
@@ -22,14 +19,15 @@ export default class PickupDestinationPage extends Component {
   componentDidMount = () => {
     this._fetchRegionFromStore();
   };
-  componentWillMount = async () => {
-    // AsyncStorage.removeItem("address");
-  };
+  // UNSAFE_componentWillMount = async () => {
+  //   // AsyncStorage.removeItem("address");
+  // };
   _fetchRegionFromStore = async () => {
     try {
       const data = await AsyncStorage.getItem("address");
       let address = JSON.parse(data);
       this.setState({ address: address[0].street });
+      console.log(address[0].street);
     } catch (e) {
       console.log(e.message);
     }
@@ -43,7 +41,6 @@ export default class PickupDestinationPage extends Component {
   };
   render() {
     const adi = this.state.address;
-    console.log(adi);
     return (
       <React.Fragment>
         <View style={{ flex: 1, backgroundColor: "#ffffff" }}>
@@ -57,7 +54,7 @@ export default class PickupDestinationPage extends Component {
               <Button
                 transparent
                 onPress={() => {
-                  this.props.navigation.navigate("PickCab");
+                  this.props.navigation.goBack();
                 }}
               >
                 <Icon name="arrow-back" style={{ color: "#000" }} />
@@ -85,7 +82,7 @@ export default class PickupDestinationPage extends Component {
                 onChangeText={(from) => this.onChangeFromText(from)}
                 placeholder="Pickup location"
                 autoFocus={false}
-                value={adi}
+                defaultValue={adi}
               />
             </View>
 

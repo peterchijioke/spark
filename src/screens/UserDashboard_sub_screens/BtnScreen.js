@@ -8,12 +8,17 @@ import {
   Image,
 } from "react-native";
 
-const BtnScreen = () => {
+const BtnScreen = ({ navigation }) => {
   return (
     <View style={styles.btn_view}>
       {/* Delivery btn */}
       <View style={styles.btn_inner}>
-        <TouchableOpacity style={[styles.btn]}>
+        <TouchableOpacity
+          onPress={() => {
+            navigation.navigate("MakeRequest");
+          }}
+          style={[styles.btn]}
+        >
           <View>
             <Image
               source={require("../../img/man1.png")}
@@ -31,7 +36,12 @@ const BtnScreen = () => {
       </View>
       {/* Get a ride btn */}
       <View style={styles.btn_inner}>
-        <TouchableOpacity style={[styles.btn]}>
+        <TouchableOpacity
+          onPress={() => {
+            navigation.navigate("PickCab");
+          }}
+          style={[styles.btn]}
+        >
           <View>
             <Image
               source={require("../../img/car.png")}

@@ -2,20 +2,20 @@ import React, { Component } from "react";
 
 import {
   StyleSheet,
-  Text,
   View,
-  TouchableOpacity,
-  ImageBackground,
   Dimensions,
   Alert,
+  TouchableOpacity,
 } from "react-native";
 import MapView from "react-native-maps";
 // import * as Permissions from "expo-permissions";
 import AsyncStorage from "@react-native-community/async-storage";
 
 import * as Location from "expo-location";
+import { Icon } from "native-base";
 import CurrentLocationButton from "../MakeRequestSubScreen/CurrentLocationButton";
 import { inject, observer } from "mobx-react";
+const { height, width } = Dimensions.get("window");
 
 @inject("store")
 @observer
@@ -57,8 +57,8 @@ export default class GoogleMap extends Component {
 
         try {
           // setRegionInStore(region);
-          let asynValue = JSON.stringify(userAddress);
-          await AsyncStorage.setItem("address", asynValue);
+          let addressObj = JSON.stringify(userAddress);
+          await AsyncStorage.setItem("address", addressObj);
         } catch (error) {
           console.log(error);
         }
@@ -93,6 +93,15 @@ export default class GoogleMap extends Component {
     return (
       <View style={styles.mapView}>
         {/* <DestinationButton /> */}
+        <TouchableOpacity
+          onPress={() => {
+            this.props.navigation.goBack();
+          }}
+          style={styles.iconArrow}
+        >
+          <Icon name="arrow-back" />
+        </TouchableOpacity>
+
         <CurrentLocationButton
           st={this.state.statusState}
           cb={() => {
@@ -131,5 +140,14 @@ const styles = StyleSheet.create({
     flex: 1,
     height: 200,
     // marginTop: ,
+  },
+  iconArrow: {
+    zIndex: 9,
+    position: "absolute",
+    shadowRadius: 5,
+    left: 15,
+    top: 10,
+    // justifyContent: "space-around",
+    // alignItems: "center",
   },
 });

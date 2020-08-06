@@ -12,9 +12,11 @@ import {
   Image,
   ToastAndroid,
   Keyboard,
-  Button,
   Alert,
+  ActivityIndicator,
 } from "react-native";
+import NetInfo from "@react-native-community/netinfo";
+import Loading from "react-native-whc-loading";
 
 import {
   widthPercentageToDP as wp,
@@ -24,6 +26,7 @@ import { MaterialCommunityIcons, Fontisto } from "@expo/vector-icons";
 import { observer, inject } from "mobx-react";
 import jwt from "jwt-decode";
 import axios from "axios";
+
 // import { Button } from "react-native-paper";
 const HEIGHT = Dimensions.get("window").height;
 const WIDTH = Dimensions.get("window").width;
@@ -33,7 +36,7 @@ const source = CancelToken.source();
 @inject("store")
 @observer
 export default class LoginPage extends Component {
-  state = { user_emailPhoneNumber: "", user_password: "" };
+  state = { user_emailPhoneNumber: "", user_password: "", loading: false };
 
   componentWillUnmount() {
     source.cancel();
@@ -110,26 +113,41 @@ export default class LoginPage extends Component {
         typeof userLoginDetails.loginEmail != "undefined" &&
         typeof userLoginDetails.loginPassword != "undefined"
       ) {
-        const DATA = {
-          email: userLoginDetails.loginEmail,
-          password: userLoginDetails.loginPassword,
-        };
+        // console.log(DATA);
+        this.refs.loading.show();
+        NetInfo.fetch().then(async (state) => {
+          // console.log("Connection type", state.type);
+          // console.log("Is connected?", state.isConnected);
+          if (state.isConnected !== true) {
+            Alert.alert("No internet connection");
+          } else {
+            const DATA = {
+              email: userLoginDetails.loginEmail,
+              password: userLoginDetails.loginPassword,
+            };
+            try {
+              const resp = await axios.post(
+                "https://sparklogistics.herokuapp.com/users/login",
+                DATA,
+                {
+                  cancelToken: source.token,
+                }
+              );
+              // this.poupRespo();
 
-        console.log(DATA);
-
-        try {
-          const resp = await axios.get(
-            "https://sparklogistics.herokuapp.com/users/login",
-            DATA,
-            {
-              cancelToken: source.token,
+              if (resp.status === 200) {
+                this.refs.loading.close();
+                this.props.navigation.navigate("UserDashboard");
+              }
+              console.log(resp.status);
+            } catch (e) {
+              console.log(e);
             }
-          );
-          console.log(resp.data.message);
-          this.poupRespo();
-        } catch (e) {
-          console.log(e.response);
-        }
+          }
+        });
+
+        // const netL = await NetInfo.state.isConnected.fetch();
+        // console.log(netL);
       } else {
         console.log("undefined field available");
       }
@@ -140,7 +158,7 @@ export default class LoginPage extends Component {
     return (
       <React.Fragment>
         {/* <this.headerFunc /> */}
-        <StatusBar barStyle="light-content" backgroundColor="#b90000" />
+        <StatusBar />
 
         <View style={{ backgroundColor: "#f1f1f1" }}>
           {/* <GirlDrive_Login /> */}
@@ -241,6 +259,7 @@ export default class LoginPage extends Component {
             </SafeAreaView>
           </ImageBackground>
         </View>
+        <Loading ref="loading" />
       </React.Fragment>
     );
   }

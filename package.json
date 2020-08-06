@@ -10,6 +10,7 @@
   "dependencies": {
     "@react-native-community/async-storage": "^1.11.0",
     "@react-native-community/masked-view": "0.1.10",
+    "@react-native-community/netinfo": "5.9.2",
     "@react-navigation/native": "^5.7.2",
     "@react-navigation/stack": "^5.8.0",
     "@types/googlemaps": "^3.39.11",
@@ -45,6 +46,7 @@
     "react-native-vector-icons": "^7.0.0",
     "react-native-web": "~0.13.4",
     "react-native-web-maps": "^0.2.0",
+    "react-native-whc-loading": "^1.0.3",
     "react-navigation-slide-from-right-transition": "^1.0.4"
   },
   "devDependencies": {

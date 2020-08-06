@@ -71,7 +71,7 @@ export default class DrawerActivity extends Component {
             renderItem={({ item }) => <CardImge />}
           /> */}
             {/* btn Area */}
-            <BtnScreen />
+            <BtnScreen navigation={this.props.navigation} />
           </Container>
           {/* text Area */}
           <Footer_screen />

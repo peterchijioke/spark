@@ -8,18 +8,6 @@ import {
   TouchableOpacity,
   Dimensions,
 } from "react-native";
-import {
-  Container,
-  Header,
-  Content,
-  Card,
-  CardItem,
-  Thumbnail,
-  Button,
-  Icon,
-  Left,
-  Body,
-} from "native-base";
 
 const DATA = [
   {
@@ -44,7 +32,7 @@ const DATA = [
   },
 ];
 
-const CarChoice = () => {
+const CarChoice = ({ navigation }) => {
   return (
     <React.Fragment>
       <View style={{ flex: 1, backgroundColor: "#f1f1f1" }}>
@@ -75,7 +63,12 @@ const CarChoice = () => {
         />
       </View>
       <View style={styles.btnView}>
-        <TouchableOpacity style={styles.btn}>
+        <TouchableOpacity
+          onPress={() => {
+            navigation.navigate("LogisticsBooking");
+          }}
+          style={styles.btn}
+        >
           <Text style={{ fontSize: 20, color: "#b90000" }}>Make Request</Text>
         </TouchableOpacity>
       </View>

@@ -24,6 +24,7 @@ import { Root } from "popup-ui";
 import { AppLoading } from "expo";
 import getSlideFromRightTransition from "react-navigation-slide-from-right-transition";
 import PickupDestinationPage from "./src/screens/PickACab/PickupDestinationPage";
+import Logistics_bookingPage from "./src/screens/Logistics_bookingPage";
 
 export default class App extends Component {
   state = { loading: true, appIsReady: false };
@@ -62,6 +63,45 @@ export default class App extends Component {
                 {/* start */}
 
                 <Stack.Screen
+                  name="Connect"
+                  component={Connect}
+                  options={{
+                    headerShown: false,
+                    cardStyleInterpolator:
+                      CardStyleInterpolators.forHorizontalIOS,
+                  }}
+                />
+
+                <Stack.Screen
+                  name="MakeRequest"
+                  component={MakeDeliveryRequest}
+                  options={{
+                    headerShown: false,
+                    cardStyleInterpolator:
+                      CardStyleInterpolators.forHorizontalIOS,
+                  }}
+                />
+                <Stack.Screen
+                  name="LogisticsBooking"
+                  component={Logistics_bookingPage}
+                  options={{
+                    headerShown: false,
+                    cardStyleInterpolator:
+                      CardStyleInterpolators.forHorizontalIOS,
+                  }}
+                />
+
+                <Stack.Screen
+                  name="UserDashboard"
+                  component={UserDashboard}
+                  options={{
+                    headerShown: false,
+                    cardStyleInterpolator:
+                      CardStyleInterpolators.forHorizontalIOS,
+                  }}
+                />
+
+                <Stack.Screen
                   name="PickCab"
                   component={PickAcab}
                   options={{
@@ -78,24 +118,6 @@ export default class App extends Component {
                     headerShown: false,
                     // cardStyleInterpolator:
                     //   CardStyleInterpolators.forScaleFromCenterAndroid,
-                    cardStyleInterpolator:
-                      CardStyleInterpolators.forHorizontalIOS,
-                  }}
-                />
-                <Stack.Screen
-                  name="UserDashboard"
-                  component={UserDashboard}
-                  options={{
-                    headerShown: false,
-                    cardStyleInterpolator:
-                      CardStyleInterpolators.forHorizontalIOS,
-                  }}
-                />
-                <Stack.Screen
-                  name="Connect"
-                  component={Connect}
-                  options={{
-                    headerShown: false,
                     cardStyleInterpolator:
                       CardStyleInterpolators.forHorizontalIOS,
                   }}
@@ -117,16 +139,6 @@ export default class App extends Component {
                   component={Splash}
                   options={{ headerShown: false }}
                 /> */}
-
-                <Stack.Screen
-                  name="Make Request"
-                  component={MakeDeliveryRequest}
-                  options={{
-                    headerShown: false,
-                    cardStyleInterpolator:
-                      CardStyleInterpolators.forHorizontalIOS,
-                  }}
-                />
 
                 <Stack.Screen
                   name="Delivery Location"

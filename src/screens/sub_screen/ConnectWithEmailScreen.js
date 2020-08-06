@@ -182,10 +182,11 @@ export default class ConnectWithEmailScreen extends Component {
           );
           console.log(resp.data.message);
           this.poupRespo();
+          this.props.navigation.navigate("LoginPage");
         } catch (e) {
-          console.log(e.response);
+          console.log(e.response.data);
         }
-        console.log(DATA);
+        // console.log(DATA);
       } else {
         console.log("undefined field available..");
       }

@@ -25,7 +25,7 @@ export default class PickAcab extends Component {
         <View>
           <StatusBar />
           <View style={styles.mapView}>
-            <GoogleMap />
+            <GoogleMap navigation={this.props.navigation} />
           </View>
         </View>
         <View style={styles.WheretoBtn_SavedPlaceView}>

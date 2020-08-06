@@ -20,22 +20,6 @@ const girlDrive_connect = ({}) => {
           style={{ height: HEIGHT - 600, width: WIDTH - 200, marginTop: 10 }}
         ></ImageBackground>
       </View>
-
-      {/* <View style={Styles.btnView}>
-        <TouchableOpacity
-          onPress={ShowEmailScreenFunction}
-          style={[Styles.btnEmail, { backgroundColor: "#fff" }]}
-        >
-          <Text style={Styles.btnText}>Email</Text>
-        </TouchableOpacity>
-
-        <TouchableOpacity
-          onPress={ShowPhoneScreenFunction}
-          style={[Styles.btnPhone, { backgroundColor: "#f2e4e3" }]}
-        >
-          <Text style={Styles.btnText}>Phone</Text>
-        </TouchableOpacity>
-      </View> */}
     </View>
   );
 };
