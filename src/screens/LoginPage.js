@@ -36,11 +36,22 @@ const source = CancelToken.source();
 @inject("store")
 @observer
 export default class LoginPage extends Component {
-  state = { user_emailPhoneNumber: "", user_password: "", loading: false };
+  state = { user_emailPhoneNumber: null, user_password: null };
 
   componentWillUnmount() {
     source.cancel();
   }
+
+  componentDidMount = () => {
+    if (
+      this.state.user_emailPhoneNumber !== null ||
+      this.state.user_password !== ""
+    ) {
+      this.setState({ btn: null });
+    } else {
+      this.setState({ btn: 0.5 });
+    }
+  };
 
   // password validation
 
@@ -120,6 +131,7 @@ export default class LoginPage extends Component {
           // console.log("Is connected?", state.isConnected);
           if (state.isConnected !== true) {
             Alert.alert("No internet connection");
+            this.refs.loading.close();
           } else {
             const DATA = {
               email: userLoginDetails.loginEmail,
@@ -139,17 +151,25 @@ export default class LoginPage extends Component {
                 this.refs.loading.close();
                 this.props.navigation.navigate("UserDashboard");
               }
-              console.log(resp.status);
+              this.refs.loading.close();
+
+              console.log(resp);
             } catch (e) {
-              console.log(e);
+              if (e.response.status === 401) {
+                Keyboard.dismiss();
+                ToastAndroid.show(
+                  "Email or password is incorrect",
+                  ToastAndroid.LONG
+                );
+                this.refs.loading.close();
+              }
+              // console.log(e.response.status);
             }
           }
         });
-
-        // const netL = await NetInfo.state.isConnected.fetch();
-        // console.log(netL);
       } else {
         console.log("undefined field available");
+        this.refs.loading.close();
       }
     }
   };
@@ -250,8 +270,8 @@ export default class LoginPage extends Component {
               </View>
               <TouchableOpacity
                 touchSoundDisabled={false}
-                disabled={this.state.disableBtn}
-                style={Styles.btn}
+                disabled={this.state.btn}
+                style={[Styles.btn, { opacity: this.state.btn }]}
                 onPress={this.loginEndPoint}
               >
                 <Text style={Styles.btnTxt}>Login</Text>
