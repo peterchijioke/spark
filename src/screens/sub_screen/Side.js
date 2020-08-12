@@ -10,6 +10,7 @@ import {
   Dimensions,
 } from "react-native";
 import { Button, Thumbnail } from "native-base";
+import AsyncStorage from "@react-native-community/async-storage";
 import {
   MaterialIcons,
   FontAwesome,
@@ -18,15 +19,13 @@ import {
 } from "react-native-vector-icons";
 import * as Linking from "expo-linking";
 
+import JwtDecode from "jwt-decode";
+
 const { width, height } = Dimensions.get("window");
 
 export default class SideBar extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {};
-  }
-
   render() {
+    const { user } = this.props;
     return (
       <React.Fragment>
         <ScrollView style={styles.container}>
@@ -43,7 +42,11 @@ export default class SideBar extends Component {
                 }}
               ></View>
               <View style={{ marginLeft: 50, marginTop: 20 }}>
-                <Text style={{ fontSize: 16, fontWeight: "bold" }}>Peter</Text>
+                <Text style={{ fontSize: 16, fontWeight: "bold" }}>
+                  Hello,
+                  <Text> {user.firstname}</Text>
+                </Text>
+
                 <TouchableOpacity>
                   <Text style={{ fontSize: 16 }}>View profile</Text>
                 </TouchableOpacity>
@@ -150,7 +153,7 @@ export default class SideBar extends Component {
               Linking.openURL("https://google.com");
             }}
           >
-            <Text style={styles.toDrivetxt}>SIGN UP TO DRIVE</Text>
+            <Text style={styles.toDrivetxt}>WANT TO DRIVE?</Text>
           </TouchableOpacity>
         </View>
       </React.Fragment>

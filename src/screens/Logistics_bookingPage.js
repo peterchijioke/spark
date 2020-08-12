@@ -6,31 +6,20 @@ import {
   TextInput,
   TouchableOpacity,
   Text,
+  ImageBackground,
 } from "react-native";
 import { Header, Left, Body, Button, Icon, Title } from "native-base";
 import { Fontisto, Entypo } from "react-native-vector-icons";
+const { height, width } = Dimensions.get("window");
 
-// {
-// "userid":"5f049a2c952d96002489aec5",
-// "sender_firstname":"Max",
-// "sender_surname":"Ludwig",
-// "sender_telephone":"0812566589",
-// "sender_address":"18 Ramlat Timson Street",
-// "sender_latitude":"59.3293371",
-// "sender_longitude":"13.4877472",
-// "receiver_firstname":"Rogers",
-// "receiver_surname":"Captain",
-// "receiver_telephone":"08182210215",
-// "receiver_address":"30 Asiri Akofa Street",
-// "receiver_latitude":"59.3225525",
-// "receiver_longitude":"13.4619422"
-// }
-
-export default class Logistics_bookingPage extends Component {
+export class Logistics_bookingPage extends Component {
   render() {
     return (
       <React.Fragment>
-        <View style={styles.container}>
+        <ImageBackground
+          source={require("../img/tenor.gif")}
+          style={{ width: width, height: height }}
+        >
           <Header
             style={{ backgroundColor: "#e92d2d" }}
             // androidStatusBarColor={statusBarColor}
@@ -142,12 +131,11 @@ export default class Logistics_bookingPage extends Component {
           >
             <Text style={[styles.btnText]}>BOOK</Text>
           </TouchableOpacity>
-        </View>
+        </ImageBackground>
       </React.Fragment>
     );
   }
 }
-let { height, width } = Dimensions.get("window");
 
 const styles = StyleSheet.create({
   container: {
@@ -208,3 +196,5 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
   },
 });
+
+export default Logistics_bookingPage;

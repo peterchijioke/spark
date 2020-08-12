@@ -17,7 +17,6 @@ import {
 } from "react-native";
 import NetInfo from "@react-native-community/netinfo";
 import Loading from "react-native-whc-loading";
-
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
@@ -25,6 +24,7 @@ import {
 import { MaterialCommunityIcons, Fontisto } from "@expo/vector-icons";
 import { observer, inject } from "mobx-react";
 import jwt from "jwt-decode";
+import AsyncStorage from "@react-native-community/async-storage";
 import axios from "axios";
 
 // import { Button } from "react-native-paper";
@@ -150,10 +150,17 @@ export default class LoginPage extends Component {
               if (resp.status === 200) {
                 this.refs.loading.close();
                 this.props.navigation.navigate("UserDashboard");
+                // console.log(resp.data.token);
+                const jwtData = JSON.stringify(resp.data.token);
+                try {
+                  await AsyncStorage.setItem("userDetails", jwtData);
+                } catch (error) {
+                  console.log(error.response);
+                }
+
+                console.log(resp.data.message);
               }
               this.refs.loading.close();
-
-              console.log(resp);
             } catch (e) {
               if (e.response.status === 401) {
                 Keyboard.dismiss();

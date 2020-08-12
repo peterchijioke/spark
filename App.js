@@ -61,6 +61,15 @@ export default class App extends Component {
             <NavigationContainer>
               <Stack.Navigator>
                 {/* start */}
+                <Stack.Screen
+                  name="LogisticsBooking"
+                  component={Logistics_bookingPage}
+                  options={{
+                    headerShown: false,
+                    cardStyleInterpolator:
+                      CardStyleInterpolators.forHorizontalIOS,
+                  }}
+                />
 
                 <Stack.Screen
                   name="Connect"
@@ -75,15 +84,6 @@ export default class App extends Component {
                 <Stack.Screen
                   name="MakeRequest"
                   component={MakeDeliveryRequest}
-                  options={{
-                    headerShown: false,
-                    cardStyleInterpolator:
-                      CardStyleInterpolators.forHorizontalIOS,
-                  }}
-                />
-                <Stack.Screen
-                  name="LogisticsBooking"
-                  component={Logistics_bookingPage}
                   options={{
                     headerShown: false,
                     cardStyleInterpolator:

@@ -16,8 +16,25 @@ import { statusBarColor, stauBarColorDash } from "../screens/sub_screen/Colors";
 import BtnScreen from "./UserDashboard_sub_screens/BtnScreen";
 import Footer_screen from "./UserDashboard_sub_screens/Footer_screen";
 import { Dimensions } from "react-native";
+import AsyncStorage from "@react-native-community/async-storage";
+import JwtDecode from "jwt-decode";
+// AsyncStorage.getItem("UserDetails");
 
 export default class DrawerActivity extends Component {
+  state = { details: "" };
+  componentDidMount = async () => {
+    try {
+      const AcyncUserdetails = await AsyncStorage.getItem("userDetails");
+      const result =
+        AcyncUserdetails != null ? JSON.parse(AcyncUserdetails) : null;
+      console.log(result);
+      const details = JwtDecode(result);
+      this.setState({ details });
+      console.log(details);
+    } catch (error) {
+      console.log(error.response);
+    }
+  };
   closeDrawer = () => {
     this.drawer._root.close();
   };
@@ -32,7 +49,9 @@ export default class DrawerActivity extends Component {
           ref={(ref) => {
             this.drawer = ref;
           }}
-          content={<SideBar navigator={this.navigator} />}
+          content={
+            <SideBar navigator={this.navigator} user={this.state.details} />
+          }
           onClose={() => this.closeDrawer()}
         >
           <Container
@@ -54,7 +73,11 @@ export default class DrawerActivity extends Component {
               </Left>
               <Body>
                 <Title
-                  style={{ color: "#fff", fontSize: 27, fontWeight: "bold" }}
+                  style={{
+                    color: "#fff",
+                    fontSize: 27,
+                    fontWeight: "bold",
+                  }}
                 >
                   Dashboard
                 </Title>
