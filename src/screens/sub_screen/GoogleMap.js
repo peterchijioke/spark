@@ -49,14 +49,17 @@ export default class GoogleMap extends Component {
         };
         this.setState({ region });
         this.setState({ statusState: true });
-
-        let userAddress = await Location.reverseGeocodeAsync({
+        let userCord = {
           latitude: location.coords.latitude,
           longitude: location.coords.longitude,
-        });
+        };
+
+        let userAddress = await Location.reverseGeocodeAsync(userCord);
 
         try {
           // setRegionInStore(region);
+          let Usercordinate = JSON.stringify(userCord);
+          await AsyncStorage.setItem("cord", Usercordinate);
           let addressObj = JSON.stringify(userAddress);
           await AsyncStorage.setItem("address", addressObj);
         } catch (error) {

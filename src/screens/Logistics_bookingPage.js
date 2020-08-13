@@ -8,6 +8,7 @@ import {
   Text,
   ImageBackground,
   Keyboard,
+  Image,
 } from "react-native";
 import {
   Header,
@@ -20,12 +21,20 @@ import {
   Root,
 } from "native-base";
 import { Fontisto, Entypo } from "react-native-vector-icons";
+import AsyncStorage from "@react-native-community/async-storage";
 const { height, width } = Dimensions.get("window");
 
 export class Logistics_bookingPage extends Component {
-  state = { firstname: "", surname: "", mobile: "", address: "" };
+  state = {
+    firstname: "",
+    surname: "",
+    mobile: "",
+    address: "",
+    resultAddy: "",
+    details: "",
+  };
 
-  bookEndpoint = () => {
+  bookEndpoint = async () => {
     if (
       this.state.firstname === "" &&
       this.state.surname === "" &&
@@ -72,11 +81,51 @@ export class Logistics_bookingPage extends Component {
         type: "warning",
       });
     } else {
+      try {
+        const AcyncUserdetails = await AsyncStorage.getItem("userDetails");
+        const detailresult =
+          AcyncUserdetails != null ? JSON.parse(AcyncUserdetails) : null;
+        //  console.log(result);
+        const details = JwtDecode(detailresult);
+        this.setState({ details });
+
+        const AcyncUsercord = await AsyncStorage.getItem("cord");
+        const result = AcyncUsercord != null ? JSON.parse(AcyncUsercord) : null;
+        this.setState({ resultAddy: result });
+      } catch (error) {
+        console.log(error);
+      }
+
+      // {
+      // "userid":"5f049a2c952d96002489aec5",
+      // "sender_firstname":"Max",
+      // "sender_surname":"Ludwig",
+      // "sender_telephone":"0812566589",
+      // "sender_address":"18 Ramlat Timson Street",
+      // "sender_latitude":"59.3293371",
+      // "sender_longitude":"13.4877472",
+      // "receiver_firstname":"Rogers",
+      // "receiver_surname":"Captain",
+      // "receiver_telephone":"08182210215",
+      // "receiver_address":"30 Asiri Akofa Street",
+      // "receiver_latitude":"59.3225525",
+      // "receiver_longitude":"13.4619422"
+      // }
+
       const recieverData = {
-        fname: this.state.firstname,
-        surename: this.state.surname,
-        phone: this.state.mobile,
-        addy: this.state.address,
+        userid: this.state.details.userid,
+        sender_firstname: this.state.details.firstname,
+        sender_surname: this.state.details.surname,
+        sender_telephone: this.state.details.phone_number,
+        // sender_address:this.state.resultAddy
+        sender_latitude: this.state.resultAddy.latitude,
+        sender_longitude: this.state.resultAddy.longitude,
+        receiver_firstname: this.state.firstname,
+        receiver_surname: this.state.surname,
+        receiver_telephone: this.state.mobile,
+        receiver_address: this.state.address,
+        receiver_latitude: "59.3225525",
+        receiver_longitude: "13.4619422",
       };
 
       console.log(recieverData);
@@ -90,7 +139,7 @@ export class Logistics_bookingPage extends Component {
           source={require("../img/tree.gif")}
           style={styles.container}
         >
-          <Header
+          {/* <Header
             style={{ backgroundColor: "#e92d2d" }}
             // androidStatusBarColor={statusBarColor}
             androidStatusBarColor="#000000"
@@ -113,7 +162,65 @@ export class Logistics_bookingPage extends Component {
                 Receiver's details
               </Title>
             </Body>
-          </Header>
+          </Header> */}
+
+          <View
+            style={{
+              backgroundColor: "#133",
+              width: width,
+              height: height - 550,
+              backgroundColor: "#e92d2d",
+              borderBottomLeftRadius: 28,
+              borderBottomRightRadius: 60,
+              elevation: 7,
+              // borderBottomWidth: 1,
+            }}
+          >
+            <TouchableOpacity
+              onPress={() => {
+                this.props.navigation.goBack();
+              }}
+              style={styles.iconArrow}
+            >
+              <Icon name="arrow-back" style={{ color: "#fff" }} />
+            </TouchableOpacity>
+
+            <Image
+              source={require("../img/logowhite.png")}
+              style={{
+                width: 100,
+                height: 30,
+                top: 10,
+                alignSelf: "center",
+                marginBottom: 5,
+              }}
+            />
+            <View>
+              <Text
+                style={{
+                  fontSize: 26,
+                  top: 25,
+                  left: 20,
+                  color: "#fff",
+                }}
+              >
+                Hello, <Text>Chukwu</Text>
+              </Text>
+              <Text style={{ marginTop: 30, left: 20, color: "#fff" }}>
+                <Text
+                  style={{
+                    fontSize: 15,
+                    fontWeight: "bold",
+                    color: "#133",
+                  }}
+                >
+                  NOTE:
+                </Text>
+                Please make sure all details are correct before submitting the
+                form!
+              </Text>
+            </View>
+          </View>
           <View style={styles.TextInputView}>
             {/* email end */}
             <View style={[styles.inputView]}>
@@ -209,10 +316,9 @@ const styles = StyleSheet.create({
     // backgroundColor: "#fff",
     alignItems: "center",
     alignSelf: "center",
-
-    height: height / 1.5,
-    top: height / 8,
-
+    height: height / 2.5,
+    marginTop: 30,
+    marginBottom: 30,
     // elevation: 3,
   },
   inputView: {
@@ -239,13 +345,14 @@ const styles = StyleSheet.create({
   btn: {
     backgroundColor: "#e92d2d",
     width: "75%",
-    height: "7%",
+    height: "8%",
     justifyContent: "center",
     alignSelf: "center",
     borderRadius: 65,
-    elevation: 3,
+    elevation: 7,
     padding: 5,
     // opacity: 0.2,
+    marginTop: 30,
   },
   btnText: {
     color: "#fff",
@@ -255,6 +362,15 @@ const styles = StyleSheet.create({
     textAlign: "center",
     fontSize: 18,
     fontWeight: "bold",
+  },
+  iconArrow: {
+    zIndex: 9,
+    position: "absolute",
+    shadowRadius: 5,
+    left: 15,
+    top: 10,
+    // justifyContent: "space-around",
+    // alignItems: "center",
   },
 });
 
