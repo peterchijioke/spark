@@ -7,18 +7,88 @@ import {
   TouchableOpacity,
   Text,
   ImageBackground,
+  Keyboard,
 } from "react-native";
-import { Header, Left, Body, Button, Icon, Title } from "native-base";
+import {
+  Header,
+  Left,
+  Body,
+  Button,
+  Icon,
+  Title,
+  Toast,
+  Root,
+} from "native-base";
 import { Fontisto, Entypo } from "react-native-vector-icons";
 const { height, width } = Dimensions.get("window");
 
 export class Logistics_bookingPage extends Component {
+  state = { firstname: "", surname: "", mobile: "", address: "" };
+
+  bookEndpoint = () => {
+    if (
+      this.state.firstname === "" &&
+      this.state.surname === "" &&
+      this.state.mobile === "" &&
+      this.state.address === ""
+    ) {
+      Keyboard.dismiss();
+      Toast.show({
+        text: "make sure you fill the form..!",
+        buttonText: "Okay",
+        duration: 3000,
+        type: "warning",
+      });
+    } else if (this.state.firstname === "") {
+      Keyboard.dismiss();
+      Toast.show({
+        text: "Put reciever's first name!",
+        buttonText: "Okay",
+        duration: 3000,
+        type: "warning",
+      });
+    } else if (this.state.surname === "") {
+      Keyboard.dismiss();
+      Toast.show({
+        text: "Put reciever's surename!",
+        buttonText: "Okay",
+        duration: 3000,
+        type: "warning",
+      });
+    } else if (this.state.address === "") {
+      Keyboard.dismiss();
+      Toast.show({
+        text: "Put reciever's address!",
+        buttonText: "Okay",
+        duration: 3000,
+        type: "warning",
+      });
+    } else if (this.state.mobile === "") {
+      Keyboard.dismiss();
+      Toast.show({
+        text: "Put reciever's phone number!",
+        buttonText: "Okay",
+        duration: 3000,
+        type: "warning",
+      });
+    } else {
+      const recieverData = {
+        fname: this.state.firstname,
+        surename: this.state.surname,
+        phone: this.state.mobile,
+        addy: this.state.address,
+      };
+
+      console.log(recieverData);
+    }
+  };
+
   render() {
     return (
-      <React.Fragment>
+      <Root>
         <ImageBackground
-          source={require("../img/tenor.gif")}
-          style={{ width: width, height: height }}
+          source={require("../img/tree.gif")}
+          style={styles.container}
         >
           <Header
             style={{ backgroundColor: "#e92d2d" }}
@@ -56,11 +126,9 @@ export class Logistics_bookingPage extends Component {
               <TextInput
                 style={styles.input}
                 keyboardType="default"
-                passwordRules={true}
-                secureTextEntry={true}
-                onChangeText={(password) =>
-                  this.setState({ password: password })
-                }
+                // passwordRules={true}
+                // secureTextEntry={true}
+                onChangeText={(firstname) => this.setState({ firstname })}
                 placeholder="Receiver's First name"
               />
             </View>
@@ -75,11 +143,9 @@ export class Logistics_bookingPage extends Component {
               <TextInput
                 style={styles.input}
                 keyboardType="default"
-                passwordRules={true}
-                secureTextEntry={true}
-                onChangeText={(password) =>
-                  this.setState({ password: password })
-                }
+                // passwordRules={true}
+                // secureTextEntry={true}
+                onChangeText={(surname) => this.setState({ surname })}
                 placeholder="Receiver's Surname"
               />
             </View>
@@ -94,11 +160,9 @@ export class Logistics_bookingPage extends Component {
               <TextInput
                 style={styles.input}
                 keyboardType="number-pad"
-                passwordRules={true}
-                secureTextEntry={true}
-                onChangeText={(password) =>
-                  this.setState({ password: password })
-                }
+                // passwordRules={true}
+                // secureTextEntry={true}
+                onChangeText={(mobile) => this.setState({ mobile })}
                 placeholder="07037********65"
               />
             </View>
@@ -115,11 +179,9 @@ export class Logistics_bookingPage extends Component {
               <TextInput
                 style={styles.input}
                 keyboardType="default"
-                passwordRules={true}
-                secureTextEntry={true}
-                onChangeText={(password) =>
-                  this.setState({ password: password })
-                }
+                // passwordRules={true}
+                // secureTextEntry={true}
+                onChangeText={(address) => this.setState({ address })}
                 placeholder="Receiver's address"
               />
             </View>
@@ -127,19 +189,18 @@ export class Logistics_bookingPage extends Component {
           <TouchableOpacity
             // disabled={true}
             style={styles.btn}
-            onPress={() => {}}
+            onPress={() => this.bookEndpoint()}
           >
             <Text style={[styles.btnText]}>BOOK</Text>
           </TouchableOpacity>
         </ImageBackground>
-      </React.Fragment>
+      </Root>
     );
   }
 }
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: "#f1f1f1",
     flex: 1,
     height: height,
     width: width,

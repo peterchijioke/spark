@@ -23,7 +23,7 @@ import {
 } from "react-native-responsive-screen";
 import { MaterialCommunityIcons, Fontisto } from "@expo/vector-icons";
 import { observer, inject } from "mobx-react";
-import jwt from "jwt-decode";
+import { Root, Toast } from "native-base";
 import AsyncStorage from "@react-native-community/async-storage";
 import axios from "axios";
 
@@ -102,10 +102,20 @@ export default class LoginPage extends Component {
 
     if (this.state.user_emailPhoneNumber === "") {
       Keyboard.dismiss();
-      ToastAndroid.show("Enter your email", ToastAndroid.SHORT);
+      Toast.show({
+        text: "Email can't be blank",
+        buttonText: "Okay",
+        duration: 3000,
+        //  type: "warning",
+      });
     } else if (this.state.user_password === "") {
       Keyboard.dismiss();
-      ToastAndroid.show("Password can't be blank", ToastAndroid.SHORT);
+      Toast.show({
+        text: "Password can't be blank",
+        buttonText: "Okay",
+        duration: 3000,
+        //  type: "warning",
+      });
     } else {
       let email_regx = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
       // let num = new RegExp("^-?[0-9]*$");
@@ -164,10 +174,12 @@ export default class LoginPage extends Component {
             } catch (e) {
               if (e.response.status === 401) {
                 Keyboard.dismiss();
-                ToastAndroid.show(
-                  "Email or password is incorrect",
-                  ToastAndroid.LONG
-                );
+                Toast.show({
+                  text: "Email or password is incorrect!",
+                  buttonText: "Okay",
+                  duration: 3000,
+                  type: "warning",
+                });
                 this.refs.loading.close();
               }
               // console.log(e.response.status);
@@ -183,7 +195,7 @@ export default class LoginPage extends Component {
 
   render() {
     return (
-      <React.Fragment>
+      <Root>
         {/* <this.headerFunc /> */}
         <StatusBar />
 
@@ -287,7 +299,7 @@ export default class LoginPage extends Component {
           </ImageBackground>
         </View>
         <Loading ref="loading" />
-      </React.Fragment>
+      </Root>
     );
   }
 }
