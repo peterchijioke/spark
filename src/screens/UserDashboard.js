@@ -27,10 +27,10 @@ export default class DrawerActivity extends Component {
       const AcyncUserdetails = await AsyncStorage.getItem("userDetails");
       const result =
         AcyncUserdetails != null ? JSON.parse(AcyncUserdetails) : null;
-      console.log(result);
+      // console.log(result);
       const details = JwtDecode(result);
       this.setState({ details });
-      console.log(details);
+      // console.log(details);
     } catch (error) {
       console.log(error.response);
     }

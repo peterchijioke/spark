@@ -21,6 +21,7 @@ import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from "react-native-responsive-screen";
+
 import { MaterialCommunityIcons, Fontisto } from "@expo/vector-icons";
 import { observer, inject } from "mobx-react";
 import { Root, Toast } from "native-base";
@@ -140,7 +141,13 @@ export default class LoginPage extends Component {
           // console.log("Connection type", state.type);
           // console.log("Is connected?", state.isConnected);
           if (state.isConnected !== true) {
-            Alert.alert("No internet connection");
+            Toast.show({
+              text: "No internet connection!",
+              buttonText: "Okay",
+              duration: 3000,
+              type: "warning",
+            });
+
             this.refs.loading.close();
           } else {
             const DATA = {
@@ -160,7 +167,7 @@ export default class LoginPage extends Component {
               if (resp.status === 200) {
                 this.refs.loading.close();
                 this.props.navigation.navigate("UserDashboard");
-                // console.log(resp.data.token);
+                // console.log(resp.data);
                 const jwtData = JSON.stringify(resp.data.token);
                 try {
                   await AsyncStorage.setItem("userDetails", jwtData);

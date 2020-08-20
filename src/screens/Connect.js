@@ -10,12 +10,17 @@ import {
 import GirlDrive_connect from "./sub_screen/GirlDrive_connect";
 import ConnectWithEmailSreen from "./sub_screen/ConnectWithEmailScreen";
 import { observer, inject } from "mobx-react";
-
+import axios from "axios";
+const CancelToken = axios.CancelToken;
+const source = CancelToken.source();
 @inject("store")
 @observer
 export default class Connect extends Component {
   // state = { emailPage: false, phonePage: false };
   componentDidMount() {}
+  componentWillUnmount = () => {
+    source.cancel();
+  };
 
   render() {
     // console.log(this.props.navigation);

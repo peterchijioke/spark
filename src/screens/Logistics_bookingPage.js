@@ -8,7 +8,11 @@ import {
   Text,
   ImageBackground,
   Keyboard,
+  Modal,
+  Pressable,
   Image,
+  Alert,
+  StatusBar,
 } from "react-native";
 import {
   Header,
@@ -22,6 +26,8 @@ import {
 } from "native-base";
 import { Fontisto, Entypo } from "react-native-vector-icons";
 import AsyncStorage from "@react-native-community/async-storage";
+import JwtDecode from "jwt-decode";
+import * as Location from "expo-location";
 const { height, width } = Dimensions.get("window");
 
 export class Logistics_bookingPage extends Component {
@@ -32,6 +38,8 @@ export class Logistics_bookingPage extends Component {
     address: "",
     resultAddy: "",
     details: "",
+    reciverAddress: "",
+    modalVisible:false
   };
 
   bookEndpoint = async () => {
@@ -88,10 +96,13 @@ export class Logistics_bookingPage extends Component {
         //  console.log(result);
         const details = JwtDecode(detailresult);
         this.setState({ details });
+        // console.log(details);
 
         const AcyncUsercord = await AsyncStorage.getItem("cord");
-        const result = AcyncUsercord != null ? JSON.parse(AcyncUsercord) : null;
-        this.setState({ resultAddy: result });
+        const resultAddy =
+          AcyncUsercord != null ? JSON.parse(AcyncUsercord) : null;
+        this.setState({ resultAddy });
+        // console.log(resultAddy);
       } catch (error) {
         console.log(error);
       }
@@ -110,10 +121,15 @@ export class Logistics_bookingPage extends Component {
       // "receiver_address":"30 Asiri Akofa Street",
       // "receiver_latitude":"59.3225525",
       // "receiver_longitude":"13.4619422"
+
       // }
 
-      const recieverData = {
-        userid: this.state.details.userid,
+      const reciverAddress = this.reciverAddyFunction(this.state.address);
+      console.log(reciverAddress);
+      this.setState({ reciverAddress });
+
+      const receiverData = {
+        userid: this.state.details.userId,
         sender_firstname: this.state.details.firstname,
         sender_surname: this.state.details.surname,
         sender_telephone: this.state.details.phone_number,
@@ -122,19 +138,34 @@ export class Logistics_bookingPage extends Component {
         sender_longitude: this.state.resultAddy.longitude,
         receiver_firstname: this.state.firstname,
         receiver_surname: this.state.surname,
-        receiver_telephone: this.state.mobile,
+        // receiver_telephone: this.state.mobile,
         receiver_address: this.state.address,
-        receiver_latitude: "59.3225525",
-        receiver_longitude: "13.4619422",
+        receiver_latitude: () => {
+          if (this.state.reciverAddress.latitude === "") {
+            return null;
+            Alert.alert(
+              "We are unable to get receiver location details remotly, but dont worry we are ok with the address you made available."
+            );
+          } else {
+            return this.state.reciverAddress.latitude;
+          }
+        },
+        receiver_longitude: this.state.reciverAddress.longitude,
       };
 
-      console.log(recieverData);
+      // console.log(receiverData);
     }
+  };
+
+  reciverAddyFunction = async (addy) => {
+    const reciverCord = await Location.geocodeAsync(addy);
+    return reciverCord;
   };
 
   render() {
     return (
       <Root>
+        <StatusBar />
         <ImageBackground
           source={require("../img/tree.gif")}
           style={styles.container}
@@ -195,6 +226,45 @@ export class Logistics_bookingPage extends Component {
                 marginBottom: 5,
               }}
             />
+
+            {/* modal open */}
+
+            <Modal
+              animationType="slide"
+              transparent={true}
+              visible={modalVisible}
+              onRequestClose={() => {
+                Alert.alert("Modal has been closed.");
+              }}
+            >
+              <View style={styles.centeredView}>
+                <View style={styles.modalView}>
+                  <Text style={styles.modalText}>Hello World!</Text>
+
+                 <View style={{flexDirection:'row'}}>
+                    <TouchableHighlight
+                    style={{ ...styles.openButton, backgroundColor: "#2196F3" }}
+                    onPress={() => {
+                      this.bookEndpoint()
+                    }}
+                  >
+                    <Text style={styles.textStyle}>Done</Text>
+                  </TouchableHighlight>
+                  <TouchableHighlight
+                    style={{ ...styles.openButton, backgroundColor: "#2196F3" }}
+                    onPress={() => {
+                      this.setState({})
+                    }}
+                  >
+                    <Text style={styles.textStyle}>Recheck</Text>
+                  </TouchableHighlight>
+                 </View>
+                </View>
+              </View>
+            </Modal>
+
+            {/* modal close  */}
+
             <View>
               <Text
                 style={{
@@ -296,7 +366,7 @@ export class Logistics_bookingPage extends Component {
           <TouchableOpacity
             // disabled={true}
             style={styles.btn}
-            onPress={() => this.bookEndpoint()}
+            onPress={() => this.setState({modalVisible:true})}
           >
             <Text style={[styles.btnText]}>BOOK</Text>
           </TouchableOpacity>
@@ -363,6 +433,21 @@ const styles = StyleSheet.create({
     fontSize: 18,
     fontWeight: "bold",
   },
+
+
+modalView: {
+    margin: 20,
+    backgroundColor: "white",
+    borderRadius: 20,
+    padding: 35,
+    alignItems: "center",
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 2
+    },
+
+
   iconArrow: {
     zIndex: 9,
     position: "absolute",

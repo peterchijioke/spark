@@ -61,11 +61,13 @@ export default class App extends Component {
             <NavigationContainer>
               <Stack.Navigator>
                 {/* start */}
+
                 <Stack.Screen
-                  name="LogisticsBooking"
-                  component={Logistics_bookingPage}
+                  name="LoginPage"
+                  component={LoginPage}
                   options={{
                     headerShown: false,
+
                     cardStyleInterpolator:
                       CardStyleInterpolators.forHorizontalIOS,
                   }}
@@ -74,6 +76,16 @@ export default class App extends Component {
                 <Stack.Screen
                   name="Connect"
                   component={Connect}
+                  options={{
+                    headerShown: false,
+                    cardStyleInterpolator:
+                      CardStyleInterpolators.forHorizontalIOS,
+                  }}
+                />
+
+                <Stack.Screen
+                  name="LogisticsBooking"
+                  component={Logistics_bookingPage}
                   options={{
                     headerShown: false,
                     cardStyleInterpolator:
@@ -118,17 +130,6 @@ export default class App extends Component {
                     headerShown: false,
                     // cardStyleInterpolator:
                     //   CardStyleInterpolators.forScaleFromCenterAndroid,
-                    cardStyleInterpolator:
-                      CardStyleInterpolators.forHorizontalIOS,
-                  }}
-                />
-
-                <Stack.Screen
-                  name="LoginPage"
-                  component={LoginPage}
-                  options={{
-                    headerShown: false,
-
                     cardStyleInterpolator:
                       CardStyleInterpolators.forHorizontalIOS,
                   }}
