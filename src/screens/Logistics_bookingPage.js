@@ -239,7 +239,11 @@ export class Logistics_bookingPage extends Component {
             >
               <View style={styles.centeredView}>
                 <View style={styles.modalView}>
-                  <Text style={styles.modalText}>Hello World!</Text>
+                   <View style={{flexDirection:'row'}}>
+                   <Text style={{}}>Name:</Text>
+                   <Text style={{}}>{this.state.firstname}</Text>
+                 </View>
+
 
                  <View style={{flexDirection:'row'}}>
                     <TouchableHighlight
