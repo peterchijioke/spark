@@ -305,7 +305,7 @@ export default class LoginPage extends Component {
             </SafeAreaView>
           </ImageBackground>
         </View>
-        <Loading ref="loading" />
+        <Loading ref="loading" useNativeDriver={false} />
       </Root>
     );
   }

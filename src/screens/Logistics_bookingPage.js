@@ -8,8 +8,6 @@ import {
   Text,
   ImageBackground,
   Keyboard,
-  Modal,
-  Pressable,
   Image,
   Alert,
   StatusBar,
@@ -28,6 +26,7 @@ import { Fontisto, Entypo } from "react-native-vector-icons";
 import AsyncStorage from "@react-native-community/async-storage";
 import JwtDecode from "jwt-decode";
 import * as Location from "expo-location";
+import { BlurView } from "@react-native-community/blur";
 const { height, width } = Dimensions.get("window");
 
 export class Logistics_bookingPage extends Component {
@@ -39,7 +38,7 @@ export class Logistics_bookingPage extends Component {
     resultAddy: "",
     details: "",
     reciverAddress: "",
-    modalVisible:false
+    modalVisible: false,
   };
 
   bookEndpoint = async () => {
@@ -166,6 +165,7 @@ export class Logistics_bookingPage extends Component {
     return (
       <Root>
         <StatusBar />
+
         <ImageBackground
           source={require("../img/tree.gif")}
           style={styles.container}
@@ -226,48 +226,6 @@ export class Logistics_bookingPage extends Component {
                 marginBottom: 5,
               }}
             />
-
-            {/* modal open */}
-
-            <Modal
-              animationType="slide"
-              transparent={true}
-              visible={modalVisible}
-              onRequestClose={() => {
-                Alert.alert("Modal has been closed.");
-              }}
-            >
-              <View style={styles.centeredView}>
-                <View style={styles.modalView}>
-                   <View style={{flexDirection:'row'}}>
-                   <Text style={{}}>Name:</Text>
-                   <Text style={{}}>{this.state.firstname}</Text>
-                 </View>
-
-
-                 <View style={{flexDirection:'row'}}>
-                    <TouchableHighlight
-                    style={{ ...styles.openButton, backgroundColor: "#2196F3" }}
-                    onPress={() => {
-                      this.bookEndpoint()
-                    }}
-                  >
-                    <Text style={styles.textStyle}>Done</Text>
-                  </TouchableHighlight>
-                  <TouchableHighlight
-                    style={{ ...styles.openButton, backgroundColor: "#2196F3" }}
-                    onPress={() => {
-                      this.setState({})
-                    }}
-                  >
-                    <Text style={styles.textStyle}>Recheck</Text>
-                  </TouchableHighlight>
-                 </View>
-                </View>
-              </View>
-            </Modal>
-
-            {/* modal close  */}
 
             <View>
               <Text
@@ -370,10 +328,15 @@ export class Logistics_bookingPage extends Component {
           <TouchableOpacity
             // disabled={true}
             style={styles.btn}
-            onPress={() => this.setState({modalVisible:true})}
+            onPress={() => this.setState({ modalVisible: true })}
           >
             <Text style={[styles.btnText]}>BOOK</Text>
           </TouchableOpacity>
+          <BlurView
+            blurType="light"
+            blurAmount={10}
+            reducedTransparencyFallbackColor="white"
+          />
         </ImageBackground>
       </Root>
     );
@@ -436,30 +399,6 @@ const styles = StyleSheet.create({
     textAlign: "center",
     fontSize: 18,
     fontWeight: "bold",
-  },
-
-
-modalView: {
-    margin: 20,
-    backgroundColor: "white",
-    borderRadius: 20,
-    padding: 35,
-    alignItems: "center",
-    shadowColor: "#000",
-    shadowOffset: {
-      width: 0,
-      height: 2
-    },
-
-
-  iconArrow: {
-    zIndex: 9,
-    position: "absolute",
-    shadowRadius: 5,
-    left: 15,
-    top: 10,
-    // justifyContent: "space-around",
-    // alignItems: "center",
   },
 });
 
