@@ -11,22 +11,13 @@ import {
   Image,
   Alert,
   StatusBar,
+  Modal,
 } from "react-native";
-import {
-  Header,
-  Left,
-  Body,
-  Button,
-  Icon,
-  Title,
-  Toast,
-  Root,
-} from "native-base";
+import { Icon, Toast, Root } from "native-base";
 import { Fontisto, Entypo } from "react-native-vector-icons";
 import AsyncStorage from "@react-native-community/async-storage";
 import JwtDecode from "jwt-decode";
 import * as Location from "expo-location";
-import { BlurView } from "@react-native-community/blur";
 const { height, width } = Dimensions.get("window");
 
 export class Logistics_bookingPage extends Component {
@@ -139,16 +130,7 @@ export class Logistics_bookingPage extends Component {
         receiver_surname: this.state.surname,
         // receiver_telephone: this.state.mobile,
         receiver_address: this.state.address,
-        receiver_latitude: () => {
-          if (this.state.reciverAddress.latitude === "") {
-            return null;
-            Alert.alert(
-              "We are unable to get receiver location details remotly, but dont worry we are ok with the address you made available."
-            );
-          } else {
-            return this.state.reciverAddress.latitude;
-          }
-        },
+        receiver_latitude: this.check_lat(),
         receiver_longitude: this.state.reciverAddress.longitude,
       };
 
@@ -159,6 +141,16 @@ export class Logistics_bookingPage extends Component {
   reciverAddyFunction = async (addy) => {
     const reciverCord = await Location.geocodeAsync(addy);
     return reciverCord;
+  };
+  check_lat = () => {
+    // check if it exist
+    return this.state.reciverAddress.latitude;
+  };
+
+  alert_information = () => {
+    <Modal transparent={true}>
+      <Text>peter is was here!</Text>
+    </Modal>;
   };
 
   render() {
@@ -328,15 +320,11 @@ export class Logistics_bookingPage extends Component {
           <TouchableOpacity
             // disabled={true}
             style={styles.btn}
-            onPress={() => this.setState({ modalVisible: true })}
+            // onPress={() => this.setState({ modalVisible: true })}
+            onPress={this.alert_information}
           >
             <Text style={[styles.btnText]}>BOOK</Text>
           </TouchableOpacity>
-          <BlurView
-            blurType="light"
-            blurAmount={10}
-            reducedTransparencyFallbackColor="white"
-          />
         </ImageBackground>
       </Root>
     );
