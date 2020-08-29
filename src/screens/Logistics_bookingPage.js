@@ -9,16 +9,21 @@ import {
   ImageBackground,
   Keyboard,
   Image,
-  Alert,
+  Pressable,
   StatusBar,
-  Modal,
+  Alert,
 } from "react-native";
 import { Icon, Toast, Root } from "native-base";
 import { Fontisto, Entypo } from "react-native-vector-icons";
 import AsyncStorage from "@react-native-community/async-storage";
 import JwtDecode from "jwt-decode";
 import * as Location from "expo-location";
+import Modal from "react-native-modal";
+import Loading from "react-native-whc-loading";
+import axios from "axios";
 const { height, width } = Dimensions.get("window");
+const CancelToken = axios.CancelToken;
+const source = CancelToken.source();
 
 export class Logistics_bookingPage extends Component {
   state = {
@@ -30,6 +35,7 @@ export class Logistics_bookingPage extends Component {
     details: "",
     reciverAddress: "",
     modalVisible: false,
+    senderAddy: "",
   };
 
   bookEndpoint = async () => {
@@ -86,6 +92,11 @@ export class Logistics_bookingPage extends Component {
         //  console.log(result);
         const details = JwtDecode(detailresult);
         this.setState({ details });
+
+        const senderAddy = await AsyncStorage.getItem("address");
+        const sender = AcyncUserdetails != null ? JSON.parse(senderAddy) : null;
+        this.setState({ senderAddy });
+
         // console.log(details);
 
         const AcyncUsercord = await AsyncStorage.getItem("cord");
@@ -118,23 +129,7 @@ export class Logistics_bookingPage extends Component {
       console.log(reciverAddress);
       this.setState({ reciverAddress });
 
-      const receiverData = {
-        userid: this.state.details.userId,
-        sender_firstname: this.state.details.firstname,
-        sender_surname: this.state.details.surname,
-        sender_telephone: this.state.details.phone_number,
-        // sender_address:this.state.resultAddy
-        sender_latitude: this.state.resultAddy.latitude,
-        sender_longitude: this.state.resultAddy.longitude,
-        receiver_firstname: this.state.firstname,
-        receiver_surname: this.state.surname,
-        // receiver_telephone: this.state.mobile,
-        receiver_address: this.state.address,
-        receiver_latitude: this.check_lat(),
-        receiver_longitude: this.state.reciverAddress.longitude,
-      };
-
-      // console.log(receiverData);
+      this.setState({ modalVisible: true });
     }
   };
 
@@ -146,11 +141,51 @@ export class Logistics_bookingPage extends Component {
     // check if it exist
     return this.state.reciverAddress.latitude;
   };
+  componentWillUnmount() {
+    source.cancel();
+  }
 
-  alert_information = () => {
-    <Modal transparent={true}>
-      <Text>peter is was here!</Text>
-    </Modal>;
+  onRequestComplet = async () => {
+    this.setState({ modalVisible: false });
+
+    const DATA = {
+      userid: this.state.details.userId,
+      sender_firstname: this.state.details.firstname,
+      sender_surname: this.state.details.surname,
+      sender_telephone: this.state.details.phone_number,
+      sender_address: this.state.senderAddy,
+      sender_latitude: this.state.resultAddy.latitude,
+      sender_longitude: this.state.resultAddy.longitude,
+      receiver_firstname: this.state.firstname,
+      receiver_surname: this.state.surname,
+      receiver_telephone: this.state.mobile,
+      receiver_address: this.state.address,
+      receiver_latitude: this.check_lat(),
+      receiver_longitude: this.state.reciverAddress.longitude,
+    };
+    console.log(DATA);
+    this.refs.loading.show();
+    try {
+      const url = "https://sparklogistics.herokuapp.com/bookings/logistics";
+      const result = axios.post(url, DATA, {
+        cancelToken: source.token,
+      });
+
+      if (result.status === 200) {
+        this.refs.loading.close();
+        Alert.alert("Success Message", "Booking was successful");
+        this.props.navigation.navigate("UserDashboard");
+        // console.log(resp.data);
+
+        console.log(resp.data.message);
+      } else {
+        alert("Error occures please try again..");
+        this.refs.loading.close();
+      }
+    } catch (error) {
+      console.log(error);
+      this.refs.loading.close();
+    }
   };
 
   render() {
@@ -320,12 +355,70 @@ export class Logistics_bookingPage extends Component {
           <TouchableOpacity
             // disabled={true}
             style={styles.btn}
-            // onPress={() => this.setState({ modalVisible: true })}
-            onPress={this.alert_information}
+            onPress={() => this.bookEndpoint()}
+            // onPress={() => {
+            //   Alert.alert("peter", "peter");
+            // }}
           >
             <Text style={[styles.btnText]}>BOOK</Text>
           </TouchableOpacity>
+
+          {/* modal  */}
+          <Modal isVisible={this.state.modalVisible}>
+            <View style={styles.modalView1}>
+              <View style={{ marginTop: 23 }}>
+                <Text
+                  style={{
+                    color: "#b90000",
+                    fontSize: 20,
+                    marginLeft: 25,
+                    alignSelf: "center",
+                  }}
+                >
+                  Please confirm that the receiver details are correct
+                </Text>
+                <View
+                  style={{ borderWidth: 1, marginBottom: 10, marginTop: 5 }}
+                ></View>
+              </View>
+              <View>
+                <Text style={styles.modalText}>Receiver's Firstname:</Text>
+                <Text>{this.state.address}</Text>
+                <Text style={styles.modalText}>Receiver's surname:</Text>
+                <Text>{this.state.surname}</Text>
+                <Text style={styles.modalText}>Receiver's phonenumber: </Text>
+                <Text>{this.state.mobile}</Text>
+                <Text style={styles.modalText}>Receiver's address: </Text>
+                <Text>{this.state.reciverAddress}</Text>
+
+                <View
+                  style={{
+                    borderWidth: 1,
+                    marginBottom: 5,
+                    marginTop: 10,
+                    width: width,
+                  }}
+                ></View>
+              </View>
+
+              <View style={{ marginTop: 5 }}>
+                <TouchableOpacity
+                  onPress={() => {
+                    this.onRequestComplet();
+                  }}
+                  style={styles.btnModal}
+                >
+                  <Text
+                    style={{ color: "#fff", fontSize: 18, fontWeight: "700" }}
+                  >
+                    Confirmed
+                  </Text>
+                </TouchableOpacity>
+              </View>
+            </View>
+          </Modal>
         </ImageBackground>
+        <Loading ref="loading" useNativeDriver={false} />
       </Root>
     );
   }
@@ -387,6 +480,39 @@ const styles = StyleSheet.create({
     textAlign: "center",
     fontSize: 18,
     fontWeight: "bold",
+  },
+  centeredView: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    marginTop: 60,
+    marginBottom: 60,
+    backgroundColor: "#000",
+    width: width - 50,
+  },
+  modalView1: {
+    flex: 1,
+    // justifyContent: "center",
+    backgroundColor: "#fff",
+    alignItems: "center",
+    marginTop: 130,
+    marginBottom: 150,
+  },
+  modalText: {
+    color: "#6c736f",
+    fontSize: 18,
+    fontWeight: "bold",
+    marginLeft: 25,
+    marginRight: 25,
+    // alignSelf: "center",
+  },
+  btnModal: {
+    backgroundColor: "#b90000",
+    width: 120,
+    height: 50,
+    justifyContent: "center",
+    alignItems: "center",
+    borderRadius: 28,
   },
 });
 
