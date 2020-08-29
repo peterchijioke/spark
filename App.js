@@ -63,8 +63,8 @@ export default class App extends Component {
                 {/* start */}
 
                 <Stack.Screen
-                  name="LogisticsBooking"
-                  component={Logistics_bookingPage}
+                  name="LoginPage"
+                  component={LoginPage}
                   options={{
                     headerShown: false,
                     cardStyleInterpolator:
@@ -73,11 +73,10 @@ export default class App extends Component {
                 />
 
                 <Stack.Screen
-                  name="LoginPage"
-                  component={LoginPage}
+                  name="LogisticsBooking"
+                  component={Logistics_bookingPage}
                   options={{
                     headerShown: false,
-
                     cardStyleInterpolator:
                       CardStyleInterpolators.forHorizontalIOS,
                   }}
