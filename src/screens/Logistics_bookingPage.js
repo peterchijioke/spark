@@ -32,11 +32,14 @@ export class Logistics_bookingPage extends Component {
     mobile: "",
     address: "",
     resultAddy: "",
-    details: "",
-    reciverAddress: "",
+    userDetails: "",
+    reciverAddressAsync: "",
     modalVisible: false,
     senderAddy: "",
   };
+  componentWillUnmount() {
+    source.cancel();
+  }
 
   bookEndpoint = async () => {
     if (
@@ -90,22 +93,43 @@ export class Logistics_bookingPage extends Component {
         const detailresult =
           AcyncUserdetails != null ? JSON.parse(AcyncUserdetails) : null;
         //  console.log(result);
-        const details = JwtDecode(detailresult);
-        this.setState({ details });
-
-        const senderAddy = await AsyncStorage.getItem("address");
-        const sender = AcyncUserdetails != null ? JSON.parse(senderAddy) : null;
-        this.setState({ senderAddy });
-
-        // console.log(details);
-
+        const userDetails = JwtDecode(detailresult);
+        this.setState({ userDetails });
+      } catch (error) {
+        console.log(error);
+      }
+      try {
         const AcyncUsercord = await AsyncStorage.getItem("cord");
         const resultAddy =
           AcyncUsercord != null ? JSON.parse(AcyncUsercord) : null;
         this.setState({ resultAddy });
-        // console.log(resultAddy);
       } catch (error) {
         console.log(error);
+      }
+      try {
+        const sender = await AsyncStorage.getItem("address");
+        const senderAddy = sender != null ? JSON.parse(sender) : null;
+        this.setState({ senderAddy });
+      } catch (error) {
+        console.log(error);
+      }
+      try {
+        let { status } = await Location.getPermissionsAsync();
+        if (status === "granted") {
+          let data = this.state.address;
+          const receiverAddress = Location.geocodeAsync(data);
+          console.log(receiverAddress);
+          if (receiverAddress != null) {
+            this.setState({ receiverAddress });
+          } else {
+            alert("null pointer in receiver's latitued longitude.");
+          }
+        } else {
+          alert("Enable location service");
+        }
+      } catch (error) {
+        console.log(error);
+        alert(error);
       }
 
       // {
@@ -125,67 +149,55 @@ export class Logistics_bookingPage extends Component {
 
       // }
 
-      const reciverAddress = this.reciverAddyFunction(this.state.address);
-      console.log(reciverAddress);
-      this.setState({ reciverAddress });
-
       this.setState({ modalVisible: true });
     }
   };
 
-  reciverAddyFunction = async (addy) => {
-    const reciverCord = await Location.geocodeAsync(addy);
-    return reciverCord;
-  };
-  check_lat = () => {
-    // check if it exist
-    return this.state.reciverAddress.latitude;
-  };
-  componentWillUnmount() {
-    source.cancel();
-  }
-
   onRequestComplet = async () => {
     this.setState({ modalVisible: false });
 
-    const DATA = {
-      userid: this.state.details.userId,
-      sender_firstname: this.state.details.firstname,
-      sender_surname: this.state.details.surname,
-      sender_telephone: this.state.details.phone_number,
-      sender_address: this.state.senderAddy,
-      sender_latitude: this.state.resultAddy.latitude,
-      sender_longitude: this.state.resultAddy.longitude,
-      receiver_firstname: this.state.firstname,
-      receiver_surname: this.state.surname,
-      receiver_telephone: this.state.mobile,
-      receiver_address: this.state.address,
-      receiver_latitude: this.check_lat(),
-      receiver_longitude: this.state.reciverAddress.longitude,
-    };
-    console.log(DATA);
-    this.refs.loading.show();
     try {
-      const url = "https://sparklogistics.herokuapp.com/bookings/logistics";
-      const result = axios.post(url, DATA, {
-        cancelToken: source.token,
-      });
-
-      if (result.status === 200) {
-        this.refs.loading.close();
-        Alert.alert("Success Message", "Booking was successful");
-        this.props.navigation.navigate("UserDashboard");
-        // console.log(resp.data);
-
-        console.log(resp.data.message);
-      } else {
-        alert("Error occures please try again..");
-        this.refs.loading.close();
-      }
-    } catch (error) {
-      console.log(error);
-      this.refs.loading.close();
+      const data = {
+        userid: this.state.userDetails.userId,
+        sender_firstname: this.state.userDetails.firstname,
+        sender_surname: this.state.userDetails.surname,
+        // sender_telephone: this.state.userDetails.phone_number, buchi has not included it
+        sender_address: this.state.senderAddy,
+        sender_latitude: this.state.resultAddy.latitude,
+        sender_longitude: this.state.resultAddy.longitude,
+        receiver_firstname: this.state.firstname,
+        receiver_surname: this.state.surname,
+        receiver_telephone: this.state.mobile,
+        receiver_address: this.state.address,
+        receiver_latitude: this.state.reciverAddress.latitude,
+        receiver_longitude: this.state.reciverAddress.longitude,
+      };
+      // console.log(data);
+    } catch (e) {
+      console.log(e);
     }
+    // this.refs.loading.show();
+    // try {
+    //   const url = "https://sparklogistics.herokuapp.com/bookings/logistics";
+    //   const result = axios.post(url, DATA, {
+    //     cancelToken: source.token,
+    //   });
+
+    //   if (result.status === 200) {
+    //     this.refs.loading.close();
+    //     Alert.alert("Success Message", "Booking was successful");
+    //     // this.props.navigation.navigate("UserDashboard");
+    //     console.log();
+
+    //     console.log(resp.data.message);
+    //   } else {
+    //     alert("Error occures please try again..");
+    //     this.refs.loading.close();
+    //   }
+    // } catch (error) {
+    //   console.log(error);
+    //   this.refs.loading.close();
+    // }
   };
 
   render() {
@@ -381,15 +393,15 @@ export class Logistics_bookingPage extends Component {
                   style={{ borderWidth: 1, marginBottom: 10, marginTop: 5 }}
                 ></View>
               </View>
-              <View>
+              {/* <View>
                 <Text style={styles.modalText}>Receiver's Firstname:</Text>
-                <Text>{this.state.address}</Text>
+                {this.state.address}
                 <Text style={styles.modalText}>Receiver's surname:</Text>
-                <Text>{this.state.surname}</Text>
+                {this.state.surname}
                 <Text style={styles.modalText}>Receiver's phonenumber: </Text>
-                <Text>{this.state.mobile}</Text>
+                {this.state.mobile}
                 <Text style={styles.modalText}>Receiver's address: </Text>
-                <Text>{this.state.reciverAddress}</Text>
+                {this.state.reciverAddress}
 
                 <View
                   style={{
@@ -399,7 +411,7 @@ export class Logistics_bookingPage extends Component {
                     width: width,
                   }}
                 ></View>
-              </View>
+              </View> */}
 
               <View style={{ marginTop: 5 }}>
                 <TouchableOpacity
