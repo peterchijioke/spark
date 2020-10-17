@@ -2,7 +2,6 @@ import React, { Component } from "react";
 import { StyleSheet, Text, View } from "react-native";
 import { Provider } from "mobx-react";
 import store from "./store";
-
 import { NavigationContainer } from "@react-navigation/native";
 import {
   createStackNavigator,
@@ -59,7 +58,7 @@ export default class App extends Component {
         <Root>
           <Provider store={store}>
             <NavigationContainer>
-              <Stack.Navigator>
+              <Stack.Navigator screenOptions={{ headerShown: false }}>
                 {/* start */}
 
                 <Stack.Screen
@@ -76,7 +75,6 @@ export default class App extends Component {
                   name="LogisticsBooking"
                   component={Logistics_bookingPage}
                   options={{
-                    headerShown: false,
                     cardStyleInterpolator:
                       CardStyleInterpolators.forHorizontalIOS,
                   }}
@@ -86,7 +84,6 @@ export default class App extends Component {
                   name="Connect"
                   component={Connect}
                   options={{
-                    headerShown: false,
                     cardStyleInterpolator:
                       CardStyleInterpolators.forHorizontalIOS,
                   }}
@@ -96,7 +93,6 @@ export default class App extends Component {
                   name="MakeRequest"
                   component={MakeDeliveryRequest}
                   options={{
-                    headerShown: false,
                     cardStyleInterpolator:
                       CardStyleInterpolators.forHorizontalIOS,
                   }}
@@ -106,7 +102,6 @@ export default class App extends Component {
                   name="UserDashboard"
                   component={UserDashboard}
                   options={{
-                    headerShown: false,
                     cardStyleInterpolator:
                       CardStyleInterpolators.forHorizontalIOS,
                   }}
@@ -116,7 +111,6 @@ export default class App extends Component {
                   name="PickCab"
                   component={PickAcab}
                   options={{
-                    headerShown: false,
                     cardStyleInterpolator:
                       CardStyleInterpolators.forHorizontalIOS,
                   }}
@@ -126,7 +120,6 @@ export default class App extends Component {
                   name="pickupdestination"
                   component={PickupDestinationPage}
                   options={{
-                    headerShown: false,
                     // cardStyleInterpolator:
                     //   CardStyleInterpolators.forScaleFromCenterAndroid,
                     cardStyleInterpolator:
@@ -144,7 +137,6 @@ export default class App extends Component {
                   name="Delivery Location"
                   component={DeliveryLocation}
                   options={{
-                    headerShown: false,
                     cardStyleInterpolator:
                       CardStyleInterpolators.forHorizontalIOS,
                   }}
@@ -160,7 +152,6 @@ export default class App extends Component {
                       borderBottomWidth: 0,
                     },
                     title: "SPARK",
-                    headerShown: false,
                     headerTitleAlign: "center",
                     cardStyleInterpolator:
                       CardStyleInterpolators.forHorizontalIOS,
