@@ -16,7 +16,7 @@
     "@react-navigation/stack": "^5.8.0",
     "@types/googlemaps": "^3.39.11",
     "@types/markerclustererplus": "^2.1.33",
-    "axios": "^0.19.2",
+    "axios": "^0.21.1",
     "core-js": "^3.6.5",
     "expo": "^38.0.8",
     "expo-font": "~8.2.2",
