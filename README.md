@@ -10,7 +10,7 @@ Spark is logistics and transportation mobile base application designed by me, us
 **Server:** NodeJS, MongoDB, ExpressJS
 
 
-How to Install & test the React Native App
+# How to Install & test the React Native App
 
 ```bash
 git clone https://github.com/peterchijioke/spark.git
